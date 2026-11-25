@@ -175,15 +175,15 @@
        =========================================== */
     .topbar {
       position: absolute;
-      top: 40px;
-      left: 64px;
-      right: 64px;
+      top: 36px;
+      left: 72px;
+      right: 72px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       z-index: 5;
       font-family: var(--font-mono);
-      font-size: 18px;
+      font-size: 20px;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--ink);
@@ -194,24 +194,24 @@
     .topbar-pill {
       border: 2px solid var(--ink);
       border-radius: 999px;
-      padding: 6px 16px;
+      padding: 8px 18px;
       background: var(--cream);
-      font-size: 15px;
+      font-size: 17px;
       letter-spacing: 0.08em;
       white-space: nowrap;
     }
 
     .slide-meta {
       position: absolute;
-      bottom: 36px;
-      left: 64px;
-      right: 64px;
+      bottom: 32px;
+      left: 72px;
+      right: 72px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       z-index: 5;
       font-family: var(--font-mono);
-      font-size: 16px;
+      font-size: 18px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--ink);
@@ -430,10 +430,10 @@
        =========================================== */
     .content {
       position: absolute;
-      top: 100px;
-      left: 96px;
-      right: 96px;
-      bottom: 90px;
+      top: 92px;
+      left: 72px;
+      right: 72px;
+      bottom: 84px;
     }
 
     .hard-box {
@@ -451,49 +451,81 @@
        =========================================== */
     .s01 .content {
       display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: 48px;
-      align-items: center;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 40px;
+      align-items: stretch;
+    }
+
+    .s01-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 0;
+      padding: 12px 0 8px;
     }
 
     .s01-title {
-      font-size: 118px;
-      line-height: 0.88;
+      font-size: 120px;
+      line-height: 0.86;
     }
 
     .s01-title .orange { color: var(--orange); }
 
     .s01-sub {
-      margin-top: 28px;
-      font-size: 24px;
-      line-height: 1.35;
-      max-width: 720px;
+      margin-top: 20px;
+      font-size: 30px;
+      font-weight: 500;
+      line-height: 1.28;
+      max-width: 820px;
       color: var(--ink-2);
     }
 
     .s01-meta {
-      margin-top: 28px;
+      margin-top: 0;
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      font-size: 15px;
-      letter-spacing: 0.04em;
+      gap: 14px;
+      font-family: var(--font-body);
+      font-size: 26px;
+      letter-spacing: 0;
       text-transform: none;
-      line-height: 1.45;
+      line-height: 1.35;
+      color: var(--ink);
+      border: 4px solid var(--ink);
+      background: var(--cream);
+      box-shadow: 8px 8px 0 var(--pink);
+      padding: 26px 28px;
+      max-width: 860px;
+    }
+
+    .s01-meta > div {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
     }
 
     .s01-meta strong {
       font-family: var(--font-mono);
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      font-size: 13px;
-      display: block;
-      margin-bottom: 2px;
+      letter-spacing: 0.1em;
+      font-size: 15px;
+      font-weight: 500;
+      display: inline-block;
+      min-width: 92px;
+      text-align: center;
+      color: var(--ink);
+      opacity: 1;
+      background: var(--yellow);
+      border: 2px solid var(--ink);
+      padding: 4px 10px;
+      line-height: 1.3;
+      flex-shrink: 0;
     }
 
     .s01-poster {
       position: relative;
-      height: 760px;
+      height: 820px;
       background: var(--green);
       border: 4px solid var(--ink);
       box-shadow: var(--hard-shadow-xl);
@@ -506,23 +538,23 @@
     }
 
     .s01-frame.f1 {
-      inset: 48px 56px 120px 56px;
+      inset: 44px 48px 110px 48px;
       background: var(--pink);
     }
 
     .s01-frame.f2 {
-      inset: 96px 104px 168px 104px;
+      inset: 92px 96px 158px 96px;
       background: var(--orange);
     }
 
     .s01-frame.f3 {
-      inset: 148px 156px 220px 156px;
+      inset: 148px 152px 214px 152px;
       background: var(--cream);
     }
 
     .s01-reticle {
       position: absolute;
-      inset: 188px 196px 260px 196px;
+      inset: 196px 200px 262px 200px;
       border: 3px solid var(--ink);
       background: transparent;
     }
@@ -552,15 +584,15 @@
 
     .s01-badge {
       position: absolute;
-      bottom: 36px;
-      left: 40px;
-      right: 40px;
+      bottom: 32px;
+      left: 36px;
+      right: 36px;
       background: var(--cream);
       border: 3px solid var(--ink);
-      padding: 14px 18px;
+      padding: 16px 18px;
       font-family: var(--font-mono);
-      font-size: 14px;
-      letter-spacing: 0.1em;
+      font-size: 16px;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       text-align: center;
     }
@@ -576,11 +608,12 @@
 
     .s02-col {
       border: 4px solid var(--ink);
-      padding: 22px 26px 18px;
+      padding: 28px 30px 26px;
       display: flex;
       flex-direction: column;
+      justify-content: space-between;
       min-height: 0;
-      max-height: 860px;
+      height: 100%;
     }
 
     .s02-col.problem {
@@ -595,32 +628,35 @@
 
     .s02-col h2 {
       font-family: var(--font-display);
-      font-size: 36px;
+      font-size: 42px;
       text-transform: uppercase;
       line-height: 0.95;
-      margin-bottom: 22px;
-      padding-bottom: 14px;
+      margin-bottom: 8px;
+      padding-bottom: 16px;
       border-bottom: 3px solid var(--ink);
     }
 
     .s02-item {
       display: grid;
-      grid-template-columns: 42px 1fr;
-      gap: 12px;
-      margin-bottom: 14px;
+      grid-template-columns: 52px 1fr;
+      gap: 16px;
+      margin-bottom: 0;
+      align-items: center;
+      flex: 1;
+      padding: 8px 0;
     }
 
     .s02-item:last-child { margin-bottom: 0; }
 
     .s02-num {
-      width: 42px;
-      height: 42px;
+      width: 52px;
+      height: 52px;
       border: 3px solid var(--ink);
       display: flex;
       align-items: center;
       justify-content: center;
       font-family: var(--font-display);
-      font-size: 20px;
+      font-size: 22px;
       flex-shrink: 0;
     }
 
@@ -637,15 +673,15 @@
 
     .s02-item h3 {
       font-family: var(--font-display);
-      font-size: 20px;
+      font-size: 24px;
       text-transform: uppercase;
       line-height: 1.05;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     .s02-item p {
-      font-size: 18px;
-      line-height: 1.3;
+      font-size: 22px;
+      line-height: 1.32;
       color: var(--ink-2);
     }
 
@@ -655,31 +691,34 @@
     .s03-banner {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      margin-bottom: 22px;
+      gap: 14px;
+      margin-bottom: 20px;
       align-items: stretch;
     }
 
     .s03-step {
       border: 3px solid var(--ink);
       background: var(--cream-2);
-      padding: 14px 16px;
+      padding: 18px 20px;
       position: relative;
-      min-height: 86px;
+      min-height: 108px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .s03-step .tag {
       font-family: var(--font-mono);
-      font-size: 11px;
+      font-size: 13px;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      margin-bottom: 6px;
-      opacity: 0.7;
+      margin-bottom: 8px;
+      opacity: 0.75;
     }
 
     .s03-step .label {
       font-family: var(--font-display);
-      font-size: 18px;
+      font-size: 22px;
       text-transform: uppercase;
       line-height: 1.1;
     }
@@ -707,27 +746,31 @@
       grid-template-columns: 1fr 1fr;
       grid-template-rows: 1fr 1fr;
       gap: 18px;
-      height: calc(100% - 108px);
+      height: calc(100% - 128px);
     }
 
     .s03-card {
       border: 4px solid var(--ink);
-      padding: 20px 22px;
+      padding: 24px 26px;
       background: var(--cream);
       box-shadow: var(--hard-shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .s03-card .role-tag {
       display: inline-block;
       font-family: var(--font-mono);
-      font-size: 12px;
+      font-size: 14px;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       border: 2px solid var(--ink);
       border-radius: 999px;
-      padding: 4px 10px;
-      margin-bottom: 10px;
+      padding: 5px 12px;
+      margin-bottom: 12px;
       background: var(--yellow);
+      align-self: flex-start;
     }
 
     .s03-card:nth-child(2) .role-tag { background: var(--pink); }
@@ -736,14 +779,14 @@
 
     .s03-card h3 {
       font-family: var(--font-display);
-      font-size: 26px;
+      font-size: 30px;
       text-transform: uppercase;
       line-height: 1;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     .s03-card p {
-      font-size: 17px;
+      font-size: 20px;
       line-height: 1.35;
       color: var(--ink-2);
     }
@@ -762,15 +805,15 @@
       display: flex;
       flex-direction: column;
       min-height: 0;
-      max-height: 860px;
+      height: 100%;
       box-shadow: var(--hard-shadow);
     }
 
     .s04-head {
-      padding: 22px 24px;
+      padding: 26px 28px;
       border-bottom: 4px solid var(--ink);
       font-family: var(--font-display);
-      font-size: 28px;
+      font-size: 34px;
       text-transform: uppercase;
       line-height: 1;
     }
@@ -780,18 +823,21 @@
     .s04-head.green { background: var(--green); color: var(--cream); }
 
     .s04-body {
-      padding: 20px 22px;
+      padding: 28px 26px;
       flex: 1;
       background: var(--cream);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
     }
 
     .s04-body li {
       list-style: none;
       position: relative;
-      padding-left: 18px;
-      margin-bottom: 12px;
-      font-size: 17px;
-      line-height: 1.3;
+      padding-left: 20px;
+      margin-bottom: 0;
+      font-size: 20px;
+      line-height: 1.35;
       color: var(--ink-2);
     }
 
@@ -799,19 +845,19 @@
       content: "";
       position: absolute;
       left: 0;
-      top: 9px;
-      width: 8px;
-      height: 8px;
+      top: 10px;
+      width: 9px;
+      height: 9px;
       background: var(--ink);
     }
 
     .s04-body li strong {
       display: block;
       font-family: var(--font-display);
-      font-size: 16px;
+      font-size: 20px;
       text-transform: uppercase;
       color: var(--ink);
-      margin-bottom: 2px;
+      margin-bottom: 4px;
       letter-spacing: 0;
     }
 
@@ -820,9 +866,9 @@
        =========================================== */
     .s05-title {
       font-family: var(--font-display);
-      font-size: 42px;
+      font-size: 48px;
       text-transform: uppercase;
-      margin-bottom: 28px;
+      margin-bottom: 22px;
       line-height: 0.95;
     }
 
@@ -831,15 +877,17 @@
       grid-template-columns: 1fr 28px 1fr 28px 1fr 28px 1fr;
       gap: 0;
       align-items: stretch;
-      height: calc(100% - 70px);
+      height: calc(100% - 78px);
     }
 
     .s05-card {
       border: 4px solid var(--ink);
-      padding: 24px 22px;
+      padding: 28px 24px;
       display: flex;
       flex-direction: column;
+      justify-content: flex-start;
       min-height: 0;
+      gap: 4px;
     }
 
     .s05-card.c1 { background: var(--cream); }
@@ -849,35 +897,36 @@
 
     .s05-card .num {
       font-family: var(--font-display);
-      font-size: 72px;
+      font-size: 84px;
       line-height: 0.85;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
     }
 
     .s05-card h3 {
       font-family: var(--font-display);
-      font-size: 22px;
+      font-size: 26px;
       text-transform: uppercase;
       line-height: 1.05;
-      margin-bottom: 14px;
+      margin-bottom: 10px;
     }
 
     .s05-card .uc {
       font-family: var(--font-mono);
-      font-size: 12px;
+      font-size: 14px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      margin-bottom: 14px;
-      opacity: 0.75;
+      margin-bottom: 16px;
+      opacity: 0.8;
     }
 
     .s05-card p {
       font-family: var(--font-body);
-      font-size: 17px;
+      font-size: 20px;
       line-height: 1.35;
+      margin-top: auto;
     }
 
-    .s05-card.c4 p { color: rgba(239, 233, 217, 0.92); }
+    .s05-card.c4 p { color: rgba(239, 233, 217, 0.95); }
 
     .s05-arrow {
       display: flex;
@@ -899,45 +948,49 @@
     .s06 .content {
       display: grid;
       grid-template-columns: 0.92fr 1.08fr;
-      gap: 28px;
+      gap: 26px;
     }
 
     .s06-flow {
       border: 4px solid var(--ink);
       background: var(--cream);
-      padding: 20px 22px;
+      padding: 28px 26px;
       box-shadow: 8px 8px 0 var(--orange);
-      max-height: 860px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
     .s06-flow h2 {
       font-family: var(--font-display);
-      font-size: 30px;
+      font-size: 34px;
       text-transform: uppercase;
-      margin-bottom: 22px;
+      margin-bottom: 8px;
       line-height: 1;
     }
 
     .s06-step {
       display: grid;
-      grid-template-columns: 56px 1fr;
-      gap: 14px;
-      margin-bottom: 18px;
-      align-items: start;
+      grid-template-columns: 60px 1fr;
+      gap: 16px;
+      margin-bottom: 0;
+      align-items: center;
+      flex: 1;
     }
 
     .s06-step:last-child { margin-bottom: 0; }
 
     .s06-step .n {
-      width: 56px;
-      height: 56px;
+      width: 60px;
+      height: 60px;
       border: 3px solid var(--ink);
       background: var(--yellow);
       display: flex;
       align-items: center;
       justify-content: center;
       font-family: var(--font-display);
-      font-size: 24px;
+      font-size: 26px;
     }
 
     .s06-step:nth-child(3) .n { background: var(--pink); }
@@ -946,14 +999,14 @@
 
     .s06-step h3 {
       font-family: var(--font-display);
-      font-size: 20px;
+      font-size: 23px;
       text-transform: uppercase;
       line-height: 1.1;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     .s06-step p {
-      font-size: 16px;
+      font-size: 19px;
       line-height: 1.3;
       color: var(--ink-2);
     }
@@ -961,23 +1014,28 @@
     .s06-rules {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 14px;
+      grid-template-rows: 1fr 1fr auto;
+      gap: 16px;
+      height: 100%;
     }
 
     .s06-rule {
       border: 3px solid var(--ink);
-      padding: 16px 18px;
+      padding: 22px 22px;
       background: var(--cream);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .s06-rule.wide { grid-column: 1 / -1; }
 
     .s06-rule .br {
       font-family: var(--font-mono);
-      font-size: 12px;
+      font-size: 14px;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
       color: var(--ink);
     }
 
@@ -989,18 +1047,18 @@
 
     .s06-rule h3 {
       font-family: var(--font-display);
-      font-size: 18px;
+      font-size: 22px;
       text-transform: uppercase;
       line-height: 1.1;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
     .s06-rule p {
-      font-size: 15px;
-      line-height: 1.3;
+      font-size: 18px;
+      line-height: 1.35;
     }
 
-    .s06-rule.green p { color: rgba(239, 233, 217, 0.92); }
+    .s06-rule.green p { color: rgba(239, 233, 217, 0.95); }
 
     /* ===========================================
        SLIDE 07 — NFRs
@@ -1009,13 +1067,16 @@
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 16px;
-      margin-bottom: 22px;
+      margin-bottom: 20px;
     }
 
     .s07-kpi {
       border: 4px solid var(--ink);
-      padding: 18px 20px;
-      min-height: 130px;
+      padding: 22px 24px;
+      min-height: 150px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .s07-kpi.k1 { background: var(--pink); }
@@ -1025,14 +1086,14 @@
 
     .s07-kpi .val {
       font-family: var(--font-display);
-      font-size: 42px;
+      font-size: 48px;
       line-height: 0.95;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
     .s07-kpi .lbl {
       font-family: var(--font-mono);
-      font-size: 13px;
+      font-size: 15px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       line-height: 1.25;
@@ -1042,33 +1103,42 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 18px;
-      height: calc(100% - 152px);
+      height: calc(100% - 170px);
     }
 
     .s07-card {
       border: 4px solid var(--ink);
-      padding: 22px;
+      padding: 26px 24px;
       background: var(--cream);
       box-shadow: var(--hard-shadow);
+      display: flex;
+      flex-direction: column;
     }
 
     .s07-card h3 {
       font-family: var(--font-display);
-      font-size: 22px;
+      font-size: 26px;
       text-transform: uppercase;
       line-height: 1.05;
-      margin-bottom: 14px;
-      padding-bottom: 10px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
       border-bottom: 3px solid var(--ink);
+    }
+
+    .s07-card ul {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      flex: 1;
     }
 
     .s07-card li {
       list-style: none;
-      font-size: 16px;
+      font-size: 19px;
       line-height: 1.35;
       color: var(--ink-2);
-      margin-bottom: 12px;
-      padding-left: 14px;
+      margin-bottom: 0;
+      padding-left: 16px;
       position: relative;
     }
 
@@ -1095,8 +1165,8 @@
       position: relative;
       overflow: hidden;
       box-shadow: var(--hard-shadow);
-      /* Content box is top:100 bottom:90 → ~890px */
-      height: 860px;
+      height: 100%;
+      min-height: 0;
     }
 
     .s08-diagram .dotgrid {
@@ -1122,18 +1192,20 @@
     .s08-legend {
       border: 4px solid var(--ink);
       background: var(--cream);
-      padding: 22px;
+      padding: 26px 24px;
       display: flex;
       flex-direction: column;
+      justify-content: space-between;
       gap: 14px;
       box-shadow: 8px 8px 0 var(--pink);
-      height: 860px;
+      height: 100%;
+      min-height: 0;
       overflow: hidden;
     }
 
     .s08-legend h2 {
       font-family: var(--font-display);
-      font-size: 28px;
+      font-size: 34px;
       text-transform: uppercase;
       line-height: 1;
       margin-bottom: 4px;
@@ -1141,8 +1213,12 @@
 
     .s08-leg-item {
       border: 3px solid var(--ink);
-      padding: 14px;
+      padding: 18px 18px;
       background: var(--cream-2);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .s08-leg-item.pink { background: var(--pink); }
@@ -1151,15 +1227,15 @@
 
     .s08-leg-item h3 {
       font-family: var(--font-mono);
-      font-size: 13px;
+      font-size: 15px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
     .s08-leg-item p {
-      font-size: 15px;
-      line-height: 1.3;
+      font-size: 18px;
+      line-height: 1.35;
     }
 
     /* ===========================================
@@ -1168,30 +1244,30 @@
     .s09 .content {
       display: grid;
       grid-template-columns: 0.88fr 1.12fr;
-      gap: 40px;
+      gap: 36px;
       align-items: center;
     }
 
     .s09-left h2 {
       font-family: var(--font-display);
-      font-size: 56px;
+      font-size: 64px;
       text-transform: uppercase;
       line-height: 0.92;
-      margin-bottom: 22px;
+      margin-bottom: 24px;
     }
 
     .s09-left p {
-      font-size: 20px;
+      font-size: 23px;
       line-height: 1.4;
       color: var(--ink-2);
       margin-bottom: 28px;
-      max-width: 620px;
+      max-width: 640px;
     }
 
     .s09-legend {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 14px;
     }
 
     .s09-leg {
@@ -1199,14 +1275,14 @@
       align-items: center;
       gap: 12px;
       font-family: var(--font-mono);
-      font-size: 14px;
+      font-size: 16px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
 
     .s09-swatch {
-      width: 22px;
-      height: 22px;
+      width: 24px;
+      height: 24px;
       border: 3px solid var(--ink);
       flex-shrink: 0;
     }
@@ -1218,7 +1294,7 @@
 
     .s09-stack-wrap {
       position: relative;
-      height: 740px;
+      height: 820px;
       background: var(--green);
       border: 4px solid var(--ink);
       box-shadow: var(--hard-shadow-xl);
@@ -1227,63 +1303,63 @@
 
     .s09-layer {
       position: absolute;
-      left: 48px;
-      right: 72px;
+      left: 44px;
+      right: 68px;
       border: 4px solid var(--ink);
       box-shadow: var(--hard-shadow-lg);
-      padding: 22px 28px;
-      min-height: 118px;
+      padding: 26px 30px;
+      min-height: 132px;
     }
 
     .s09-layer.t1 {
-      top: 48px;
+      top: 42px;
       background: var(--pink);
       transform: translateX(0);
     }
 
     .s09-layer.t2 {
-      top: 198px;
+      top: 210px;
       background: var(--yellow);
       transform: translateX(28px);
-      right: 44px;
+      right: 40px;
     }
 
     .s09-layer.t3 {
-      top: 348px;
+      top: 378px;
       background: var(--orange);
       color: var(--cream);
       transform: translateX(56px);
-      right: 16px;
+      right: 12px;
     }
 
     .s09-layer.t4 {
-      top: 498px;
+      top: 546px;
       background: var(--cream-2);
       transform: translateX(84px);
-      right: -12px;
-      left: 48px;
+      right: -16px;
+      left: 44px;
     }
 
     .s09-layer .tier {
       font-family: var(--font-mono);
-      font-size: 13px;
+      font-size: 14px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      margin-bottom: 6px;
-      opacity: 0.8;
+      margin-bottom: 8px;
+      opacity: 0.85;
     }
 
     .s09-layer h3 {
       font-family: var(--font-display);
-      font-size: 26px;
+      font-size: 30px;
       text-transform: uppercase;
       line-height: 1;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
     .s09-layer p {
       font-family: var(--font-body);
-      font-size: 16px;
+      font-size: 19px;
       line-height: 1.3;
     }
 
@@ -1299,34 +1375,36 @@
     .s10-card {
       border: 4px solid var(--ink);
       background: var(--cream);
-      padding: 20px;
+      padding: 26px 24px;
       box-shadow: var(--hard-shadow);
       display: flex;
       flex-direction: column;
       min-height: 0;
-      max-height: 860px;
+      height: 100%;
     }
 
     .s10-card h2 {
       font-family: var(--font-display);
-      font-size: 26px;
+      font-size: 30px;
       text-transform: uppercase;
       line-height: 1;
-      margin-bottom: 16px;
-      padding-bottom: 12px;
+      margin-bottom: 18px;
+      padding-bottom: 14px;
       border-bottom: 3px solid var(--ink);
     }
 
     .s10-engines {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      gap: 14px;
       flex: 1;
     }
 
     .s10-eng {
       border: 3px solid var(--ink);
-      padding: 16px;
+      padding: 20px 18px;
+      display: flex;
+      flex-direction: column;
     }
 
     .s10-eng.deep { background: var(--pink); }
@@ -1334,27 +1412,34 @@
 
     .s10-eng h3 {
       font-family: var(--font-display);
-      font-size: 16px;
+      font-size: 20px;
       text-transform: uppercase;
       line-height: 1.1;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     .s10-eng .mono-tag {
       font-family: var(--font-mono);
-      font-size: 11px;
+      font-size: 13px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       display: block;
+    }
+
+    .s10-eng ul {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      flex: 1;
     }
 
     .s10-eng li {
       list-style: none;
-      font-size: 14px;
+      font-size: 17px;
       line-height: 1.35;
-      margin-bottom: 8px;
-      padding-left: 12px;
+      margin-bottom: 0;
+      padding-left: 14px;
       position: relative;
     }
 
@@ -1368,14 +1453,18 @@
     .s10-groups {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 14px;
       flex: 1;
     }
 
     .s10-group {
       border: 3px solid var(--ink);
-      padding: 14px 16px;
+      padding: 22px 20px;
       background: var(--cream-2);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .s10-group.g1 { background: var(--pink); }
@@ -1384,26 +1473,26 @@
 
     .s10-group h3 {
       font-family: var(--font-mono);
-      font-size: 12px;
+      font-size: 14px;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
     .s10-group p {
-      font-size: 15px;
+      font-size: 19px;
       line-height: 1.35;
     }
 
     .s10-callout {
-      margin-top: 12px;
+      margin-top: 14px;
       border: 3px solid var(--ink);
       border-radius: 999px;
-      padding: 10px 16px;
+      padding: 14px 18px;
       background: var(--green);
       color: var(--cream);
       font-family: var(--font-mono);
-      font-size: 12px;
+      font-size: 14px;
       letter-spacing: 0.06em;
       text-transform: uppercase;
       text-align: center;
@@ -1424,7 +1513,7 @@
     .s11-card {
       border: 4px solid var(--ink);
       background: var(--cream);
-      padding: 20px 22px;
+      padding: 24px 26px;
       box-shadow: var(--hard-shadow);
       display: flex;
       flex-direction: column;
@@ -1432,9 +1521,9 @@
 
     .s11-card .num {
       font-family: var(--font-display);
-      font-size: 28px;
+      font-size: 34px;
       line-height: 1;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
     .s11-card:nth-child(1) .num,
@@ -1446,28 +1535,28 @@
 
     .s11-card h3 {
       font-family: var(--font-display);
-      font-size: 20px;
+      font-size: 24px;
       text-transform: uppercase;
       line-height: 1.1;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     .s11-card p {
-      font-size: 16px;
+      font-size: 19px;
       line-height: 1.35;
       color: var(--ink-2);
       flex: 1;
     }
 
     .s11-card .mit {
-      margin-top: 12px;
+      margin-top: 14px;
       font-family: var(--font-mono);
-      font-size: 12px;
+      font-size: 14px;
       letter-spacing: 0.04em;
       text-transform: uppercase;
       line-height: 1.35;
       border-top: 2px solid var(--ink);
-      padding-top: 10px;
+      padding-top: 12px;
       color: var(--green-dark);
     }
 
@@ -1482,14 +1571,17 @@
     .s12 .content {
       display: grid;
       grid-template-columns: 1.1fr 0.9fr;
-      gap: 28px;
+      gap: 26px;
     }
 
     .s12-block {
       border: 4px solid var(--ink);
-      padding: 26px;
+      padding: 30px 28px;
       color: var(--ink);
       box-shadow: var(--hard-shadow-lg);
+      min-height: 520px;
+      display: flex;
+      flex-direction: column;
     }
 
     .s12-block.cream { background: var(--cream); }
@@ -1498,18 +1590,25 @@
 
     .s12-block h2 {
       font-family: var(--font-display);
-      font-size: 28px;
+      font-size: 32px;
       text-transform: uppercase;
       line-height: 1;
-      margin-bottom: 16px;
+      margin-bottom: 20px;
+    }
+
+    .s12-block ul {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      flex: 1;
     }
 
     .s12-block li {
       list-style: none;
-      font-size: 18px;
+      font-size: 21px;
       line-height: 1.35;
-      margin-bottom: 12px;
-      padding-left: 16px;
+      margin-bottom: 0;
+      padding-left: 18px;
       position: relative;
     }
 
@@ -1519,50 +1618,55 @@
       left: 0;
     }
 
+    .s12-road {
+      justify-content: flex-start;
+    }
+
     .s12-road .item {
       display: grid;
-      grid-template-columns: 48px 1fr;
-      gap: 12px;
-      margin-bottom: 14px;
-      align-items: start;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      margin-bottom: 18px;
+      align-items: center;
+      flex: 1;
     }
 
     .s12-road .item:last-child { margin-bottom: 0; }
 
     .s12-road .n {
-      width: 48px;
-      height: 48px;
+      width: 54px;
+      height: 54px;
       border: 3px solid var(--ink);
       background: var(--cream);
       display: flex;
       align-items: center;
       justify-content: center;
       font-family: var(--font-display);
-      font-size: 18px;
+      font-size: 20px;
     }
 
     .s12-road h3 {
       font-family: var(--font-display);
-      font-size: 18px;
+      font-size: 20px;
       text-transform: uppercase;
       line-height: 1.1;
-      margin-bottom: 2px;
+      margin-bottom: 4px;
     }
 
     .s12-road p {
-      font-size: 15px;
+      font-size: 18px;
       line-height: 1.3;
     }
 
     .s12-thanks {
       position: absolute;
-      left: 96px;
-      right: 96px;
-      bottom: 100px;
+      left: 72px;
+      right: 72px;
+      bottom: 96px;
       border: 4px solid var(--ink);
       background: var(--cream);
       color: var(--ink);
-      padding: 20px 28px;
+      padding: 24px 30px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -1571,19 +1675,20 @@
 
     .s12-thanks .big {
       font-family: var(--font-display);
-      font-size: 32px;
+      font-size: 36px;
       text-transform: uppercase;
       line-height: 1;
     }
 
     .s12-thanks .team {
       font-family: var(--font-mono);
-      font-size: 13px;
+      font-size: 15px;
       letter-spacing: 0.06em;
       text-transform: uppercase;
       text-align: right;
       line-height: 1.45;
     }
+
   </style>
 </head>
 <body>
@@ -1611,17 +1716,19 @@
           <div class="topbar-pill">CS330 / SRS V1.0</div>
         </div>
         <div class="content">
-          <div class="reveal">
-            <h1 class="display s01-title">
-              MarkAny<br />
-              <span class="orange">Facial<br />Attendance</span>
-            </h1>
-            <p class="body s01-sub">A Hybrid Classical &amp; Deep Learning Biometric Attendance Platform</p>
-            <div class="mono s01-meta">
-              <div><strong>Course</strong>CS330 – Software Engineering | Navrachana University, Vadodara</div>
-              <div><strong>Faculty Guide</strong>Ujwala Petigara</div>
-              <div><strong>Team</strong>Maitra Prajapati (24000493) · Vikas Patanvadiya (24000605) · Rishi Yagnesh Kachhadia (24000713)</div>
-              <div><strong>Doc ID</strong>SRS-MARKANY-V1.0</div>
+          <div class="s01-left reveal">
+            <div>
+              <h1 class="display s01-title">
+                MarkAny<br />
+                <span class="orange">Facial<br />Attendance</span>
+              </h1>
+              <p class="body s01-sub">A Hybrid Classical &amp; Deep Learning Biometric Attendance Platform</p>
+            </div>
+            <div class="s01-meta">
+              <div><strong>Course</strong> CS330 – Software Engineering · Navrachana University</div>
+              <div><strong>Guide</strong> Ujwala Petigara</div>
+              <div><strong>Team</strong> Maitra (24000493) · Vikas (24000605) · Rishi (24000713)</div>
+              <div><strong>Doc ID</strong> SRS-MARKANY-V1.0</div>
             </div>
           </div>
           <div class="s01-poster reveal reveal-d2" aria-hidden="true">
@@ -1990,7 +2097,7 @@
                 <line x1="0" y1="20" x2="-22" y2="58" stroke="#0F0F0F" stroke-width="3"/>
                 <line x1="0" y1="20" x2="22" y2="58" stroke="#0F0F0F" stroke-width="3"/>
                 <rect x="-62" y="72" width="124" height="28" fill="#F06CA8" stroke="#0F0F0F" stroke-width="2"/>
-                <text x="0" y="91" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#0F0F0F">FACULTY</text>
+                <text x="0" y="91" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" fill="#0F0F0F">FACULTY</text>
               </g>
               <g transform="translate(1110,330)">
                 <circle cx="0" cy="-48" r="18" fill="none" stroke="#0F0F0F" stroke-width="3"/>
@@ -1999,17 +2106,17 @@
                 <line x1="0" y1="20" x2="-22" y2="58" stroke="#0F0F0F" stroke-width="3"/>
                 <line x1="0" y1="20" x2="22" y2="58" stroke="#0F0F0F" stroke-width="3"/>
                 <rect x="-62" y="72" width="124" height="28" fill="#F4C419" stroke="#0F0F0F" stroke-width="2"/>
-                <text x="0" y="91" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#0F0F0F">STUDENT</text>
+                <text x="0" y="91" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" fill="#0F0F0F">STUDENT</text>
               </g>
 
               <!-- System boundary -->
               <rect x="170" y="36" width="840" height="748" fill="#EFE9D9" stroke="#0F0F0F" stroke-width="4"/>
-              <text x="590" y="68" text-anchor="middle" font-family="Archivo Black, sans-serif" font-size="20" fill="#0F0F0F">MARKANY SYSTEM</text>
+              <text x="590" y="68" text-anchor="middle" font-family="Archivo Black, sans-serif" font-size="24" fill="#0F0F0F">MARKANY SYSTEM</text>
 
               <!-- Use case pills helper via rounded rects -->
               <!-- Shared top -->
               <rect x="420" y="90" rx="22" ry="22" width="340" height="40" fill="#E4DCC4" stroke="#0F0F0F" stroke-width="2.5"/>
-              <text x="590" y="116" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="15" fill="#0F0F0F">UC-01: Auth &amp; RBAC</text>
+              <text x="590" y="116" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="16" fill="#0F0F0F">UC-01: Auth &amp; RBAC</text>
 
               <!-- Faculty column -->
               <rect x="210" y="160" rx="20" ry="20" width="300" height="36" fill="#F06CA8" stroke="#0F0F0F" stroke-width="2.5"/>
@@ -2266,7 +2373,7 @@
           <div class="topbar-eyebrow">Conclusion</div>
           <div class="topbar-pill">V1.0 Complete → V2.0</div>
         </div>
-        <div class="content" style="bottom: 210px;">
+        <div class="content" style="bottom: 200px;">
           <div class="s12-block cream reveal">
             <h2>Key Achievements — v1.0 Ready</h2>
             <ul>
