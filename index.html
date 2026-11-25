@@ -1167,6 +1167,11 @@
       box-shadow: var(--hard-shadow);
       height: 100%;
       min-height: 0;
+      padding: 18px 18px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      z-index: 1;
     }
 
     .s08-diagram .dotgrid {
@@ -1174,29 +1179,218 @@
       inset: 0;
       background-image: radial-gradient(var(--ink) 1px, transparent 1px);
       background-size: 18px 18px;
-      opacity: 0.08;
+      opacity: 0.07;
       pointer-events: none;
       z-index: 0;
     }
 
-    .s08-diagram svg {
+    .s08-uml {
       position: relative;
       z-index: 1;
-      width: 100%;
-      height: 100%;
-      max-width: none;
-      max-height: none;
+      display: grid;
+      grid-template-columns: 120px 18px 1fr 18px 120px;
+      gap: 8px;
+      flex: 1;
+      min-height: 0;
+      align-items: stretch;
+    }
+
+    .s08-actor {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .s08-stick {
+      width: 70px;
+      height: 120px;
+      max-width: 70px;
+      max-height: 120px;
       display: block;
+      overflow: visible;
+      flex-shrink: 0;
+    }
+
+    .s08-actor-badge {
+      border: 3px solid var(--ink);
+      padding: 10px 8px;
+      font-family: var(--font-mono);
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 1.2;
+      width: 100%;
+    }
+
+    .s08-actor-badge.pink { background: var(--pink); }
+    .s08-actor-badge.yellow { background: var(--yellow); }
+
+    .s08-boundary {
+      border: 4px solid var(--ink);
+      background: rgba(239, 233, 217, 0.92);
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      padding: 12px 14px 14px;
+      gap: 10px;
+    }
+
+    .s08-boundary-title {
+      font-family: var(--font-display);
+      font-size: 22px;
+      text-transform: uppercase;
+      text-align: center;
+      letter-spacing: 0;
+      padding-bottom: 8px;
+      border-bottom: 3px solid var(--ink);
+    }
+
+    .s08-uc-shared {
+      border: 3px solid var(--ink);
+      border-radius: 999px;
+      background: var(--cream-2);
+      padding: 10px 16px;
+      text-align: center;
+      font-family: var(--font-body);
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    .s08-uc-shared.orange {
+      background: var(--orange);
+      color: var(--cream);
+    }
+
+    .s08-uc-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .s08-uc-col {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-height: 0;
+    }
+
+    .s08-col-label {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-align: center;
+      opacity: 0.7;
+    }
+
+    .s08-uc {
+      border: 3px solid var(--ink);
+      border-radius: 999px;
+      padding: 8px 12px;
+      text-align: center;
+      font-family: var(--font-body);
+      font-size: 17px;
+      font-weight: 600;
+      line-height: 1.2;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+    }
+
+    .s08-uc.pink { background: var(--pink); }
+    .s08-uc.yellow { background: var(--yellow); }
+    .s08-uc.green {
+      background: var(--green);
+      color: var(--cream);
+      border-radius: 18px;
+      font-size: 15px;
+    }
+    .s08-uc.extend {
+      background: var(--cream-2);
+      border-style: dashed;
+      font-size: 15px;
+    }
+
+    .s08-includes {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      margin-top: 2px;
+    }
+
+    .s08-includes .s08-uc {
+      flex: none;
+      min-height: 52px;
+    }
+
+    .s08-rel {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-align: center;
+      border: 2px solid var(--ink);
+      background: var(--yellow);
+      padding: 6px 10px;
+      line-height: 1.25;
+    }
+
+    .s08-assoc {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 14px;
+      align-self: center;
+      height: 55%;
+    }
+
+    .s08-assoc span {
+      height: 4px;
+      background: var(--ink);
+      width: 100%;
+      position: relative;
+      flex: 0 0 auto;
+    }
+
+    .s08-assoc.left span::after {
+      content: "";
+      position: absolute;
+      right: -2px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-top: 6px solid transparent;
+      border-bottom: 6px solid transparent;
+      border-left: 10px solid var(--ink);
+    }
+
+    .s08-assoc.right span::before {
+      content: "";
+      position: absolute;
+      left: -2px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-top: 6px solid transparent;
+      border-bottom: 6px solid transparent;
+      border-right: 10px solid var(--ink);
     }
 
     .s08-legend {
       border: 4px solid var(--ink);
       background: var(--cream);
-      padding: 26px 24px;
+      padding: 22px 20px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      gap: 14px;
+      gap: 12px;
       box-shadow: 8px 8px 0 var(--pink);
       height: 100%;
       min-height: 0;
@@ -1205,15 +1399,15 @@
 
     .s08-legend h2 {
       font-family: var(--font-display);
-      font-size: 34px;
+      font-size: 32px;
       text-transform: uppercase;
       line-height: 1;
-      margin-bottom: 4px;
+      margin-bottom: 2px;
     }
 
     .s08-leg-item {
       border: 3px solid var(--ink);
-      padding: 18px 18px;
+      padding: 16px;
       background: var(--cream-2);
       flex: 1;
       display: flex;
@@ -1227,15 +1421,15 @@
 
     .s08-leg-item h3 {
       font-family: var(--font-mono);
-      font-size: 15px;
+      font-size: 14px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .s08-leg-item p {
-      font-size: 18px;
-      line-height: 1.35;
+      font-size: 17px;
+      line-height: 1.3;
     }
 
     /* ===========================================
@@ -2086,122 +2280,83 @@
           <div class="topbar-pill">UML / Actors</div>
         </div>
         <div class="content">
-          <div class="s08-diagram reveal">
+          <div class="s08-diagram reveal" role="img" aria-label="MarkAny UML Use Case Diagram">
             <div class="dotgrid"></div>
-            <svg viewBox="0 0 1180 820" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MarkAny UML Use Case Diagram">
-              <!-- Actors -->
-              <g transform="translate(70,330)">
-                <circle cx="0" cy="-48" r="18" fill="none" stroke="#0F0F0F" stroke-width="3"/>
-                <line x1="0" y1="-30" x2="0" y2="20" stroke="#0F0F0F" stroke-width="3"/>
-                <line x1="-28" y1="-5" x2="28" y2="-5" stroke="#0F0F0F" stroke-width="3"/>
-                <line x1="0" y1="20" x2="-22" y2="58" stroke="#0F0F0F" stroke-width="3"/>
-                <line x1="0" y1="20" x2="22" y2="58" stroke="#0F0F0F" stroke-width="3"/>
-                <rect x="-62" y="72" width="124" height="28" fill="#F06CA8" stroke="#0F0F0F" stroke-width="2"/>
-                <text x="0" y="91" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" fill="#0F0F0F">FACULTY</text>
-              </g>
-              <g transform="translate(1110,330)">
-                <circle cx="0" cy="-48" r="18" fill="none" stroke="#0F0F0F" stroke-width="3"/>
-                <line x1="0" y1="-30" x2="0" y2="20" stroke="#0F0F0F" stroke-width="3"/>
-                <line x1="-28" y1="-5" x2="28" y2="-5" stroke="#0F0F0F" stroke-width="3"/>
-                <line x1="0" y1="20" x2="-22" y2="58" stroke="#0F0F0F" stroke-width="3"/>
-                <line x1="0" y1="20" x2="22" y2="58" stroke="#0F0F0F" stroke-width="3"/>
-                <rect x="-62" y="72" width="124" height="28" fill="#F4C419" stroke="#0F0F0F" stroke-width="2"/>
-                <text x="0" y="91" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" fill="#0F0F0F">STUDENT</text>
-              </g>
+            <div class="s08-uml">
+              <div class="s08-actor">
+                <svg class="s08-stick" viewBox="0 0 70 120" aria-hidden="true">
+                  <circle cx="35" cy="18" r="14" fill="none" stroke="#0F0F0F" stroke-width="3"/>
+                  <line x1="35" y1="32" x2="35" y2="72" stroke="#0F0F0F" stroke-width="3"/>
+                  <line x1="12" y1="48" x2="58" y2="48" stroke="#0F0F0F" stroke-width="3"/>
+                  <line x1="35" y1="72" x2="16" y2="108" stroke="#0F0F0F" stroke-width="3"/>
+                  <line x1="35" y1="72" x2="54" y2="108" stroke="#0F0F0F" stroke-width="3"/>
+                </svg>
+                <div class="s08-actor-badge pink">Faculty</div>
+              </div>
+              <div class="s08-assoc left" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
 
-              <!-- System boundary -->
-              <rect x="170" y="36" width="840" height="748" fill="#EFE9D9" stroke="#0F0F0F" stroke-width="4"/>
-              <text x="590" y="68" text-anchor="middle" font-family="Archivo Black, sans-serif" font-size="24" fill="#0F0F0F">MARKANY SYSTEM</text>
+              <div class="s08-boundary">
+                <div class="s08-boundary-title">MarkAny System</div>
+                <div class="s08-uc-shared">UC-01 · Auth &amp; RBAC <span style="opacity:.65;font-size:14px;">(shared)</span></div>
 
-              <!-- Use case pills helper via rounded rects -->
-              <!-- Shared top -->
-              <rect x="420" y="90" rx="22" ry="22" width="340" height="40" fill="#E4DCC4" stroke="#0F0F0F" stroke-width="2.5"/>
-              <text x="590" y="116" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="16" fill="#0F0F0F">UC-01: Auth &amp; RBAC</text>
+                <div class="s08-uc-cols">
+                  <div class="s08-uc-col">
+                    <div class="s08-col-label">Faculty-driven</div>
+                    <div class="s08-uc pink">UC-02 · Parse Timetable</div>
+                    <div class="s08-uc pink">UC-03 · Subjects &amp; Enrollments</div>
+                    <div class="s08-uc pink">UC-05 · Live Video Marking</div>
+                    <div class="s08-uc pink">UC-06 · Group-Photo Batch</div>
+                    <div class="s08-uc pink">UC-08 · Review &amp; Override</div>
+                    <div class="s08-uc pink">UC-10 · Export Excel/CSV</div>
+                  </div>
+                  <div class="s08-uc-col">
+                    <div class="s08-col-label">Student-driven</div>
+                    <div class="s08-uc yellow">UC-04 · Biometric Registration<br /><span style="font-weight:500;font-size:14px;opacity:.8">3–5 poses · 512-D embeddings</span></div>
+                    <div class="s08-uc yellow">UC-07 · Mobile Self Check-In<br /><span style="font-weight:500;font-size:14px;opacity:.8">Timed window · 3D liveness</span></div>
+                    <div class="s08-uc" style="background:var(--cream-2);font-size:15px;font-weight:500;border-radius:18px;">Also uses UC-01 Auth<br />&amp; UC-09 Marks</div>
+                    <div class="s08-uc" style="background:var(--cream-2);font-size:15px;font-weight:500;border-radius:18px;">UC-07 includes Face Match<br />+ 3D Liveness</div>
+                  </div>
+                </div>
 
-              <!-- Faculty column -->
-              <rect x="210" y="160" rx="20" ry="20" width="300" height="36" fill="#F06CA8" stroke="#0F0F0F" stroke-width="2.5"/>
-              <text x="360" y="184" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="14" fill="#0F0F0F">UC-02: Parse Timetable</text>
+                <div class="s08-uc-shared orange">UC-09 · CIE Marks Management <span style="opacity:.8;font-size:14px;">(shared)</span></div>
+                <div class="s08-rel">≪include≫ UC-05 / UC-06 / UC-07 → Face Match · UC-07 → Liveness · ≪extend≫ Override → UC-08</div>
+                <div class="s08-includes">
+                  <div class="s08-uc green">Biometric Face Match<br />512-D ArcFace</div>
+                  <div class="s08-uc green">3D Head-Turn Liveness<br />Δ ≥ 0.12</div>
+                  <div class="s08-uc extend">Manual Override<br />≪extend≫ UC-08</div>
+                </div>
+              </div>
 
-              <rect x="210" y="214" rx="20" ry="20" width="300" height="36" fill="#F06CA8" stroke="#0F0F0F" stroke-width="2.5"/>
-              <text x="360" y="238" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="13" fill="#0F0F0F">UC-03: Manage Subjects &amp; Enrollments</text>
-
-              <rect x="210" y="268" rx="20" ry="20" width="300" height="36" fill="#F06CA8" stroke="#0F0F0F" stroke-width="2.5"/>
-              <text x="360" y="292" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="14" fill="#0F0F0F">UC-05: Live Video Marking</text>
-
-              <rect x="210" y="322" rx="20" ry="20" width="300" height="36" fill="#F06CA8" stroke="#0F0F0F" stroke-width="2.5"/>
-              <text x="360" y="346" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="14" fill="#0F0F0F">UC-06: Group-Photo Batch</text>
-
-              <rect x="210" y="376" rx="20" ry="20" width="300" height="36" fill="#F06CA8" stroke="#0F0F0F" stroke-width="2.5"/>
-              <text x="360" y="400" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="14" fill="#0F0F0F">UC-08: Review &amp; Override</text>
-
-              <rect x="210" y="430" rx="20" ry="20" width="300" height="36" fill="#F06CA8" stroke="#0F0F0F" stroke-width="2.5"/>
-              <text x="360" y="454" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="14" fill="#0F0F0F">UC-10: Export Excel/CSV</text>
-
-              <!-- Shared marks -->
-              <rect x="420" y="500" rx="20" ry="20" width="340" height="36" fill="#EA5B25" stroke="#0F0F0F" stroke-width="2.5"/>
-              <text x="590" y="524" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="14" fill="#EFE9D9">UC-09: CIE Marks Management</text>
-
-              <!-- Student column -->
-              <rect x="670" y="214" rx="20" ry="20" width="300" height="36" fill="#F4C419" stroke="#0F0F0F" stroke-width="2.5"/>
-              <text x="820" y="238" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="13" fill="#0F0F0F">UC-04: Biometric Registration (5 Poses)</text>
-
-              <rect x="670" y="322" rx="20" ry="20" width="300" height="36" fill="#F4C419" stroke="#0F0F0F" stroke-width="2.5"/>
-              <text x="820" y="346" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="14" fill="#0F0F0F">UC-07: Mobile Self Check-In</text>
-
-              <!-- Internal includes -->
-              <rect x="360" y="580" rx="18" ry="18" width="460" height="48" fill="#1F8A4C" stroke="#0F0F0F" stroke-width="2.5"/>
-              <text x="590" y="610" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="14" fill="#EFE9D9">Biometric Face Match (512-D)</text>
-
-              <rect x="360" y="650" rx="18" ry="18" width="460" height="48" fill="#1F8A4C" stroke="#0F0F0F" stroke-width="2.5"/>
-              <text x="590" y="680" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="14" fill="#EFE9D9">3D Head-Turn Liveness (Δ ≥ 0.12)</text>
-
-              <rect x="420" y="720" rx="18" ry="18" width="340" height="40" fill="#E4DCC4" stroke="#0F0F0F" stroke-width="2.5" stroke-dasharray="6 4"/>
-              <text x="590" y="746" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="14" fill="#0F0F0F">Manual Override ≪extend≫</text>
-
-              <!-- Association lines: Faculty -->
-              <line x1="70" y1="330" x2="210" y2="178" stroke="#0F0F0F" stroke-width="2"/>
-              <line x1="70" y1="330" x2="210" y2="232" stroke="#0F0F0F" stroke-width="2"/>
-              <line x1="70" y1="330" x2="210" y2="286" stroke="#0F0F0F" stroke-width="2"/>
-              <line x1="70" y1="330" x2="210" y2="340" stroke="#0F0F0F" stroke-width="2"/>
-              <line x1="70" y1="330" x2="210" y2="394" stroke="#0F0F0F" stroke-width="2"/>
-              <line x1="70" y1="330" x2="210" y2="448" stroke="#0F0F0F" stroke-width="2"/>
-              <line x1="70" y1="330" x2="420" y2="110" stroke="#0F0F0F" stroke-width="2"/>
-              <line x1="70" y1="330" x2="420" y2="518" stroke="#0F0F0F" stroke-width="2"/>
-
-              <!-- Association lines: Student -->
-              <line x1="1110" y1="330" x2="970" y2="110" stroke="#0F0F0F" stroke-width="2"/>
-              <line x1="1110" y1="330" x2="970" y2="232" stroke="#0F0F0F" stroke-width="2"/>
-              <line x1="1110" y1="330" x2="970" y2="340" stroke="#0F0F0F" stroke-width="2"/>
-              <line x1="1110" y1="330" x2="760" y2="518" stroke="#0F0F0F" stroke-width="2"/>
-
-              <!-- Include dashed lines -->
-              <line x1="360" y1="286" x2="480" y2="580" stroke="#0F0F0F" stroke-width="1.8" stroke-dasharray="5 4"/>
-              <line x1="360" y1="340" x2="520" y2="580" stroke="#0F0F0F" stroke-width="1.8" stroke-dasharray="5 4"/>
-              <line x1="820" y1="358" x2="700" y2="580" stroke="#0F0F0F" stroke-width="1.8" stroke-dasharray="5 4"/>
-              <line x1="820" y1="358" x2="700" y2="650" stroke="#0F0F0F" stroke-width="1.8" stroke-dasharray="5 4"/>
-              <line x1="360" y1="412" x2="520" y2="720" stroke="#0F0F0F" stroke-width="1.8" stroke-dasharray="5 4"/>
-
-              <text x="430" y="560" font-family="JetBrains Mono, monospace" font-size="11" fill="#0F0F0F">≪include≫</text>
-              <text x="760" y="620" font-family="JetBrains Mono, monospace" font-size="11" fill="#0F0F0F">≪include≫</text>
-            </svg>
+              <div class="s08-assoc right" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+              <div class="s08-actor">
+                <svg class="s08-stick" viewBox="0 0 70 120" aria-hidden="true">
+                  <circle cx="35" cy="18" r="14" fill="none" stroke="#0F0F0F" stroke-width="3"/>
+                  <line x1="35" y1="32" x2="35" y2="72" stroke="#0F0F0F" stroke-width="3"/>
+                  <line x1="12" y1="48" x2="58" y2="48" stroke="#0F0F0F" stroke-width="3"/>
+                  <line x1="35" y1="72" x2="16" y2="108" stroke="#0F0F0F" stroke-width="3"/>
+                  <line x1="35" y1="72" x2="54" y2="108" stroke="#0F0F0F" stroke-width="3"/>
+                </svg>
+                <div class="s08-actor-badge yellow">Student</div>
+              </div>
+            </div>
           </div>
           <aside class="s08-legend reveal reveal-d2">
             <h2>Legend</h2>
             <div class="s08-leg-item pink">
               <h3>Actors</h3>
-              <p>Faculty (primary) drives sessions; Student enrolls, registers biometrics, and self-checks.</p>
+              <p>Faculty runs sessions &amp; exports; Student registers biometrics &amp; self-checks.</p>
             </div>
             <div class="s08-leg-item yellow">
               <h3>≪include≫</h3>
-              <p>Mandatory dependency — Face Match is required by UC-05/06/07; Liveness is required by UC-07.</p>
+              <p>Mandatory — Face Match used by UC-05/06/07; Liveness required by UC-07.</p>
             </div>
             <div class="s08-leg-item green">
               <h3>≪extend≫</h3>
-              <p>Conditional flow — Manual Override extends UC-08 only when faculty corrects a status.</p>
+              <p>Optional — Manual Override extends UC-08 only when status is corrected.</p>
             </div>
             <div class="s08-leg-item">
-              <h3>System Boundary</h3>
-              <p>All ovals inside the MARKANY SYSTEM box are in-scope use cases from SRS §4.</p>
+              <h3>Boundary</h3>
+              <p>Everything inside MarkAny System is an in-scope SRS §4 use case.</p>
             </div>
           </aside>
         </div>
