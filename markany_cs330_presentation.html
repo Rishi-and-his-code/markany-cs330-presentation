@@ -1267,7 +1267,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 10px 16px;
+      padding: 6px 10px;
     }
 
     .s08-board .dotgrid {
@@ -1298,8 +1298,8 @@
 
     .s08-leg {
       border: 3px solid var(--ink);
-      padding: 10px 12px;
-      min-height: 78px;
+      padding: 8px 12px;
+      min-height: 64px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -1321,8 +1321,8 @@
 
     .s08-leg p {
       font-family: var(--font-body);
-      font-size: 16px;
-      line-height: 1.3;
+      font-size: 14px;
+      line-height: 1.25;
     }
 
     /* ===========================================
@@ -2197,127 +2197,135 @@
           <h2 class="slide-headline reveal">UML Use Case Model &amp; System Actors.</h2>
           <div class="s08-board reveal" style="flex:1;min-height:0;">
             <div class="dotgrid"></div>
-            <svg viewBox="0 0 1600 780" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MarkAny UML Use Case Diagram">
+            <svg viewBox="0 0 1600 720" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MarkAny UML Use Case Diagram">
               <defs>
                 <marker id="arrowHead" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
                   <polygon points="0 0, 10 4, 0 8" fill="#0F0F0F"/>
                 </marker>
               </defs>
-              <!-- System boundary first so lines draw above fill -->
-              <rect x="220" y="36" width="1160" height="710" fill="#EFE9D9" stroke="#0F0F0F" stroke-width="4"/>
-              <text x="800" y="72" text-anchor="middle" font-family="Archivo Black, sans-serif" font-size="26" fill="#0F0F0F">MARKANY SYSTEM</text>
 
-              <!-- Association lines -->
+              <!-- System boundary -->
+              <rect x="210" y="22" width="1180" height="676" fill="#EFE9D9" stroke="#0F0F0F" stroke-width="4"/>
+              <text x="800" y="54" text-anchor="middle" font-family="Archivo Black, sans-serif" font-size="24" fill="#0F0F0F">MARKANY SYSTEM</text>
+
+              <!-- Solid association lines (behind ovals) -->
               <g stroke="#0F0F0F" stroke-width="2.5" fill="none">
-                <!-- Faculty bus -->
-                <line x1="120" y1="390" x2="200" y2="390"/>
-                <line x1="200" y1="120" x2="200" y2="600"/>
-                <line x1="200" y1="120" x2="560" y2="120"/>
-                <line x1="200" y1="190" x2="300" y2="190"/>
-                <line x1="200" y1="255" x2="300" y2="255"/>
-                <line x1="200" y1="320" x2="300" y2="320"/>
-                <line x1="200" y1="385" x2="300" y2="385"/>
-                <line x1="200" y1="450" x2="300" y2="450"/>
-                <line x1="200" y1="515" x2="300" y2="515"/>
-                <line x1="200" y1="580" x2="560" y2="580"/>
+                <!-- Faculty vertical bus + spokes (aligned to oval centers) -->
+                <line x1="105" y1="300" x2="185" y2="300"/>
+                <line x1="185" y1="93" x2="185" y2="524"/>
+                <line x1="185" y1="93" x2="560" y2="93"/>
+                <line x1="185" y1="164" x2="300" y2="164"/>
+                <line x1="185" y1="224" x2="300" y2="224"/>
+                <line x1="185" y1="284" x2="300" y2="284"/>
+                <line x1="185" y1="344" x2="300" y2="344"/>
+                <line x1="185" y1="404" x2="300" y2="404"/>
+                <line x1="185" y1="464" x2="300" y2="464"/>
+                <line x1="185" y1="524" x2="560" y2="524"/>
 
-                <!-- Student bus -->
-                <line x1="1480" y1="390" x2="1400" y2="390"/>
-                <line x1="1400" y1="120" x2="1400" y2="580"/>
-                <line x1="1400" y1="120" x2="1040" y2="120"/>
-                <line x1="1400" y1="255" x2="1300" y2="255"/>
-                <line x1="1400" y1="385" x2="1300" y2="385"/>
-                <line x1="1400" y1="580" x2="1040" y2="580"/>
-
-                <!-- include: UC-05, UC-06, UC-07 -> Face Match -->
-                <path d="M470 346 V620 H510" stroke-dasharray="7 5" marker-end="url(#arrowHead)"/>
-                <path d="M470 411 V635 H620" stroke-dasharray="7 5" marker-end="url(#arrowHead)"/>
-                <path d="M1130 411 V635 H800" stroke-dasharray="7 5" marker-end="url(#arrowHead)"/>
-                <!-- include: UC-07 -> Liveness -->
-                <path d="M1130 411 V680 H970" stroke-dasharray="7 5" marker-end="url(#arrowHead)"/>
-                <!-- extend: UC-08 -> Manual Override -->
-                <path d="M470 476 V545 H800 V720" stroke-dasharray="7 5" marker-end="url(#arrowHead)"/>
+                <!-- Student vertical bus + spokes -->
+                <line x1="1495" y1="300" x2="1415" y2="300"/>
+                <line x1="1415" y1="93" x2="1415" y2="524"/>
+                <line x1="1415" y1="93" x2="1040" y2="93"/>
+                <line x1="1415" y1="224" x2="1300" y2="224"/>
+                <line x1="1415" y1="344" x2="1300" y2="344"/>
+                <line x1="1415" y1="524" x2="1040" y2="524"/>
               </g>
 
               <!-- Faculty actor -->
-              <g transform="translate(70,330)">
-                <circle cx="0" cy="0" r="22" fill="#EFE9D9" stroke="#0F0F0F" stroke-width="3"/>
-                <line x1="0" y1="22" x2="0" y2="70" stroke="#0F0F0F" stroke-width="3"/>
-                <line x1="-28" y1="40" x2="28" y2="40" stroke="#0F0F0F" stroke-width="3"/>
-                <line x1="0" y1="70" x2="-24" y2="110" stroke="#0F0F0F" stroke-width="3"/>
-                <line x1="0" y1="70" x2="24" y2="110" stroke="#0F0F0F" stroke-width="3"/>
-                <rect x="-58" y="122" width="116" height="34" fill="#F06CA8" stroke="#0F0F0F" stroke-width="3"/>
-                <text x="0" y="145" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" fill="#0F0F0F">FACULTY</text>
+              <g transform="translate(70,250)">
+                <circle cx="0" cy="0" r="20" fill="#EFE9D9" stroke="#0F0F0F" stroke-width="3"/>
+                <line x1="0" y1="20" x2="0" y2="64" stroke="#0F0F0F" stroke-width="3"/>
+                <line x1="-26" y1="36" x2="26" y2="36" stroke="#0F0F0F" stroke-width="3"/>
+                <line x1="0" y1="64" x2="-22" y2="100" stroke="#0F0F0F" stroke-width="3"/>
+                <line x1="0" y1="64" x2="22" y2="100" stroke="#0F0F0F" stroke-width="3"/>
+                <rect x="-54" y="112" width="108" height="30" fill="#F06CA8" stroke="#0F0F0F" stroke-width="3"/>
+                <text x="0" y="133" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" fill="#0F0F0F">FACULTY</text>
               </g>
 
               <!-- Student actor -->
-              <g transform="translate(1530,330)">
-                <circle cx="0" cy="0" r="22" fill="#EFE9D9" stroke="#0F0F0F" stroke-width="3"/>
-                <line x1="0" y1="22" x2="0" y2="70" stroke="#0F0F0F" stroke-width="3"/>
-                <line x1="-28" y1="40" x2="28" y2="40" stroke="#0F0F0F" stroke-width="3"/>
-                <line x1="0" y1="70" x2="-24" y2="110" stroke="#0F0F0F" stroke-width="3"/>
-                <line x1="0" y1="70" x2="24" y2="110" stroke="#0F0F0F" stroke-width="3"/>
-                <rect x="-58" y="122" width="116" height="34" fill="#F4C419" stroke="#0F0F0F" stroke-width="3"/>
-                <text x="0" y="145" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" fill="#0F0F0F">STUDENT</text>
+              <g transform="translate(1530,250)">
+                <circle cx="0" cy="0" r="20" fill="#EFE9D9" stroke="#0F0F0F" stroke-width="3"/>
+                <line x1="0" y1="20" x2="0" y2="64" stroke="#0F0F0F" stroke-width="3"/>
+                <line x1="-26" y1="36" x2="26" y2="36" stroke="#0F0F0F" stroke-width="3"/>
+                <line x1="0" y1="64" x2="-22" y2="100" stroke="#0F0F0F" stroke-width="3"/>
+                <line x1="0" y1="64" x2="22" y2="100" stroke="#0F0F0F" stroke-width="3"/>
+                <rect x="-54" y="112" width="108" height="30" fill="#F4C419" stroke="#0F0F0F" stroke-width="3"/>
+                <text x="0" y="133" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" fill="#0F0F0F">STUDENT</text>
               </g>
 
+              <!-- Column labels -->
+              <text x="470" y="128" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#0F0F0F" letter-spacing="1.5">FACULTY-DRIVEN</text>
+              <text x="1130" y="188" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#0F0F0F" letter-spacing="1.5">STUDENT-DRIVEN</text>
+
               <!-- Shared UC-01 -->
-              <rect x="560" y="94" rx="26" ry="26" width="480" height="52" fill="#E4DCC4" stroke="#0F0F0F" stroke-width="3"/>
-              <text x="800" y="127" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="22" font-weight="600" fill="#0F0F0F">UC-01  ·  Auth &amp; RBAC</text>
+              <rect x="560" y="70" rx="24" ry="24" width="480" height="46" fill="#E4DCC4" stroke="#0F0F0F" stroke-width="3"/>
+              <text x="800" y="100" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="20" font-weight="600" fill="#0F0F0F">UC-01  ·  Auth &amp; RBAC</text>
 
               <!-- Faculty use cases -->
-              <g font-family="Space Grotesk, sans-serif" font-size="20" font-weight="600" fill="#0F0F0F">
-                <rect x="300" y="164" rx="24" ry="24" width="340" height="52" fill="#F06CA8" stroke="#0F0F0F" stroke-width="3"/>
-                <text x="470" y="197" text-anchor="middle">UC-02  ·  Parse Timetable</text>
+              <g font-family="Space Grotesk, sans-serif" font-size="18" font-weight="600" fill="#0F0F0F">
+                <rect x="300" y="140" rx="22" ry="22" width="340" height="48" fill="#F06CA8" stroke="#0F0F0F" stroke-width="3"/>
+                <text x="470" y="171" text-anchor="middle">UC-02  ·  Parse Timetable</text>
 
-                <rect x="300" y="229" rx="24" ry="24" width="340" height="52" fill="#F06CA8" stroke="#0F0F0F" stroke-width="3"/>
-                <text x="470" y="262" text-anchor="middle">UC-03  ·  Subjects &amp; Enrollments</text>
+                <rect x="300" y="200" rx="22" ry="22" width="340" height="48" fill="#F06CA8" stroke="#0F0F0F" stroke-width="3"/>
+                <text x="470" y="231" text-anchor="middle">UC-03  ·  Subjects &amp; Enrollments</text>
 
-                <rect x="300" y="294" rx="24" ry="24" width="340" height="52" fill="#F06CA8" stroke="#0F0F0F" stroke-width="3"/>
-                <text x="470" y="327" text-anchor="middle">UC-05  ·  Live Video Marking</text>
+                <rect x="300" y="260" rx="22" ry="22" width="340" height="48" fill="#F06CA8" stroke="#0F0F0F" stroke-width="3"/>
+                <text x="470" y="291" text-anchor="middle">UC-05  ·  Live Video Marking</text>
 
-                <rect x="300" y="359" rx="24" ry="24" width="340" height="52" fill="#F06CA8" stroke="#0F0F0F" stroke-width="3"/>
-                <text x="470" y="392" text-anchor="middle">UC-06  ·  Group-Photo Batch</text>
+                <rect x="300" y="320" rx="22" ry="22" width="340" height="48" fill="#F06CA8" stroke="#0F0F0F" stroke-width="3"/>
+                <text x="470" y="351" text-anchor="middle">UC-06  ·  Group-Photo Batch</text>
 
-                <rect x="300" y="424" rx="24" ry="24" width="340" height="52" fill="#F06CA8" stroke="#0F0F0F" stroke-width="3"/>
-                <text x="470" y="457" text-anchor="middle">UC-08  ·  Review &amp; Override</text>
+                <rect x="300" y="380" rx="22" ry="22" width="340" height="48" fill="#F06CA8" stroke="#0F0F0F" stroke-width="3"/>
+                <text x="470" y="411" text-anchor="middle">UC-08  ·  Review &amp; Override</text>
 
-                <rect x="300" y="489" rx="24" ry="24" width="340" height="52" fill="#F06CA8" stroke="#0F0F0F" stroke-width="3"/>
-                <text x="470" y="522" text-anchor="middle">UC-10  ·  Export Excel / CSV</text>
+                <rect x="300" y="440" rx="22" ry="22" width="340" height="48" fill="#F06CA8" stroke="#0F0F0F" stroke-width="3"/>
+                <text x="470" y="471" text-anchor="middle">UC-10  ·  Export Excel / CSV</text>
               </g>
 
               <!-- Student use cases -->
-              <g font-family="Space Grotesk, sans-serif" font-size="20" font-weight="600" fill="#0F0F0F">
-                <rect x="960" y="229" rx="24" ry="24" width="340" height="52" fill="#F4C419" stroke="#0F0F0F" stroke-width="3"/>
-                <text x="1130" y="262" text-anchor="middle">UC-04  ·  Biometric Registration</text>
+              <g font-family="Space Grotesk, sans-serif" font-size="18" font-weight="600" fill="#0F0F0F">
+                <rect x="960" y="200" rx="22" ry="22" width="340" height="48" fill="#F4C419" stroke="#0F0F0F" stroke-width="3"/>
+                <text x="1130" y="231" text-anchor="middle">UC-04  ·  Biometric Registration</text>
 
-                <rect x="960" y="359" rx="24" ry="24" width="340" height="52" fill="#F4C419" stroke="#0F0F0F" stroke-width="3"/>
-                <text x="1130" y="392" text-anchor="middle">UC-07  ·  Mobile Self Check-In</text>
+                <rect x="960" y="320" rx="22" ry="22" width="340" height="48" fill="#F4C419" stroke="#0F0F0F" stroke-width="3"/>
+                <text x="1130" y="351" text-anchor="middle">UC-07  ·  Mobile Self Check-In</text>
               </g>
 
               <!-- Shared UC-09 -->
-              <rect x="560" y="554" rx="26" ry="26" width="480" height="52" fill="#EA5B25" stroke="#0F0F0F" stroke-width="3"/>
-              <text x="800" y="587" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="22" font-weight="600" fill="#EFE9D9">UC-09  ·  CIE Marks Management</text>
+              <rect x="560" y="500" rx="24" ry="24" width="480" height="48" fill="#EA5B25" stroke="#0F0F0F" stroke-width="3"/>
+              <text x="800" y="531" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="20" font-weight="600" fill="#EFE9D9">UC-09  ·  CIE Marks Management</text>
 
-              <!-- Internal dependencies -->
-              <rect x="300" y="655" rx="18" ry="18" width="420" height="50" fill="#1F8A4C" stroke="#0F0F0F" stroke-width="3"/>
-              <text x="510" y="687" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="19" font-weight="600" fill="#EFE9D9">Biometric Face Match (512-D)</text>
+              <!-- Dependency targets -->
+              <rect x="280" y="572" rx="16" ry="16" width="400" height="42" fill="#1F8A4C" stroke="#0F0F0F" stroke-width="3"/>
+              <text x="480" y="599" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="17" font-weight="600" fill="#EFE9D9">Biometric Face Match (512-D)</text>
 
-              <rect x="760" y="655" rx="18" ry="18" width="420" height="50" fill="#1F8A4C" stroke="#0F0F0F" stroke-width="3"/>
-              <text x="970" y="687" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="19" font-weight="600" fill="#EFE9D9">3D Liveness (Δ ≥ 0.12)</text>
+              <rect x="720" y="572" rx="16" ry="16" width="400" height="42" fill="#1F8A4C" stroke="#0F0F0F" stroke-width="3"/>
+              <text x="920" y="599" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="17" font-weight="600" fill="#EFE9D9">3D Liveness (Δ ≥ 0.12)</text>
 
-              <rect x="530" y="720" rx="18" ry="18" width="540" height="50" fill="#E4DCC4" stroke="#0F0F0F" stroke-width="3" stroke-dasharray="8 5"/>
-              <text x="800" y="752" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="19" font-weight="600" fill="#0F0F0F">Manual Override  ·  extends UC-08</text>
+              <rect x="480" y="632" rx="16" ry="16" width="640" height="42" fill="#E4DCC4" stroke="#0F0F0F" stroke-width="3" stroke-dasharray="8 5"/>
+              <text x="800" y="659" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="17" font-weight="600" fill="#0F0F0F">Manual Override  ·  extends UC-08</text>
 
-              <!-- Relation badges (drawn last, never clipped) -->
-              <rect x="250" y="600" width="110" height="28" fill="#F4C419" stroke="#0F0F0F" stroke-width="2"/>
-              <text x="305" y="620" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" fill="#0F0F0F">«include»</text>
-              <rect x="1220" y="690" width="110" height="28" fill="#F4C419" stroke="#0F0F0F" stroke-width="2"/>
-              <text x="1275" y="710" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" fill="#0F0F0F">«extend»</text>
+              <!-- Include / extend dashed paths — outer channels only (never through ovals) -->
+              <g stroke="#0F0F0F" stroke-width="2.25" fill="none" stroke-dasharray="7 5">
+                <!-- UC-05 → Face Match via left gutter -->
+                <path d="M300 284 H248 V572 H400" marker-end="url(#arrowHead)"/>
+                <!-- UC-06 → Face Match via left gutter (offset) -->
+                <path d="M300 344 H262 V572 H480" marker-end="url(#arrowHead)"/>
+                <!-- UC-07 → Face Match via right gutter -->
+                <path d="M1300 344 H1352 V572 H880" marker-end="url(#arrowHead)"/>
+                <!-- UC-07 → Liveness via right gutter -->
+                <path d="M1300 344 H1364 V593 H1120" marker-end="url(#arrowHead)"/>
+                <!-- UC-08 → Manual Override via left gutter -->
+                <path d="M300 404 H236 V653 H480" marker-end="url(#arrowHead)"/>
+              </g>
 
-              <!-- Column labels -->
-              <text x="470" y="155" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#0F0F0F" letter-spacing="1.5">FACULTY-DRIVEN</text>
-              <text x="1130" y="215" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#0F0F0F" letter-spacing="1.5">STUDENT-DRIVEN</text>
+              <!-- Stereotype badges beside clear corridors -->
+              <rect x="232" y="500" width="100" height="26" fill="#F4C419" stroke="#0F0F0F" stroke-width="2"/>
+              <text x="282" y="518" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#0F0F0F">«include»</text>
+
+              <rect x="232" y="610" width="100" height="26" fill="#F4C419" stroke="#0F0F0F" stroke-width="2"/>
+              <text x="282" y="628" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#0F0F0F">«extend»</text>
+            </svg>
             </svg>
           </div>
 
