@@ -1,0 +1,2527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MarkAny — CS330 Software Engineering | SRS V1.0</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ===========================================
+       CSS CUSTOM PROPERTIES — CREATIVE MODE
+       =========================================== */
+    :root {
+      --cream: #EFE9D9;
+      --cream-2: #E4DCC4;
+      --ink: #0F0F0F;
+      --ink-2: #2A2A2A;
+      --green: #1F8A4C;
+      --green-dark: #136636;
+      --pink: #F06CA8;
+      --orange: #EA5B25;
+      --yellow: #F4C419;
+      --font-display: "Archivo Black", Impact, Haettenschweiler, sans-serif;
+      --font-body: "Space Grotesk", "Segoe UI", sans-serif;
+      --font-mono: "JetBrains Mono", ui-monospace, monospace;
+      --stage-bg: #1a1814;
+      --slide-bg: var(--cream);
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      --duration-normal: 0.55s;
+      --hard-shadow: 5px 5px 0 var(--ink);
+      --hard-shadow-lg: 18px 18px 0 var(--ink);
+      --hard-shadow-xl: 24px 24px 0 var(--orange), 24px 24px 0 4px var(--ink);
+    }
+
+    /* ===========================================
+       RESET
+       =========================================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ===========================================
+       FIXED 16:9 STAGE: MANDATORY BASE STYLES
+       (viewport-base.css — full contents)
+       =========================================== */
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: var(--stage-bg, #000);
+      font-family: var(--font-body);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .deck-viewport {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      background: var(--stage-bg, #000);
+    }
+
+    .deck-stage {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      transform-origin: 0 0;
+      background: var(--slide-bg, #fff);
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      display: block;
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
+      background: var(--cream);
+    }
+
+    .slide.active,
+    .slide.visible {
+      visibility: visible;
+      opacity: 1;
+      pointer-events: auto;
+      z-index: 1;
+    }
+
+    img, video, canvas, svg {
+      max-width: 100%;
+      max-height: 100%;
+    }
+
+    .deck-controls {
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      transform: translateX(-50%);
+      z-index: 1000;
+    }
+
+    @media print {
+      html, body {
+        width: 1920px;
+        height: auto;
+        overflow: visible;
+        background: #fff;
+      }
+      .deck-viewport {
+        position: static;
+        overflow: visible;
+        background: #fff;
+      }
+      .deck-stage {
+        position: static;
+        width: auto;
+        height: auto;
+        transform: none !important;
+        background: none;
+      }
+      .slide {
+        position: relative;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        width: 1920px;
+        height: 1080px;
+        break-after: page;
+        page-break-after: always;
+      }
+      .slide:last-child {
+        break-after: auto;
+        page-break-after: auto;
+      }
+      .deck-controls,
+      .progress-track,
+      .speaker-cue,
+      .edit-hotzone,
+      .edit-toggle {
+        display: none !important;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+      }
+    }
+
+    /* ===========================================
+       PRINT BACKUP — PIXEL ACCURATE 16:9
+       =========================================== */
+    @page {
+      size: 16in 9in;
+      margin: 0;
+    }
+
+    @media print {
+      * {
+        print-color-adjust: exact !important;
+        -webkit-print-color-adjust: exact !important;
+      }
+    }
+
+    /* ===========================================
+       SLIDE CHROME
+       =========================================== */
+    .topbar {
+      position: absolute;
+      top: 40px;
+      left: 64px;
+      right: 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 5;
+      font-family: var(--font-mono);
+      font-size: 18px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+
+    .topbar-eyebrow { font-weight: 500; }
+
+    .topbar-pill {
+      border: 2px solid var(--ink);
+      border-radius: 999px;
+      padding: 6px 16px;
+      background: var(--cream);
+      font-size: 15px;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+
+    .slide-meta {
+      position: absolute;
+      bottom: 36px;
+      left: 64px;
+      right: 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 5;
+      font-family: var(--font-mono);
+      font-size: 16px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+
+    .slide-meta-num {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .slide-meta-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--ink);
+      border-radius: 50%;
+    }
+
+    .slide.closing .topbar,
+    .slide.closing .slide-meta {
+      color: var(--cream);
+    }
+
+    .slide.closing .topbar-pill {
+      background: transparent;
+      border-color: var(--cream);
+      color: var(--cream);
+    }
+
+    .slide.closing .slide-meta-dot { background: var(--cream); }
+
+    /* ===========================================
+       TYPOGRAPHY HELPERS
+       =========================================== */
+    .display {
+      font-family: var(--font-display);
+      text-transform: uppercase;
+      line-height: 0.92;
+      letter-spacing: -0.01em;
+      font-weight: 400;
+    }
+
+    .mono {
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .body {
+      font-family: var(--font-body);
+      line-height: 1.3;
+      color: var(--ink-2);
+    }
+
+    /* ===========================================
+       ANIMATIONS
+       =========================================== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity var(--duration-normal) var(--ease-out-expo),
+                  transform var(--duration-normal) var(--ease-out-expo);
+    }
+
+    .slide.visible .reveal {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .slide.visible .reveal:nth-child(1) { transition-delay: 0.05s; }
+    .slide.visible .reveal:nth-child(2) { transition-delay: 0.12s; }
+    .slide.visible .reveal:nth-child(3) { transition-delay: 0.18s; }
+    .slide.visible .reveal:nth-child(4) { transition-delay: 0.24s; }
+    .slide.visible .reveal:nth-child(5) { transition-delay: 0.30s; }
+    .slide.visible .reveal:nth-child(6) { transition-delay: 0.36s; }
+
+    .reveal-d1 { transition-delay: 0.08s !important; }
+    .reveal-d2 { transition-delay: 0.16s !important; }
+    .reveal-d3 { transition-delay: 0.24s !important; }
+    .reveal-d4 { transition-delay: 0.32s !important; }
+    .reveal-d5 { transition-delay: 0.40s !important; }
+    .reveal-d6 { transition-delay: 0.48s !important; }
+
+    /* ===========================================
+       PROGRESS BAR
+       =========================================== */
+    .progress-track {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: rgba(239, 233, 217, 0.15);
+      z-index: 2000;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--orange);
+      transition: width 0.35s var(--ease-out-expo);
+    }
+
+    /* ===========================================
+       NAV PILL + SPEAKER CUE
+       =========================================== */
+    .nav-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--ink);
+      color: var(--cream);
+      border: 3px solid var(--ink);
+      border-radius: 999px;
+      padding: 10px 18px;
+      font-family: var(--font-mono);
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      box-shadow: 4px 4px 0 var(--orange);
+      user-select: none;
+    }
+
+    .nav-pill button {
+      background: transparent;
+      border: none;
+      color: var(--cream);
+      font-family: var(--font-mono);
+      font-size: 16px;
+      cursor: pointer;
+      padding: 2px 8px;
+      line-height: 1;
+    }
+
+    .nav-pill button:hover { color: var(--yellow); }
+    .nav-pill .nav-sep { opacity: 0.4; }
+    .nav-pill .nav-reset {
+      border-left: 1px solid rgba(239, 233, 217, 0.25);
+      margin-left: 4px;
+      padding-left: 14px;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      color: rgba(239, 233, 217, 0.75);
+    }
+    .nav-pill .nav-reset:hover { color: var(--pink); }
+
+    .speaker-cue {
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      z-index: 2000;
+      background: var(--ink);
+      color: var(--cream);
+      border: 3px solid var(--cream);
+      padding: 12px 16px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      max-width: 320px;
+      display: none;
+      box-shadow: 5px 5px 0 var(--pink);
+    }
+
+    .speaker-cue.on { display: block; }
+    .speaker-cue .cue-name { color: var(--yellow); margin-bottom: 4px; }
+    .speaker-cue .cue-time { color: var(--pink); }
+
+    /* ===========================================
+       INLINE EDIT TOGGLE
+       =========================================== */
+    .edit-hotzone {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 80px;
+      height: 80px;
+      z-index: 10000;
+      cursor: pointer;
+    }
+
+    .edit-toggle {
+      position: fixed;
+      top: 14px;
+      left: 14px;
+      z-index: 10001;
+      width: 42px;
+      height: 42px;
+      border: 3px solid var(--ink);
+      background: var(--yellow);
+      font-size: 18px;
+      cursor: pointer;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+      box-shadow: 3px 3px 0 var(--ink);
+    }
+
+    .edit-toggle.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .edit-toggle.active {
+      background: var(--pink);
+    }
+
+    body.edit-mode [contenteditable="true"] {
+      outline: 2px dashed var(--orange);
+      outline-offset: 2px;
+      cursor: text;
+    }
+
+    /* ===========================================
+       SHARED LAYOUT PRIMITIVES
+       =========================================== */
+    .content {
+      position: absolute;
+      top: 100px;
+      left: 96px;
+      right: 96px;
+      bottom: 90px;
+    }
+
+    .hard-box {
+      border: 4px solid var(--ink);
+      box-shadow: var(--hard-shadow);
+    }
+
+    .hard-box-lg {
+      border: 4px solid var(--ink);
+      box-shadow: var(--hard-shadow-lg);
+    }
+
+    /* ===========================================
+       SLIDE 01 — TITLE COVER
+       =========================================== */
+    .s01 .content {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .s01-title {
+      font-size: 118px;
+      line-height: 0.88;
+    }
+
+    .s01-title .orange { color: var(--orange); }
+
+    .s01-sub {
+      margin-top: 28px;
+      font-size: 24px;
+      line-height: 1.35;
+      max-width: 720px;
+      color: var(--ink-2);
+    }
+
+    .s01-meta {
+      margin-top: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 15px;
+      letter-spacing: 0.04em;
+      text-transform: none;
+      line-height: 1.45;
+    }
+
+    .s01-meta strong {
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 13px;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .s01-poster {
+      position: relative;
+      height: 760px;
+      background: var(--green);
+      border: 4px solid var(--ink);
+      box-shadow: var(--hard-shadow-xl);
+      overflow: hidden;
+    }
+
+    .s01-frame {
+      position: absolute;
+      border: 4px solid var(--ink);
+    }
+
+    .s01-frame.f1 {
+      inset: 48px 56px 120px 56px;
+      background: var(--pink);
+    }
+
+    .s01-frame.f2 {
+      inset: 96px 104px 168px 104px;
+      background: var(--orange);
+    }
+
+    .s01-frame.f3 {
+      inset: 148px 156px 220px 156px;
+      background: var(--cream);
+    }
+
+    .s01-reticle {
+      position: absolute;
+      inset: 188px 196px 260px 196px;
+      border: 3px solid var(--ink);
+      background: transparent;
+    }
+
+    .s01-reticle::before,
+    .s01-reticle::after {
+      content: "";
+      position: absolute;
+      background: var(--ink);
+    }
+
+    .s01-reticle::before {
+      left: 50%;
+      top: 12px;
+      bottom: 12px;
+      width: 2px;
+      transform: translateX(-50%);
+    }
+
+    .s01-reticle::after {
+      top: 50%;
+      left: 12px;
+      right: 12px;
+      height: 2px;
+      transform: translateY(-50%);
+    }
+
+    .s01-badge {
+      position: absolute;
+      bottom: 36px;
+      left: 40px;
+      right: 40px;
+      background: var(--cream);
+      border: 3px solid var(--ink);
+      padding: 14px 18px;
+      font-family: var(--font-mono);
+      font-size: 14px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    /* ===========================================
+       SLIDE 02 — PROBLEM / OBJECTIVES
+       =========================================== */
+    .s02 .content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+
+    .s02-col {
+      border: 4px solid var(--ink);
+      padding: 22px 26px 18px;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      max-height: 860px;
+    }
+
+    .s02-col.problem {
+      background: var(--cream);
+      box-shadow: 8px 8px 0 var(--pink);
+    }
+
+    .s02-col.objectives {
+      background: var(--cream);
+      box-shadow: 8px 8px 0 var(--yellow);
+    }
+
+    .s02-col h2 {
+      font-family: var(--font-display);
+      font-size: 36px;
+      text-transform: uppercase;
+      line-height: 0.95;
+      margin-bottom: 22px;
+      padding-bottom: 14px;
+      border-bottom: 3px solid var(--ink);
+    }
+
+    .s02-item {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .s02-item:last-child { margin-bottom: 0; }
+
+    .s02-num {
+      width: 42px;
+      height: 42px;
+      border: 3px solid var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .problem .s02-num:nth-of-type(1),
+    .s02-item:nth-child(2) .s02-num { background: var(--pink); }
+    .problem .s02-item:nth-child(3) .s02-num { background: var(--orange); }
+    .problem .s02-item:nth-child(4) .s02-num { background: var(--pink); }
+    .problem .s02-item:nth-child(5) .s02-num { background: var(--orange); }
+
+    .objectives .s02-item:nth-child(2) .s02-num { background: var(--yellow); }
+    .objectives .s02-item:nth-child(3) .s02-num { background: var(--green); color: var(--cream); }
+    .objectives .s02-item:nth-child(4) .s02-num { background: var(--yellow); }
+    .objectives .s02-item:nth-child(5) .s02-num { background: var(--green); color: var(--cream); }
+
+    .s02-item h3 {
+      font-family: var(--font-display);
+      font-size: 20px;
+      text-transform: uppercase;
+      line-height: 1.05;
+      margin-bottom: 4px;
+    }
+
+    .s02-item p {
+      font-size: 18px;
+      line-height: 1.3;
+      color: var(--ink-2);
+    }
+
+    /* ===========================================
+       SLIDE 03 — SCOPE & USERS
+       =========================================== */
+    .s03-banner {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 22px;
+      align-items: stretch;
+    }
+
+    .s03-step {
+      border: 3px solid var(--ink);
+      background: var(--cream-2);
+      padding: 14px 16px;
+      position: relative;
+      min-height: 86px;
+    }
+
+    .s03-step .tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      opacity: 0.7;
+    }
+
+    .s03-step .label {
+      font-family: var(--font-display);
+      font-size: 18px;
+      text-transform: uppercase;
+      line-height: 1.1;
+    }
+
+    .s03-step.accent-g { background: var(--green); color: var(--cream); }
+    .s03-step.accent-p { background: var(--pink); }
+    .s03-step.accent-y { background: var(--yellow); }
+    .s03-step.accent-o { background: var(--orange); color: var(--cream); }
+
+    .s03-arrow {
+      position: absolute;
+      right: -14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-top: 10px solid transparent;
+      border-bottom: 10px solid transparent;
+      border-left: 12px solid var(--ink);
+      z-index: 2;
+    }
+
+    .s03-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 18px;
+      height: calc(100% - 108px);
+    }
+
+    .s03-card {
+      border: 4px solid var(--ink);
+      padding: 20px 22px;
+      background: var(--cream);
+      box-shadow: var(--hard-shadow);
+    }
+
+    .s03-card .role-tag {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: 2px solid var(--ink);
+      border-radius: 999px;
+      padding: 4px 10px;
+      margin-bottom: 10px;
+      background: var(--yellow);
+    }
+
+    .s03-card:nth-child(2) .role-tag { background: var(--pink); }
+    .s03-card:nth-child(3) .role-tag { background: var(--orange); color: var(--cream); }
+    .s03-card:nth-child(4) .role-tag { background: var(--green); color: var(--cream); }
+
+    .s03-card h3 {
+      font-family: var(--font-display);
+      font-size: 26px;
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .s03-card p {
+      font-size: 17px;
+      line-height: 1.35;
+      color: var(--ink-2);
+    }
+
+    /* ===========================================
+       SLIDE 04 — FEASIBILITY
+       =========================================== */
+    .s04 .content {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .s04-pillar {
+      border: 4px solid var(--ink);
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      max-height: 860px;
+      box-shadow: var(--hard-shadow);
+    }
+
+    .s04-head {
+      padding: 22px 24px;
+      border-bottom: 4px solid var(--ink);
+      font-family: var(--font-display);
+      font-size: 28px;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .s04-head.pink { background: var(--pink); }
+    .s04-head.yellow { background: var(--yellow); }
+    .s04-head.green { background: var(--green); color: var(--cream); }
+
+    .s04-body {
+      padding: 20px 22px;
+      flex: 1;
+      background: var(--cream);
+    }
+
+    .s04-body li {
+      list-style: none;
+      position: relative;
+      padding-left: 18px;
+      margin-bottom: 12px;
+      font-size: 17px;
+      line-height: 1.3;
+      color: var(--ink-2);
+    }
+
+    .s04-body li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 9px;
+      width: 8px;
+      height: 8px;
+      background: var(--ink);
+    }
+
+    .s04-body li strong {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 16px;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 2px;
+      letter-spacing: 0;
+    }
+
+    /* ===========================================
+       SLIDE 05 — FOUR CORE MODULES
+       =========================================== */
+    .s05-title {
+      font-family: var(--font-display);
+      font-size: 42px;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      line-height: 0.95;
+    }
+
+    .s05-flow {
+      display: grid;
+      grid-template-columns: 1fr 28px 1fr 28px 1fr 28px 1fr;
+      gap: 0;
+      align-items: stretch;
+      height: calc(100% - 70px);
+    }
+
+    .s05-card {
+      border: 4px solid var(--ink);
+      padding: 24px 22px;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .s05-card.c1 { background: var(--cream); }
+    .s05-card.c2 { background: var(--pink); }
+    .s05-card.c3 { background: var(--yellow); }
+    .s05-card.c4 { background: var(--green); color: var(--cream); }
+
+    .s05-card .num {
+      font-family: var(--font-display);
+      font-size: 72px;
+      line-height: 0.85;
+      margin-bottom: 12px;
+    }
+
+    .s05-card h3 {
+      font-family: var(--font-display);
+      font-size: 22px;
+      text-transform: uppercase;
+      line-height: 1.05;
+      margin-bottom: 14px;
+    }
+
+    .s05-card .uc {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      opacity: 0.75;
+    }
+
+    .s05-card p {
+      font-family: var(--font-body);
+      font-size: 17px;
+      line-height: 1.35;
+    }
+
+    .s05-card.c4 p { color: rgba(239, 233, 217, 0.92); }
+
+    .s05-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .s05-arrow span {
+      width: 0;
+      height: 0;
+      border-top: 16px solid transparent;
+      border-bottom: 16px solid transparent;
+      border-left: 22px solid var(--ink);
+    }
+
+    /* ===========================================
+       SLIDE 06 — WORKFLOWS & RULES
+       =========================================== */
+    .s06 .content {
+      display: grid;
+      grid-template-columns: 0.92fr 1.08fr;
+      gap: 28px;
+    }
+
+    .s06-flow {
+      border: 4px solid var(--ink);
+      background: var(--cream);
+      padding: 20px 22px;
+      box-shadow: 8px 8px 0 var(--orange);
+      max-height: 860px;
+    }
+
+    .s06-flow h2 {
+      font-family: var(--font-display);
+      font-size: 30px;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+      line-height: 1;
+    }
+
+    .s06-step {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 14px;
+      margin-bottom: 18px;
+      align-items: start;
+    }
+
+    .s06-step:last-child { margin-bottom: 0; }
+
+    .s06-step .n {
+      width: 56px;
+      height: 56px;
+      border: 3px solid var(--ink);
+      background: var(--yellow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 24px;
+    }
+
+    .s06-step:nth-child(3) .n { background: var(--pink); }
+    .s06-step:nth-child(4) .n { background: var(--orange); color: var(--cream); }
+    .s06-step:nth-child(5) .n { background: var(--green); color: var(--cream); }
+
+    .s06-step h3 {
+      font-family: var(--font-display);
+      font-size: 20px;
+      text-transform: uppercase;
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+
+    .s06-step p {
+      font-size: 16px;
+      line-height: 1.3;
+      color: var(--ink-2);
+    }
+
+    .s06-rules {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .s06-rule {
+      border: 3px solid var(--ink);
+      padding: 16px 18px;
+      background: var(--cream);
+    }
+
+    .s06-rule.wide { grid-column: 1 / -1; }
+
+    .s06-rule .br {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      color: var(--ink);
+    }
+
+    .s06-rule.pink { background: var(--pink); }
+    .s06-rule.yellow { background: var(--yellow); }
+    .s06-rule.green { background: var(--green); color: var(--cream); }
+    .s06-rule.green .br { color: var(--cream); }
+    .s06-rule.cream-2 { background: var(--cream-2); }
+
+    .s06-rule h3 {
+      font-family: var(--font-display);
+      font-size: 18px;
+      text-transform: uppercase;
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+
+    .s06-rule p {
+      font-size: 15px;
+      line-height: 1.3;
+    }
+
+    .s06-rule.green p { color: rgba(239, 233, 217, 0.92); }
+
+    /* ===========================================
+       SLIDE 07 — NFRs
+       =========================================== */
+    .s07-kpis {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .s07-kpi {
+      border: 4px solid var(--ink);
+      padding: 18px 20px;
+      min-height: 130px;
+    }
+
+    .s07-kpi.k1 { background: var(--pink); }
+    .s07-kpi.k2 { background: var(--yellow); }
+    .s07-kpi.k3 { background: var(--orange); color: var(--cream); }
+    .s07-kpi.k4 { background: var(--green); color: var(--cream); }
+
+    .s07-kpi .val {
+      font-family: var(--font-display);
+      font-size: 42px;
+      line-height: 0.95;
+      margin-bottom: 8px;
+    }
+
+    .s07-kpi .lbl {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      line-height: 1.25;
+    }
+
+    .s07-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      height: calc(100% - 152px);
+    }
+
+    .s07-card {
+      border: 4px solid var(--ink);
+      padding: 22px;
+      background: var(--cream);
+      box-shadow: var(--hard-shadow);
+    }
+
+    .s07-card h3 {
+      font-family: var(--font-display);
+      font-size: 22px;
+      text-transform: uppercase;
+      line-height: 1.05;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 3px solid var(--ink);
+    }
+
+    .s07-card li {
+      list-style: none;
+      font-size: 16px;
+      line-height: 1.35;
+      color: var(--ink-2);
+      margin-bottom: 12px;
+      padding-left: 14px;
+      position: relative;
+    }
+
+    .s07-card li::before {
+      content: "▸";
+      position: absolute;
+      left: 0;
+      color: var(--ink);
+    }
+
+    /* ===========================================
+       SLIDE 08 — UML USE CASE
+       =========================================== */
+    .s08 .content {
+      display: grid;
+      grid-template-columns: 1.95fr 1fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .s08-diagram {
+      border: 4px solid var(--ink);
+      background: var(--cream);
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--hard-shadow);
+      /* Content box is top:100 bottom:90 → ~890px */
+      height: 860px;
+    }
+
+    .s08-diagram .dotgrid {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(var(--ink) 1px, transparent 1px);
+      background-size: 18px 18px;
+      opacity: 0.08;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .s08-diagram svg {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      max-width: none;
+      max-height: none;
+      display: block;
+    }
+
+    .s08-legend {
+      border: 4px solid var(--ink);
+      background: var(--cream);
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: 8px 8px 0 var(--pink);
+      height: 860px;
+      overflow: hidden;
+    }
+
+    .s08-legend h2 {
+      font-family: var(--font-display);
+      font-size: 28px;
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .s08-leg-item {
+      border: 3px solid var(--ink);
+      padding: 14px;
+      background: var(--cream-2);
+    }
+
+    .s08-leg-item.pink { background: var(--pink); }
+    .s08-leg-item.yellow { background: var(--yellow); }
+    .s08-leg-item.green { background: var(--green); color: var(--cream); }
+
+    .s08-leg-item h3 {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .s08-leg-item p {
+      font-size: 15px;
+      line-height: 1.3;
+    }
+
+    /* ===========================================
+       SLIDE 09 — ARCHITECTURE STACK
+       =========================================== */
+    .s09 .content {
+      display: grid;
+      grid-template-columns: 0.88fr 1.12fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .s09-left h2 {
+      font-family: var(--font-display);
+      font-size: 56px;
+      text-transform: uppercase;
+      line-height: 0.92;
+      margin-bottom: 22px;
+    }
+
+    .s09-left p {
+      font-size: 20px;
+      line-height: 1.4;
+      color: var(--ink-2);
+      margin-bottom: 28px;
+      max-width: 620px;
+    }
+
+    .s09-legend {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .s09-leg {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-mono);
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .s09-swatch {
+      width: 22px;
+      height: 22px;
+      border: 3px solid var(--ink);
+      flex-shrink: 0;
+    }
+
+    .s09-swatch.pink { background: var(--pink); }
+    .s09-swatch.yellow { background: var(--yellow); }
+    .s09-swatch.orange { background: var(--orange); }
+    .s09-swatch.cream { background: var(--cream-2); }
+
+    .s09-stack-wrap {
+      position: relative;
+      height: 740px;
+      background: var(--green);
+      border: 4px solid var(--ink);
+      box-shadow: var(--hard-shadow-xl);
+      overflow: hidden;
+    }
+
+    .s09-layer {
+      position: absolute;
+      left: 48px;
+      right: 72px;
+      border: 4px solid var(--ink);
+      box-shadow: var(--hard-shadow-lg);
+      padding: 22px 28px;
+      min-height: 118px;
+    }
+
+    .s09-layer.t1 {
+      top: 48px;
+      background: var(--pink);
+      transform: translateX(0);
+    }
+
+    .s09-layer.t2 {
+      top: 198px;
+      background: var(--yellow);
+      transform: translateX(28px);
+      right: 44px;
+    }
+
+    .s09-layer.t3 {
+      top: 348px;
+      background: var(--orange);
+      color: var(--cream);
+      transform: translateX(56px);
+      right: 16px;
+    }
+
+    .s09-layer.t4 {
+      top: 498px;
+      background: var(--cream-2);
+      transform: translateX(84px);
+      right: -12px;
+      left: 48px;
+    }
+
+    .s09-layer .tier {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      opacity: 0.8;
+    }
+
+    .s09-layer h3 {
+      font-family: var(--font-display);
+      font-size: 26px;
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .s09-layer p {
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.3;
+    }
+
+    /* ===========================================
+       SLIDE 10 — MODULES & SCHEMA
+       =========================================== */
+    .s10 .content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .s10-card {
+      border: 4px solid var(--ink);
+      background: var(--cream);
+      padding: 20px;
+      box-shadow: var(--hard-shadow);
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      max-height: 860px;
+    }
+
+    .s10-card h2 {
+      font-family: var(--font-display);
+      font-size: 26px;
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 3px solid var(--ink);
+    }
+
+    .s10-engines {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      flex: 1;
+    }
+
+    .s10-eng {
+      border: 3px solid var(--ink);
+      padding: 16px;
+    }
+
+    .s10-eng.deep { background: var(--pink); }
+    .s10-eng.classical { background: var(--yellow); }
+
+    .s10-eng h3 {
+      font-family: var(--font-display);
+      font-size: 16px;
+      text-transform: uppercase;
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+
+    .s10-eng .mono-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .s10-eng li {
+      list-style: none;
+      font-size: 14px;
+      line-height: 1.35;
+      margin-bottom: 8px;
+      padding-left: 12px;
+      position: relative;
+    }
+
+    .s10-eng li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      font-weight: 700;
+    }
+
+    .s10-groups {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex: 1;
+    }
+
+    .s10-group {
+      border: 3px solid var(--ink);
+      padding: 14px 16px;
+      background: var(--cream-2);
+    }
+
+    .s10-group.g1 { background: var(--pink); }
+    .s10-group.g2 { background: var(--yellow); }
+    .s10-group.g3 { background: var(--orange); color: var(--cream); }
+
+    .s10-group h3 {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .s10-group p {
+      font-size: 15px;
+      line-height: 1.35;
+    }
+
+    .s10-callout {
+      margin-top: 12px;
+      border: 3px solid var(--ink);
+      border-radius: 999px;
+      padding: 10px 16px;
+      background: var(--green);
+      color: var(--cream);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 1.35;
+    }
+
+    /* ===========================================
+       SLIDE 11 — CONSTRAINTS
+       =========================================== */
+    .s11-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: 1fr 1fr;
+      gap: 18px;
+      height: 100%;
+    }
+
+    .s11-card {
+      border: 4px solid var(--ink);
+      background: var(--cream);
+      padding: 20px 22px;
+      box-shadow: var(--hard-shadow);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .s11-card .num {
+      font-family: var(--font-display);
+      font-size: 28px;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .s11-card:nth-child(1) .num,
+    .s11-card:nth-child(4) .num { color: var(--pink); }
+    .s11-card:nth-child(2) .num,
+    .s11-card:nth-child(5) .num { color: var(--orange); }
+    .s11-card:nth-child(3) .num,
+    .s11-card:nth-child(6) .num { color: var(--green); }
+
+    .s11-card h3 {
+      font-family: var(--font-display);
+      font-size: 20px;
+      text-transform: uppercase;
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+
+    .s11-card p {
+      font-size: 16px;
+      line-height: 1.35;
+      color: var(--ink-2);
+      flex: 1;
+    }
+
+    .s11-card .mit {
+      margin-top: 12px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      line-height: 1.35;
+      border-top: 2px solid var(--ink);
+      padding-top: 10px;
+      color: var(--green-dark);
+    }
+
+    /* ===========================================
+       SLIDE 12 — CLOSING
+       =========================================== */
+    .slide.closing {
+      background: var(--green);
+      color: var(--cream);
+    }
+
+    .s12 .content {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 28px;
+    }
+
+    .s12-block {
+      border: 4px solid var(--ink);
+      padding: 26px;
+      color: var(--ink);
+      box-shadow: var(--hard-shadow-lg);
+    }
+
+    .s12-block.cream { background: var(--cream); }
+    .s12-block.yellow { background: var(--yellow); }
+    .s12-block.pink { background: var(--pink); }
+
+    .s12-block h2 {
+      font-family: var(--font-display);
+      font-size: 28px;
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    .s12-block li {
+      list-style: none;
+      font-size: 18px;
+      line-height: 1.35;
+      margin-bottom: 12px;
+      padding-left: 16px;
+      position: relative;
+    }
+
+    .s12-block li::before {
+      content: "▸";
+      position: absolute;
+      left: 0;
+    }
+
+    .s12-road .item {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 12px;
+      margin-bottom: 14px;
+      align-items: start;
+    }
+
+    .s12-road .item:last-child { margin-bottom: 0; }
+
+    .s12-road .n {
+      width: 48px;
+      height: 48px;
+      border: 3px solid var(--ink);
+      background: var(--cream);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 18px;
+    }
+
+    .s12-road h3 {
+      font-family: var(--font-display);
+      font-size: 18px;
+      text-transform: uppercase;
+      line-height: 1.1;
+      margin-bottom: 2px;
+    }
+
+    .s12-road p {
+      font-size: 15px;
+      line-height: 1.3;
+    }
+
+    .s12-thanks {
+      position: absolute;
+      left: 96px;
+      right: 96px;
+      bottom: 100px;
+      border: 4px solid var(--ink);
+      background: var(--cream);
+      color: var(--ink);
+      padding: 20px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 8px 8px 0 var(--ink);
+    }
+
+    .s12-thanks .big {
+      font-family: var(--font-display);
+      font-size: 32px;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .s12-thanks .team {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-align: right;
+      line-height: 1.45;
+    }
+  </style>
+</head>
+<body>
+  <!-- Progress -->
+  <div class="progress-track" aria-hidden="true"><div class="progress-fill" id="progressFill"></div></div>
+
+  <!-- Speaker cue overlay (toggle with N) -->
+  <div class="speaker-cue" id="speakerCue" aria-live="polite">
+    <div class="cue-name" id="cueName">Speaker</div>
+    <div id="cueRange">Slides</div>
+    <div class="cue-time" id="cueTime">Target</div>
+  </div>
+
+  <!-- Inline edit affordance -->
+  <div class="edit-hotzone" id="editHotzone" title="Edit mode"></div>
+  <button class="edit-toggle" id="editToggle" title="Edit mode (E)">✎</button>
+
+  <div class="deck-viewport">
+    <main class="deck-stage" id="deckStage">
+
+      <!-- ========== SLIDE 01 — TITLE COVER ========== -->
+      <section class="slide s01 active visible" data-speaker="Maitra Prajapati" data-range="01–04" data-time="0:00–3:20">
+        <div class="topbar">
+          <div class="topbar-eyebrow">Project Overview</div>
+          <div class="topbar-pill">CS330 / SRS V1.0</div>
+        </div>
+        <div class="content">
+          <div class="reveal">
+            <h1 class="display s01-title">
+              MarkAny<br />
+              <span class="orange">Facial<br />Attendance</span>
+            </h1>
+            <p class="body s01-sub">A Hybrid Classical &amp; Deep Learning Biometric Attendance Platform</p>
+            <div class="mono s01-meta">
+              <div><strong>Course</strong>CS330 – Software Engineering | Navrachana University, Vadodara</div>
+              <div><strong>Faculty Guide</strong>Ujwala Petigara</div>
+              <div><strong>Team</strong>Maitra Prajapati (24000493) · Vikas Patanvadiya (24000605) · Rishi Yagnesh Kachhadia (24000713)</div>
+              <div><strong>Doc ID</strong>SRS-MARKANY-V1.0</div>
+            </div>
+          </div>
+          <div class="s01-poster reveal reveal-d2" aria-hidden="true">
+            <div class="s01-frame f1"></div>
+            <div class="s01-frame f2"></div>
+            <div class="s01-frame f3"></div>
+            <div class="s01-reticle"></div>
+            <div class="s01-badge">Hybrid CV · ArcFace 512-D · 3D Liveness</div>
+          </div>
+        </div>
+        <div class="slide-meta">
+          <div>SRS Defense Deck</div>
+          <div class="slide-meta-num"><span>01</span><span class="slide-meta-dot"></span><span>12</span></div>
+        </div>
+      </section>
+
+      <!-- ========== SLIDE 02 — PROBLEM & OBJECTIVES ========== -->
+      <section class="slide s02" data-speaker="Maitra Prajapati" data-range="01–04" data-time="0:00–3:20">
+        <div class="topbar">
+          <div class="topbar-eyebrow">Project Introduction</div>
+          <div class="topbar-pill">Problem → Goal</div>
+        </div>
+        <div class="content">
+          <div class="s02-col problem reveal">
+            <h2>The 4 Failures</h2>
+            <div class="s02-item">
+              <div class="s02-num">01</div>
+              <div>
+                <h3>Lecture Time Loss</h3>
+                <p>Verbal roll-calls consume 10–15 mins (15–20%) every lecture.</p>
+              </div>
+            </div>
+            <div class="s02-item">
+              <div class="s02-num">02</div>
+              <div>
+                <h3>Proxy Attendance</h3>
+                <p>Paper sign-ins and RFID cards enable effortless buddy signing.</p>
+              </div>
+            </div>
+            <div class="s02-item">
+              <div class="s02-num">03</div>
+              <div>
+                <h3>Hardware &amp; Hygiene Friction</h3>
+                <p>Fingerprint scanners bottleneck doors and degrade from dust/grease.</p>
+              </div>
+            </div>
+            <div class="s02-item">
+              <div class="s02-num">04</div>
+              <div>
+                <h3>Administrative Lag</h3>
+                <p>Manual sheet-to-ERP transcription delays compliance reporting.</p>
+              </div>
+            </div>
+          </div>
+          <div class="s02-col objectives reveal reveal-d2">
+            <h2>Project Objectives</h2>
+            <div class="s02-item">
+              <div class="s02-num">01</div>
+              <div>
+                <h3>Instant Batch Marking</h3>
+                <p>Mark 40–50 students from a single photo in &lt; 2.5 s.</p>
+              </div>
+            </div>
+            <div class="s02-item">
+              <div class="s02-num">02</div>
+              <div>
+                <h3>Anti-Spoofing Biometrics</h3>
+                <p>512-D ArcFace + active 3D head-turn liveness defeats photos/replays.</p>
+              </div>
+            </div>
+            <div class="s02-item">
+              <div class="s02-num">03</div>
+              <div>
+                <h3>Multi-Modal Flexibility</h3>
+                <p>Live stream, classroom group photo, and timed mobile self check-in.</p>
+              </div>
+            </div>
+            <div class="s02-item">
+              <div class="s02-num">04</div>
+              <div>
+                <h3>Auditability &amp; Rigor</h3>
+                <p>IEEE 830 SRS, immutable audit logs, and dual hybrid CV validation.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="slide-meta">
+          <div>Problem Statement &amp; Objectives</div>
+          <div class="slide-meta-num"><span>02</span><span class="slide-meta-dot"></span><span>12</span></div>
+        </div>
+      </section>
+
+      <!-- ========== SLIDE 03 — SCOPE & USERS ========== -->
+      <section class="slide s03" data-speaker="Maitra Prajapati" data-range="01–04" data-time="0:00–3:20">
+        <div class="topbar">
+          <div class="topbar-eyebrow">Project Introduction</div>
+          <div class="topbar-pill">Scope &amp; Actors</div>
+        </div>
+        <div class="content">
+          <div class="s03-banner reveal">
+            <div class="s03-step accent-p">
+              <div class="tag">01 Capture</div>
+              <div class="label">Browser WebRTC Capture</div>
+              <span class="s03-arrow"></span>
+            </div>
+            <div class="s03-step accent-y">
+              <div class="tag">02 Recognize</div>
+              <div class="label">Hybrid CV Recognition</div>
+              <span class="s03-arrow"></span>
+            </div>
+            <div class="s03-step accent-o">
+              <div class="tag">03 Review</div>
+              <div class="label">Audit Review &amp; Marks</div>
+              <span class="s03-arrow"></span>
+            </div>
+            <div class="s03-step accent-g">
+              <div class="tag">04 Export</div>
+              <div class="label">Excel / CSV Export</div>
+            </div>
+          </div>
+          <div class="s03-grid">
+            <div class="s03-card reveal reveal-d1">
+              <span class="role-tag">Primary Actor</span>
+              <h3>Faculty / Teacher</h3>
+              <p>Creates subjects &amp; 6-char join codes, imports timetables, runs live/group sessions, overrides statuses, enters CIE marks, exports reports.</p>
+            </div>
+            <div class="s03-card reveal reveal-d2">
+              <span class="role-tag">End-User</span>
+              <h3>Student</h3>
+              <p>One-time biometric registration (3–5 poses), joins courses, mobile self check-in with 3D liveness, tracks attendance % &amp; marks.</p>
+            </div>
+            <div class="s03-card reveal reveal-d3">
+              <span class="role-tag">Auditor</span>
+              <h3>Academic Administrator</h3>
+              <p>Monitors institutional compliance and inspects <span class="mono" style="text-transform:none;letter-spacing:0;font-size:15px;">manually_set = 1</span> override trails.</p>
+            </div>
+            <div class="s03-card reveal reveal-d4">
+              <span class="role-tag">Examiner</span>
+              <h3>Course Evaluator</h3>
+              <p>Audits IEEE 830 traceability, hybrid CV implementations, and automated test suite (16/16 passing).</p>
+            </div>
+          </div>
+        </div>
+        <div class="slide-meta">
+          <div>Product Scope &amp; Target Users</div>
+          <div class="slide-meta-num"><span>03</span><span class="slide-meta-dot"></span><span>12</span></div>
+        </div>
+      </section>
+
+      <!-- ========== SLIDE 04 — FEASIBILITY ========== -->
+      <section class="slide s04" data-speaker="Maitra Prajapati" data-range="01–04" data-time="0:00–3:20">
+        <div class="topbar">
+          <div class="topbar-eyebrow">Project Overview</div>
+          <div class="topbar-pill">Feasibility</div>
+        </div>
+        <div class="content">
+          <article class="s04-pillar reveal">
+            <div class="s04-head pink">Technical</div>
+            <ul class="s04-body">
+              <li><strong>CPU-only ONNX</strong>~200 ms/frame on Intel i5 / Apple Silicon — no CUDA required.</li>
+              <li><strong>Browser WebRTC</strong>getUserMedia eliminates server camera driver issues.</li>
+              <li><strong>Dual Persistence</strong>Supabase PostgreSQL + SQLite3 offline fallback.</li>
+              <li><strong>Test Suite</strong>16/16 unit tests passing in 0.43 s.</li>
+            </ul>
+          </article>
+          <article class="s04-pillar reveal reveal-d2">
+            <div class="s04-head yellow">Economic</div>
+            <ul class="s04-body">
+              <li><strong>$0 Licensing</strong>100% open-source: React 19, Flask, InsightFace, SQLite/Supabase.</li>
+              <li><strong>$0 Hardware</strong>Eliminates biometric kiosks, RFID readers, and CUDA GPUs.</li>
+              <li><strong>Reuse Assets</strong>Existing webcams &amp; student phones become capture devices.</li>
+              <li><strong>Ops Cost</strong>Faculty laptops run the full stack locally.</li>
+            </ul>
+          </article>
+          <article class="s04-pillar reveal reveal-d3">
+            <div class="s04-head green">Operational</div>
+            <ul class="s04-body">
+              <li><strong>Timetable Fit</strong>Regex portal parsing plugs into university routines.</li>
+              <li><strong>One-Click Group</strong>&lt; 2.5 s single-click classroom capture.</li>
+              <li><strong>Human-in-Loop</strong>Present/Absent overrides before finalization.</li>
+              <li><strong>Ready Export</strong>Submit-ready .xlsx / .csv reports.</li>
+            </ul>
+          </article>
+        </div>
+        <div class="slide-meta">
+          <div>Feasibility Study</div>
+          <div class="slide-meta-num"><span>04</span><span class="slide-meta-dot"></span><span>12</span></div>
+        </div>
+      </section>
+
+      <!-- ========== SLIDE 05 — FUNCTIONAL REQUIREMENTS ========== -->
+      <section class="slide s05" data-speaker="Vikas Patanvadiya" data-range="05–08" data-time="3:20–6:40">
+        <div class="topbar">
+          <div class="topbar-eyebrow">Requirements Analysis</div>
+          <div class="topbar-pill">Four Core Modules</div>
+        </div>
+        <div class="content">
+          <h2 class="s05-title reveal">A Four-Step Process</h2>
+          <div class="s05-flow">
+            <article class="s05-card c1 reveal reveal-d1">
+              <div class="num">01</div>
+              <div class="uc">UC-04</div>
+              <h3>Biometric Enrollment</h3>
+              <p>Captures 3–5 multi-angle face samples; SCRFD enforces single face; stores unit-normalized 512-D ArcFace vectors (||e||2 = 1.0).</p>
+            </article>
+            <div class="s05-arrow" aria-hidden="true"><span></span></div>
+            <article class="s05-card c2 reveal reveal-d2">
+              <div class="num">02</div>
+              <div class="uc">UC-05, UC-06</div>
+              <h3>Live &amp; Group Marking</h3>
+              <p>1500 ms live webcam overlay + batch group-photo recognition of 40–50 faces (≥ 24×24 px) with archived BLOB evidence.</p>
+            </article>
+            <div class="s05-arrow" aria-hidden="true"><span></span></div>
+            <article class="s05-card c3 reveal reveal-d3">
+              <div class="num">03</div>
+              <div class="uc">UC-07</div>
+              <h3>3D Liveness Check-In</h3>
+              <p>Timed mobile self-marking (open_until) guarded by 14-frame head-turn challenge verifying nose-to-eye span Δ ≥ 0.12.</p>
+            </article>
+            <div class="s05-arrow" aria-hidden="true"><span></span></div>
+            <article class="s05-card c4 reveal reveal-d4">
+              <div class="num">04</div>
+              <div class="uc">UC-08, UC-10</div>
+              <h3>Audit &amp; Reporting</h3>
+              <p>Roster sheet with match confidences, manual toggles (manually_set = 1), irreversible session lock, and in-memory .xlsx/.csv export.</p>
+            </article>
+          </div>
+        </div>
+        <div class="slide-meta">
+          <div>Major Functional Requirements</div>
+          <div class="slide-meta-num"><span>05</span><span class="slide-meta-dot"></span><span>12</span></div>
+        </div>
+      </section>
+
+      <!-- ========== SLIDE 06 — WORKFLOWS & BUSINESS RULES ========== -->
+      <section class="slide s06" data-speaker="Vikas Patanvadiya" data-range="05–08" data-time="3:20–6:40">
+        <div class="topbar">
+          <div class="topbar-eyebrow">Requirements Analysis</div>
+          <div class="topbar-pill">Rules &amp; Control</div>
+        </div>
+        <div class="content">
+          <div class="s06-flow reveal">
+            <h2>End-to-End Session Flow</h2>
+            <div class="s06-step">
+              <div class="n">01</div>
+              <div>
+                <h3>Timetable Regex Parse</h3>
+                <p>Heuristic ingestion of portal timetable text into weekly recurring schedules.</p>
+              </div>
+            </div>
+            <div class="s06-step">
+              <div class="n">02</div>
+              <div>
+                <h3>6-Char Join Code &amp; Capacity</h3>
+                <p>Cryptographic join codes + enrollment capacity guards before sessions open.</p>
+              </div>
+            </div>
+            <div class="s06-step">
+              <div class="n">03</div>
+              <div>
+                <h3>Multi-Modal Capture</h3>
+                <p>Live stream, group photo, or timed mobile self check-in with liveness.</p>
+              </div>
+            </div>
+            <div class="s06-step">
+              <div class="n">04</div>
+              <div>
+                <h3>Finalize Lock</h3>
+                <p>Human review, Present/Absent overrides, then irreversible session lock.</p>
+              </div>
+            </div>
+          </div>
+          <div class="s06-rules reveal reveal-d2">
+            <div class="s06-rule pink">
+              <div class="br">BR-5</div>
+              <h3>Cosine Decision Margin</h3>
+              <p>Match accepted iff a · b ≥ 0.38; otherwise Unknown.</p>
+            </div>
+            <div class="s06-rule yellow">
+              <div class="br">BR-6</div>
+              <h3>Duplicate Arbitration</h3>
+              <p>Highest confidence claims ID; secondary becomes Unknown.</p>
+            </div>
+            <div class="s06-rule green">
+              <div class="br">BR-4</div>
+              <h3>Strict Idempotency</h3>
+              <p>UNIQUE(student_id, session_date, session_id) → max 1 mark.</p>
+            </div>
+            <div class="s06-rule cream-2 wide">
+              <div class="br">BR-1 · BR-7</div>
+              <h3>RBAC &amp; Audit Integrity</h3>
+              <p>Salted PBKDF2 SHA-256 + 30-day signed tokens; manual overrides permanently logged with manually_set = 1.</p>
+            </div>
+          </div>
+        </div>
+        <div class="slide-meta">
+          <div>System Workflows &amp; Business Rules</div>
+          <div class="slide-meta-num"><span>06</span><span class="slide-meta-dot"></span><span>12</span></div>
+        </div>
+      </section>
+
+      <!-- ========== SLIDE 07 — NFRs ========== -->
+      <section class="slide s07" data-speaker="Vikas Patanvadiya" data-range="05–08" data-time="3:20–6:40">
+        <div class="topbar">
+          <div class="topbar-eyebrow">Requirements Analysis</div>
+          <div class="topbar-pill">NFR Benchmarks</div>
+        </div>
+        <div class="content">
+          <div class="s07-kpis reveal">
+            <div class="s07-kpi k1"><div class="val">&lt; 250 ms</div><div class="lbl">Live Frame Latency</div></div>
+            <div class="s07-kpi k2"><div class="val">&lt; 2.5 s</div><div class="lbl">50-Face Group Batch</div></div>
+            <div class="s07-kpi k3"><div class="val">&lt; 600 ms</div><div class="lbl">14-Frame Liveness</div></div>
+            <div class="s07-kpi k4"><div class="val">16/16</div><div class="lbl">Tests in 0.43 s</div></div>
+          </div>
+          <div class="s07-cards">
+            <article class="s07-card reveal reveal-d1">
+              <h3>Performance &amp; Scalability</h3>
+              <ul>
+                <li>Commodity 4-core CPU inference — no GPU bottleneck</li>
+                <li>DB queries &lt; 50 ms under normal load</li>
+                <li>Stateless bearer tokens + client-side WebRTC capture</li>
+                <li>Scales across concurrent classrooms effortlessly</li>
+              </ul>
+            </article>
+            <article class="s07-card reveal reveal-d2">
+              <h3>Security &amp; Privacy</h3>
+              <ul>
+                <li>Non-invertible 512-D embeddings — no raw recognition photos</li>
+                <li>Live frames processed in volatile RAM, then discarded</li>
+                <li>Active 3D anti-spoofing (Δ ≥ 0.12)</li>
+                <li>Salted PBKDF2 SHA-256 + signed URL-safe tokens</li>
+              </ul>
+            </article>
+            <article class="s07-card reveal reveal-d3">
+              <h3>Reliability &amp; Usability</h3>
+              <ul>
+                <li>Automatic Supabase → SQLite3 offline fallback</li>
+                <li>Strict idempotency on attendance writes</li>
+                <li>1500 ms frame throttling for thermal/battery safety</li>
+                <li>Responsive UI from 375×667 mobile to 4K</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+        <div class="slide-meta">
+          <div>Non-Functional Requirements</div>
+          <div class="slide-meta-num"><span>07</span><span class="slide-meta-dot"></span><span>12</span></div>
+        </div>
+      </section>
+
+      <!-- ========== SLIDE 08 — UML USE CASE ========== -->
+      <section class="slide s08" data-speaker="Vikas Patanvadiya" data-range="05–08" data-time="3:20–6:40">
+        <div class="topbar">
+          <div class="topbar-eyebrow">System Analysis &amp; Design</div>
+          <div class="topbar-pill">UML / Actors</div>
+        </div>
+        <div class="content">
+          <div class="s08-diagram reveal">
+            <div class="dotgrid"></div>
+            <svg viewBox="0 0 1180 820" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MarkAny UML Use Case Diagram">
+              <!-- Actors -->
+              <g transform="translate(70,330)">
+                <circle cx="0" cy="-48" r="18" fill="none" stroke="#0F0F0F" stroke-width="3"/>
+                <line x1="0" y1="-30" x2="0" y2="20" stroke="#0F0F0F" stroke-width="3"/>
+                <line x1="-28" y1="-5" x2="28" y2="-5" stroke="#0F0F0F" stroke-width="3"/>
+                <line x1="0" y1="20" x2="-22" y2="58" stroke="#0F0F0F" stroke-width="3"/>
+                <line x1="0" y1="20" x2="22" y2="58" stroke="#0F0F0F" stroke-width="3"/>
+                <rect x="-62" y="72" width="124" height="28" fill="#F06CA8" stroke="#0F0F0F" stroke-width="2"/>
+                <text x="0" y="91" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#0F0F0F">FACULTY</text>
+              </g>
+              <g transform="translate(1110,330)">
+                <circle cx="0" cy="-48" r="18" fill="none" stroke="#0F0F0F" stroke-width="3"/>
+                <line x1="0" y1="-30" x2="0" y2="20" stroke="#0F0F0F" stroke-width="3"/>
+                <line x1="-28" y1="-5" x2="28" y2="-5" stroke="#0F0F0F" stroke-width="3"/>
+                <line x1="0" y1="20" x2="-22" y2="58" stroke="#0F0F0F" stroke-width="3"/>
+                <line x1="0" y1="20" x2="22" y2="58" stroke="#0F0F0F" stroke-width="3"/>
+                <rect x="-62" y="72" width="124" height="28" fill="#F4C419" stroke="#0F0F0F" stroke-width="2"/>
+                <text x="0" y="91" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#0F0F0F">STUDENT</text>
+              </g>
+
+              <!-- System boundary -->
+              <rect x="170" y="36" width="840" height="748" fill="#EFE9D9" stroke="#0F0F0F" stroke-width="4"/>
+              <text x="590" y="68" text-anchor="middle" font-family="Archivo Black, sans-serif" font-size="20" fill="#0F0F0F">MARKANY SYSTEM</text>
+
+              <!-- Use case pills helper via rounded rects -->
+              <!-- Shared top -->
+              <rect x="420" y="90" rx="22" ry="22" width="340" height="40" fill="#E4DCC4" stroke="#0F0F0F" stroke-width="2.5"/>
+              <text x="590" y="116" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="15" fill="#0F0F0F">UC-01: Auth &amp; RBAC</text>
+
+              <!-- Faculty column -->
+              <rect x="210" y="160" rx="20" ry="20" width="300" height="36" fill="#F06CA8" stroke="#0F0F0F" stroke-width="2.5"/>
+              <text x="360" y="184" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="14" fill="#0F0F0F">UC-02: Parse Timetable</text>
+
+              <rect x="210" y="214" rx="20" ry="20" width="300" height="36" fill="#F06CA8" stroke="#0F0F0F" stroke-width="2.5"/>
+              <text x="360" y="238" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="13" fill="#0F0F0F">UC-03: Manage Subjects &amp; Enrollments</text>
+
+              <rect x="210" y="268" rx="20" ry="20" width="300" height="36" fill="#F06CA8" stroke="#0F0F0F" stroke-width="2.5"/>
+              <text x="360" y="292" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="14" fill="#0F0F0F">UC-05: Live Video Marking</text>
+
+              <rect x="210" y="322" rx="20" ry="20" width="300" height="36" fill="#F06CA8" stroke="#0F0F0F" stroke-width="2.5"/>
+              <text x="360" y="346" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="14" fill="#0F0F0F">UC-06: Group-Photo Batch</text>
+
+              <rect x="210" y="376" rx="20" ry="20" width="300" height="36" fill="#F06CA8" stroke="#0F0F0F" stroke-width="2.5"/>
+              <text x="360" y="400" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="14" fill="#0F0F0F">UC-08: Review &amp; Override</text>
+
+              <rect x="210" y="430" rx="20" ry="20" width="300" height="36" fill="#F06CA8" stroke="#0F0F0F" stroke-width="2.5"/>
+              <text x="360" y="454" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="14" fill="#0F0F0F">UC-10: Export Excel/CSV</text>
+
+              <!-- Shared marks -->
+              <rect x="420" y="500" rx="20" ry="20" width="340" height="36" fill="#EA5B25" stroke="#0F0F0F" stroke-width="2.5"/>
+              <text x="590" y="524" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="14" fill="#EFE9D9">UC-09: CIE Marks Management</text>
+
+              <!-- Student column -->
+              <rect x="670" y="214" rx="20" ry="20" width="300" height="36" fill="#F4C419" stroke="#0F0F0F" stroke-width="2.5"/>
+              <text x="820" y="238" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="13" fill="#0F0F0F">UC-04: Biometric Registration (5 Poses)</text>
+
+              <rect x="670" y="322" rx="20" ry="20" width="300" height="36" fill="#F4C419" stroke="#0F0F0F" stroke-width="2.5"/>
+              <text x="820" y="346" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="14" fill="#0F0F0F">UC-07: Mobile Self Check-In</text>
+
+              <!-- Internal includes -->
+              <rect x="360" y="580" rx="18" ry="18" width="460" height="48" fill="#1F8A4C" stroke="#0F0F0F" stroke-width="2.5"/>
+              <text x="590" y="610" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="14" fill="#EFE9D9">Biometric Face Match (512-D)</text>
+
+              <rect x="360" y="650" rx="18" ry="18" width="460" height="48" fill="#1F8A4C" stroke="#0F0F0F" stroke-width="2.5"/>
+              <text x="590" y="680" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="14" fill="#EFE9D9">3D Head-Turn Liveness (Δ ≥ 0.12)</text>
+
+              <rect x="420" y="720" rx="18" ry="18" width="340" height="40" fill="#E4DCC4" stroke="#0F0F0F" stroke-width="2.5" stroke-dasharray="6 4"/>
+              <text x="590" y="746" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="14" fill="#0F0F0F">Manual Override ≪extend≫</text>
+
+              <!-- Association lines: Faculty -->
+              <line x1="70" y1="330" x2="210" y2="178" stroke="#0F0F0F" stroke-width="2"/>
+              <line x1="70" y1="330" x2="210" y2="232" stroke="#0F0F0F" stroke-width="2"/>
+              <line x1="70" y1="330" x2="210" y2="286" stroke="#0F0F0F" stroke-width="2"/>
+              <line x1="70" y1="330" x2="210" y2="340" stroke="#0F0F0F" stroke-width="2"/>
+              <line x1="70" y1="330" x2="210" y2="394" stroke="#0F0F0F" stroke-width="2"/>
+              <line x1="70" y1="330" x2="210" y2="448" stroke="#0F0F0F" stroke-width="2"/>
+              <line x1="70" y1="330" x2="420" y2="110" stroke="#0F0F0F" stroke-width="2"/>
+              <line x1="70" y1="330" x2="420" y2="518" stroke="#0F0F0F" stroke-width="2"/>
+
+              <!-- Association lines: Student -->
+              <line x1="1110" y1="330" x2="970" y2="110" stroke="#0F0F0F" stroke-width="2"/>
+              <line x1="1110" y1="330" x2="970" y2="232" stroke="#0F0F0F" stroke-width="2"/>
+              <line x1="1110" y1="330" x2="970" y2="340" stroke="#0F0F0F" stroke-width="2"/>
+              <line x1="1110" y1="330" x2="760" y2="518" stroke="#0F0F0F" stroke-width="2"/>
+
+              <!-- Include dashed lines -->
+              <line x1="360" y1="286" x2="480" y2="580" stroke="#0F0F0F" stroke-width="1.8" stroke-dasharray="5 4"/>
+              <line x1="360" y1="340" x2="520" y2="580" stroke="#0F0F0F" stroke-width="1.8" stroke-dasharray="5 4"/>
+              <line x1="820" y1="358" x2="700" y2="580" stroke="#0F0F0F" stroke-width="1.8" stroke-dasharray="5 4"/>
+              <line x1="820" y1="358" x2="700" y2="650" stroke="#0F0F0F" stroke-width="1.8" stroke-dasharray="5 4"/>
+              <line x1="360" y1="412" x2="520" y2="720" stroke="#0F0F0F" stroke-width="1.8" stroke-dasharray="5 4"/>
+
+              <text x="430" y="560" font-family="JetBrains Mono, monospace" font-size="11" fill="#0F0F0F">≪include≫</text>
+              <text x="760" y="620" font-family="JetBrains Mono, monospace" font-size="11" fill="#0F0F0F">≪include≫</text>
+            </svg>
+          </div>
+          <aside class="s08-legend reveal reveal-d2">
+            <h2>Legend</h2>
+            <div class="s08-leg-item pink">
+              <h3>Actors</h3>
+              <p>Faculty (primary) drives sessions; Student enrolls, registers biometrics, and self-checks.</p>
+            </div>
+            <div class="s08-leg-item yellow">
+              <h3>≪include≫</h3>
+              <p>Mandatory dependency — Face Match is required by UC-05/06/07; Liveness is required by UC-07.</p>
+            </div>
+            <div class="s08-leg-item green">
+              <h3>≪extend≫</h3>
+              <p>Conditional flow — Manual Override extends UC-08 only when faculty corrects a status.</p>
+            </div>
+            <div class="s08-leg-item">
+              <h3>System Boundary</h3>
+              <p>All ovals inside the MARKANY SYSTEM box are in-scope use cases from SRS §4.</p>
+            </div>
+          </aside>
+        </div>
+        <div class="slide-meta">
+          <div>UML Use Case Diagram</div>
+          <div class="slide-meta-num"><span>08</span><span class="slide-meta-dot"></span><span>12</span></div>
+        </div>
+      </section>
+
+      <!-- ========== SLIDE 09 — ARCHITECTURE ========== -->
+      <section class="slide s09" data-speaker="Rishi Yagnesh Kachhadia" data-range="09–12" data-time="6:40–10:00">
+        <div class="topbar">
+          <div class="topbar-eyebrow">System Analysis &amp; Design</div>
+          <div class="topbar-pill">Schematic / 3-Tier</div>
+        </div>
+        <div class="content">
+          <div class="s09-left reveal">
+            <h2>Four Tiers.<br />Zero Driver<br />Lock-In.</h2>
+            <p>HTML5 WebRTC client capture → Base64 JSON over HTTP/REST → CPU-only hybrid CV → unified dual persistence. No OS camera drivers on the server.</p>
+            <div class="s09-legend">
+              <div class="s09-leg"><span class="s09-swatch pink"></span>Pink — Presentation</div>
+              <div class="s09-leg"><span class="s09-swatch yellow"></span>Yellow — Application</div>
+              <div class="s09-leg"><span class="s09-swatch orange"></span>Orange — Vision Inference</div>
+              <div class="s09-leg"><span class="s09-swatch cream"></span>Cream — Data Persistence</div>
+            </div>
+          </div>
+          <div class="s09-stack-wrap reveal reveal-d2">
+            <div class="s09-layer t1">
+              <div class="tier">Tier 01 / Presentation</div>
+              <h3>Client Surface</h3>
+              <p>React 19 · Tailwind CSS · HTML5 Canvas · WebRTC getUserMedia</p>
+            </div>
+            <div class="s09-layer t2">
+              <div class="tier">Tier 02 / Application</div>
+              <h3>Flask REST Gateway</h3>
+              <p>Port 5050 · RBAC · Regex Parser · Idempotency Guards</p>
+            </div>
+            <div class="s09-layer t3">
+              <div class="tier">Tier 03 / CV Inference</div>
+              <h3>Hybrid Verification Engine</h3>
+              <p>SCRFD + ArcFace 512-D + 3D Liveness · Classical Baseline (pixel_ops, lbp, drawing)</p>
+            </div>
+            <div class="s09-layer t4">
+              <div class="tier">Tier 04 / Persistence</div>
+              <h3>Unified DAL</h3>
+              <p>store.py · Supabase PostgreSQL ↔ SQLite3 Offline Fallback</p>
+            </div>
+          </div>
+        </div>
+        <div class="slide-meta">
+          <div>System Architecture</div>
+          <div class="slide-meta-num"><span>09</span><span class="slide-meta-dot"></span><span>12</span></div>
+        </div>
+      </section>
+
+      <!-- ========== SLIDE 10 — MODULES & SCHEMA ========== -->
+      <section class="slide s10" data-speaker="Rishi Yagnesh Kachhadia" data-range="09–12" data-time="6:40–10:00">
+        <div class="topbar">
+          <div class="topbar-eyebrow">System Analysis &amp; Design</div>
+          <div class="topbar-pill">Engine &amp; Schema</div>
+        </div>
+        <div class="content">
+          <article class="s10-card reveal">
+            <h2>Hybrid Computer Vision Modules</h2>
+            <div class="s10-engines">
+              <div class="s10-eng deep">
+                <span class="mono-tag">Production Deep Engine</span>
+                <h3>ONNX CPU Runtime</h3>
+                <ul>
+                  <li>SCRFD multi-scale detector (≥ 24×24 px)</li>
+                  <li>ArcFace 512-D embeddings</li>
+                  <li>Cosine k-NN (≥ 0.38)</li>
+                  <li>3D Landmark Liveness (Δ ≥ 0.12)</li>
+                </ul>
+              </div>
+              <div class="s10-eng classical">
+                <span class="mono-tag">Classical Vision Baseline</span>
+                <h3>Pure Python / NumPy</h3>
+                <ul>
+                  <li>Luminosity Grayscale</li>
+                  <li>2D Gaussian Convolution</li>
+                  <li>CDF Histogram Equalization</li>
+                  <li>3,776-D LBP (0.65 Euclidean)</li>
+                  <li>Bresenham integer line rasterization</li>
+                </ul>
+              </div>
+            </div>
+          </article>
+          <article class="s10-card reveal reveal-d2">
+            <h2>Relational Schema — 10 Tables</h2>
+            <div class="s10-groups">
+              <div class="s10-group g1">
+                <h3>Identity &amp; Biometrics</h3>
+                <p>users · students · face_embeddings (ON DELETE CASCADE)</p>
+              </div>
+              <div class="s10-group g2">
+                <h3>Academics</h3>
+                <p>subjects (UNIQUE join_code) · enrollments · scheduled_classes · results</p>
+              </div>
+              <div class="s10-group g3">
+                <h3>Attendance &amp; Audit</h3>
+                <p>attendance_sessions · attendance (UNIQUE student/date/session) · session_photos (immutable BLOB)</p>
+              </div>
+            </div>
+            <div class="s10-callout">Dual-Mode store.py DAL · Supabase Cloud → local data/attendance.db failover</div>
+          </article>
+        </div>
+        <div class="slide-meta">
+          <div>Core Modules &amp; Data Architecture</div>
+          <div class="slide-meta-num"><span>10</span><span class="slide-meta-dot"></span><span>12</span></div>
+        </div>
+      </section>
+
+      <!-- ========== SLIDE 11 — CONSTRAINTS ========== -->
+      <section class="slide s11" data-speaker="Rishi Yagnesh Kachhadia" data-range="09–12" data-time="6:40–10:00">
+        <div class="topbar">
+          <div class="topbar-eyebrow">Constraints &amp; Risk</div>
+          <div class="topbar-pill">Limitations</div>
+        </div>
+        <div class="content">
+          <div class="s11-grid">
+            <article class="s11-card reveal">
+              <div class="num">01</div>
+              <h3>CPU-Only Execution</h3>
+              <p>No dedicated CUDA GPU on standard faculty laptops.</p>
+              <div class="mit">Mitigation: Quantized ONNX Runtime (~200 ms/frame).</div>
+            </article>
+            <article class="s11-card reveal reveal-d1">
+              <div class="num">02</div>
+              <h3>WebRTC Secure Context</h3>
+              <p>Browsers block webcam access on insecure HTTP origins.</p>
+              <div class="mit">Mitigation: HTTPS or localhost / 127.0.0.1.</div>
+            </article>
+            <article class="s11-card reveal reveal-d2">
+              <div class="num">03</div>
+              <h3>Ambient Lighting (&gt; 150 lux)</h3>
+              <p>Harsh backlighting or dim halls reduce facial contrast.</p>
+              <div class="mit">Mitigation: Multi-pose enrollment + manual review override.</div>
+            </article>
+            <article class="s11-card reveal reveal-d3">
+              <div class="num">04</div>
+              <h3>Initial Weight Cache (~330 MB)</h3>
+              <p>First launch needs internet for buffalo_l weights.</p>
+              <div class="mit">Mitigation: Cached locally in ~/.insightface/ for offline runs.</div>
+            </article>
+            <article class="s11-card reveal reveal-d4">
+              <div class="num">05</div>
+              <h3>Client-Side Capture Only</h3>
+              <p>Server cannot directly open OS camera drivers.</p>
+              <div class="mit">Mitigation: Browser getUserMedia + Base64 JPEG REST payloads.</div>
+            </article>
+            <article class="s11-card reveal reveal-d5">
+              <div class="num">06</div>
+              <h3>OS Runtime Quirks (macOS)</h3>
+              <p>Port 5000 AirPlay clash &amp; Homebrew expat linking.</p>
+              <div class="mit">Mitigation: Permanent port 5050 + run-backend.sh wrapper.</div>
+            </article>
+          </div>
+        </div>
+        <div class="slide-meta">
+          <div>Project Constraints &amp; Limitations</div>
+          <div class="slide-meta-num"><span>11</span><span class="slide-meta-dot"></span><span>12</span></div>
+        </div>
+      </section>
+
+      <!-- ========== SLIDE 12 — CLOSING ========== -->
+      <section class="slide s12 closing" data-speaker="Rishi Yagnesh Kachhadia" data-range="09–12" data-time="6:40–10:00">
+        <div class="topbar">
+          <div class="topbar-eyebrow">Conclusion</div>
+          <div class="topbar-pill">V1.0 Complete → V2.0</div>
+        </div>
+        <div class="content" style="bottom: 210px;">
+          <div class="s12-block cream reveal">
+            <h2>Key Achievements — v1.0 Ready</h2>
+            <ul>
+              <li>Working end-to-end prototype: all SRS TBDs resolved &amp; 16/16 backend tests passing (0.43 s).</li>
+              <li>Eliminates 10–15 min roll-call overhead &amp; proxy attendance with &lt; 2.5 s touchless classroom marking.</li>
+              <li>Hybrid Verification Engine pairs Classical Vision Baseline with production ArcFace depth.</li>
+            </ul>
+          </div>
+          <div class="s12-block yellow s12-road reveal reveal-d2">
+            <h2>Post-1.0 Enterprise Roadmap</h2>
+            <div class="item">
+              <div class="n">01</div>
+              <div>
+                <h3>Firebase Cloud Messaging</h3>
+                <p>Native mobile push alerts via FCM.</p>
+              </div>
+            </div>
+            <div class="item">
+              <div class="n">02</div>
+              <div>
+                <h3>Canvas / Moodle LMS Sync</h3>
+                <p>Automated webhooks for university LMS.</p>
+              </div>
+            </div>
+            <div class="item">
+              <div class="n">03</div>
+              <div>
+                <h3>Edge-AI Classroom Terminals</h3>
+                <p>Standalone Raspberry Pi 5 / NVIDIA Jetson nodes.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="s12-thanks reveal reveal-d3">
+          <div class="big">Thank You — Open for Viva Q&amp;A</div>
+          <div class="team">
+            Maitra · Vikas · Rishi<br />
+            Navrachana University · CS330 Software Engineering
+          </div>
+        </div>
+        <div class="slide-meta">
+          <div>Conclusion &amp; Future Roadmap</div>
+          <div class="slide-meta-num"><span>12</span><span class="slide-meta-dot"></span><span>12</span></div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Bottom nav pill -->
+  <div class="deck-controls" role="navigation" aria-label="Slide navigation">
+    <div class="nav-pill">
+      <button type="button" id="btnPrev" aria-label="Previous slide">&lt;</button>
+      <span id="navCounter">01/12</span>
+      <button type="button" id="btnNext" aria-label="Next slide">&gt;</button>
+      <button type="button" class="nav-reset" id="btnReset" aria-label="Reset to slide 1">Reset (R)</button>
+    </div>
+  </div>
+
+  <script>
+    /* ===========================================
+       SLIDE PRESENTATION CONTROLLER
+       =========================================== */
+    class SlidePresentation {
+      constructor() {
+        this.slides = Array.from(document.querySelectorAll('.slide'));
+        this.currentSlide = 0;
+        this.stage = document.getElementById('deckStage');
+        this.progressFill = document.getElementById('progressFill');
+        this.navCounter = document.getElementById('navCounter');
+        this.speakerCue = document.getElementById('speakerCue');
+        this.cueName = document.getElementById('cueName');
+        this.cueRange = document.getElementById('cueRange');
+        this.cueTime = document.getElementById('cueTime');
+        this.editMode = false;
+        this.touchStartX = null;
+
+        this.setupStageScale();
+        this.setupKeyboardNav();
+        this.setupTouchNav();
+        this.setupButtons();
+        this.setupEditMode();
+        this.showSlide(0);
+      }
+
+      setupStageScale() {
+        const scale = () => {
+          const factor = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+          const x = (window.innerWidth - 1920 * factor) / 2;
+          const y = (window.innerHeight - 1080 * factor) / 2;
+          this.stage.style.transform = `translate(${x}px, ${y}px) scale(${factor})`;
+        };
+        scale();
+        window.addEventListener('resize', scale);
+      }
+
+      setupButtons() {
+        document.getElementById('btnPrev').addEventListener('click', () => this.prev());
+        document.getElementById('btnNext').addEventListener('click', () => this.next());
+        document.getElementById('btnReset').addEventListener('click', () => this.showSlide(0));
+      }
+
+      setupKeyboardNav() {
+        document.addEventListener('keydown', (e) => {
+          if (this.editMode && e.target.getAttribute('contenteditable') === 'true') {
+            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
+              e.preventDefault();
+              this.saveEdits();
+            }
+            return;
+          }
+
+          const key = e.key;
+          if (key === 'ArrowRight' || key === ' ' || key === 'PageDown') {
+            e.preventDefault();
+            this.next();
+          } else if (key === 'ArrowLeft' || key === 'PageUp') {
+            e.preventDefault();
+            this.prev();
+          } else if (key === 'Home') {
+            e.preventDefault();
+            this.showSlide(0);
+          } else if (key === 'End') {
+            e.preventDefault();
+            this.showSlide(this.slides.length - 1);
+          } else if (key.toLowerCase() === 'r') {
+            e.preventDefault();
+            this.showSlide(0);
+          } else if (key.toLowerCase() === 'f') {
+            e.preventDefault();
+            this.toggleFullscreen();
+          } else if (key.toLowerCase() === 'n') {
+            e.preventDefault();
+            this.speakerCue.classList.toggle('on');
+          } else if (key.toLowerCase() === 'e') {
+            e.preventDefault();
+            this.toggleEditMode();
+          }
+        });
+      }
+
+      setupTouchNav() {
+        const vp = document.querySelector('.deck-viewport');
+        vp.addEventListener('touchstart', (e) => {
+          this.touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+        vp.addEventListener('touchend', (e) => {
+          if (this.touchStartX == null) return;
+          const dx = e.changedTouches[0].screenX - this.touchStartX;
+          if (Math.abs(dx) > 60) {
+            if (dx < 0) this.next();
+            else this.prev();
+          }
+          this.touchStartX = null;
+        }, { passive: true });
+
+        window.addEventListener('wheel', (e) => {
+          if (this.editMode) return;
+          if (Math.abs(e.deltaY) < 20) return;
+          if (e.deltaY > 0) this.next();
+          else this.prev();
+        }, { passive: true });
+      }
+
+      setupEditMode() {
+        const hotzone = document.getElementById('editHotzone');
+        const toggle = document.getElementById('editToggle');
+        let hideTimer = null;
+
+        const show = () => {
+          clearTimeout(hideTimer);
+          toggle.classList.add('show');
+        };
+        const scheduleHide = () => {
+          hideTimer = setTimeout(() => {
+            if (!this.editMode) toggle.classList.remove('show');
+          }, 400);
+        };
+
+        hotzone.addEventListener('mouseenter', show);
+        hotzone.addEventListener('mouseleave', scheduleHide);
+        toggle.addEventListener('mouseenter', show);
+        toggle.addEventListener('mouseleave', scheduleHide);
+        toggle.addEventListener('click', () => this.toggleEditMode());
+      }
+
+      toggleEditMode() {
+        this.editMode = !this.editMode;
+        document.body.classList.toggle('edit-mode', this.editMode);
+        document.getElementById('editToggle').classList.toggle('active', this.editMode);
+        document.getElementById('editToggle').classList.add('show');
+
+        const nodes = document.querySelectorAll('.slide h1, .slide h2, .slide h3, .slide p, .slide li, .slide .label, .slide .s01-sub, .slide .s01-meta, .slide .big, .slide .team, .slide .mit, .slide .uc, .slide .lbl, .slide .val, .slide .tier');
+        nodes.forEach((el) => {
+          if (this.editMode) {
+            el.setAttribute('contenteditable', 'true');
+            el.setAttribute('spellcheck', 'false');
+          } else {
+            el.removeAttribute('contenteditable');
+          }
+        });
+
+        if (!this.editMode) this.saveEdits();
+      }
+
+      saveEdits() {
+        try {
+          localStorage.setItem('markany-cs330-edits', this.stage.innerHTML);
+        } catch (_) { /* ignore quota */ }
+      }
+
+      restoreEdits() {
+        try {
+          const html = localStorage.getItem('markany-cs330-edits');
+          if (html) {
+            /* Intentionally not restoring full stage HTML to avoid breaking listeners;
+               edits persist for the session via contenteditable save prompt only. */
+          }
+        } catch (_) {}
+      }
+
+      toggleFullscreen() {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen?.();
+        } else {
+          document.exitFullscreen?.();
+        }
+      }
+
+      next() { this.showSlide(this.currentSlide + 1); }
+      prev() { this.showSlide(this.currentSlide - 1); }
+
+      showSlide(index) {
+        this.currentSlide = Math.max(0, Math.min(index, this.slides.length - 1));
+        this.slides.forEach((slide, i) => {
+          const on = i === this.currentSlide;
+          slide.classList.toggle('active', on);
+          slide.classList.toggle('visible', on);
+        });
+
+        const n = String(this.currentSlide + 1).padStart(2, '0');
+        const total = String(this.slides.length).padStart(2, '0');
+        this.navCounter.textContent = `${n}/${total}`;
+        this.progressFill.style.width = `${((this.currentSlide + 1) / this.slides.length) * 100}%`;
+
+        const slide = this.slides[this.currentSlide];
+        this.cueName.textContent = slide.dataset.speaker || '';
+        this.cueRange.textContent = `Slides ${slide.dataset.range || ''}`;
+        this.cueTime.textContent = `Target ${slide.dataset.time || ''}`;
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      window.__deck = new SlidePresentation();
+    });
+  </script>
+</body>
+</html>
