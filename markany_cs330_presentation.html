@@ -560,11 +560,31 @@
       background: var(--cream);
     }
 
-    .s01-reticle {
+    .s01-scan {
       position: absolute;
       inset: 196px 200px 262px 200px;
       border: 3px solid var(--ink);
       background: transparent;
+      overflow: hidden;
+      z-index: 2;
+    }
+
+    .s01-face {
+      position: absolute;
+      inset: 8%;
+      width: 84%;
+      height: 84%;
+      max-width: none;
+      max-height: none;
+      opacity: 0.92;
+      z-index: 1;
+    }
+
+    .s01-reticle {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
     }
 
     .s01-reticle::before,
@@ -572,23 +592,37 @@
       content: "";
       position: absolute;
       background: var(--ink);
+      opacity: 0.85;
     }
 
     .s01-reticle::before {
       left: 50%;
-      top: 12px;
-      bottom: 12px;
+      top: 10px;
+      bottom: 10px;
       width: 2px;
       transform: translateX(-50%);
     }
 
     .s01-reticle::after {
       top: 50%;
-      left: 12px;
-      right: 12px;
+      left: 10px;
+      right: 10px;
       height: 2px;
       transform: translateY(-50%);
     }
+
+    .s01-corner {
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      border: 3px solid var(--ink);
+      z-index: 3;
+    }
+
+    .s01-corner.tl { top: 8px; left: 8px; border-right: none; border-bottom: none; }
+    .s01-corner.tr { top: 8px; right: 8px; border-left: none; border-bottom: none; }
+    .s01-corner.bl { bottom: 8px; left: 8px; border-right: none; border-top: none; }
+    .s01-corner.br { bottom: 8px; right: 8px; border-left: none; border-top: none; }
 
     .s01-badge {
       position: absolute;
@@ -1733,7 +1767,39 @@
             <div class="s01-frame f1"></div>
             <div class="s01-frame f2"></div>
             <div class="s01-frame f3"></div>
-            <div class="s01-reticle"></div>
+            <div class="s01-scan">
+              <svg class="s01-face" viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">
+                <!-- Face oval -->
+                <ellipse cx="100" cy="118" rx="62" ry="78" fill="none" stroke="#0F0F0F" stroke-width="3.5"/>
+                <!-- Brow / forehead landmark -->
+                <path d="M48 92 Q100 72 152 92" fill="none" stroke="#0F0F0F" stroke-width="2.5"/>
+                <!-- Eyes -->
+                <ellipse cx="74" cy="112" rx="14" ry="9" fill="none" stroke="#0F0F0F" stroke-width="3"/>
+                <ellipse cx="126" cy="112" rx="14" ry="9" fill="none" stroke="#0F0F0F" stroke-width="3"/>
+                <circle cx="74" cy="112" r="3.5" fill="#0F0F0F"/>
+                <circle cx="126" cy="112" r="3.5" fill="#0F0F0F"/>
+                <!-- Nose bridge + tip -->
+                <path d="M100 104 L100 138" fill="none" stroke="#0F0F0F" stroke-width="2.5"/>
+                <path d="M88 148 Q100 158 112 148" fill="none" stroke="#0F0F0F" stroke-width="3"/>
+                <!-- Mouth -->
+                <path d="M72 172 Q100 188 128 172" fill="none" stroke="#0F0F0F" stroke-width="3"/>
+                <!-- Jaw / cheek landmarks -->
+                <path d="M48 140 Q42 170 58 196" fill="none" stroke="#0F0F0F" stroke-width="2.5"/>
+                <path d="M152 140 Q158 170 142 196" fill="none" stroke="#0F0F0F" stroke-width="2.5"/>
+                <!-- Scan nodes -->
+                <circle cx="100" cy="40" r="4" fill="#EA5B25" stroke="#0F0F0F" stroke-width="2"/>
+                <circle cx="48" cy="92" r="3.5" fill="#F06CA8" stroke="#0F0F0F" stroke-width="2"/>
+                <circle cx="152" cy="92" r="3.5" fill="#F06CA8" stroke="#0F0F0F" stroke-width="2"/>
+                <circle cx="100" cy="152" r="3.5" fill="#F4C419" stroke="#0F0F0F" stroke-width="2"/>
+                <circle cx="72" cy="172" r="3" fill="#1F8A4C" stroke="#0F0F0F" stroke-width="2"/>
+                <circle cx="128" cy="172" r="3" fill="#1F8A4C" stroke="#0F0F0F" stroke-width="2"/>
+              </svg>
+              <div class="s01-reticle"></div>
+              <span class="s01-corner tl"></span>
+              <span class="s01-corner tr"></span>
+              <span class="s01-corner bl"></span>
+              <span class="s01-corner br"></span>
+            </div>
             <div class="s01-badge">Hybrid CV · ArcFace 512-D · 3D Liveness</div>
           </div>
         </div>
