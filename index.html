@@ -1153,282 +1153,77 @@
        SLIDE 08 — UML USE CASE
        =========================================== */
     .s08 .content {
-      display: grid;
-      grid-template-columns: 1.95fr 1fr;
-      gap: 22px;
-      align-items: stretch;
-    }
-
-    .s08-diagram {
-      border: 4px solid var(--ink);
-      background: var(--cream);
-      position: relative;
-      overflow: hidden;
-      box-shadow: var(--hard-shadow);
-      height: 100%;
-      min-height: 0;
-      padding: 18px 18px 16px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      z-index: 1;
+      gap: 14px;
     }
 
-    .s08-diagram .dotgrid {
+    .s08-board {
+      flex: 1;
+      min-height: 0;
+      border: 4px solid var(--ink);
+      background: var(--cream);
+      box-shadow: var(--hard-shadow);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 16px;
+    }
+
+    .s08-board .dotgrid {
       position: absolute;
       inset: 0;
       background-image: radial-gradient(var(--ink) 1px, transparent 1px);
       background-size: 18px 18px;
       opacity: 0.07;
       pointer-events: none;
-      z-index: 0;
     }
 
-    .s08-uml {
+    .s08-board svg {
       position: relative;
       z-index: 1;
-      display: grid;
-      grid-template-columns: 120px 18px 1fr 18px 120px;
-      gap: 8px;
-      flex: 1;
-      min-height: 0;
-      align-items: stretch;
-    }
-
-    .s08-actor {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-    }
-
-    .s08-stick {
-      width: 70px;
-      height: 120px;
-      max-width: 70px;
-      max-height: 120px;
+      width: 100%;
+      height: 100%;
+      max-width: none;
+      max-height: none;
       display: block;
-      overflow: visible;
-      flex-shrink: 0;
     }
 
-    .s08-actor-badge {
-      border: 3px solid var(--ink);
-      padding: 10px 8px;
-      font-family: var(--font-mono);
-      font-size: 14px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      text-align: center;
-      line-height: 1.2;
-      width: 100%;
-    }
-
-    .s08-actor-badge.pink { background: var(--pink); }
-    .s08-actor-badge.yellow { background: var(--yellow); }
-
-    .s08-boundary {
-      border: 4px solid var(--ink);
-      background: rgba(239, 233, 217, 0.92);
-      display: flex;
-      flex-direction: column;
-      min-height: 0;
-      padding: 12px 14px 14px;
-      gap: 10px;
-    }
-
-    .s08-boundary-title {
-      font-family: var(--font-display);
-      font-size: 22px;
-      text-transform: uppercase;
-      text-align: center;
-      letter-spacing: 0;
-      padding-bottom: 8px;
-      border-bottom: 3px solid var(--ink);
-    }
-
-    .s08-uc-shared {
-      border: 3px solid var(--ink);
-      border-radius: 999px;
-      background: var(--cream-2);
-      padding: 10px 16px;
-      text-align: center;
-      font-family: var(--font-body);
-      font-size: 18px;
-      font-weight: 600;
-      line-height: 1.2;
-    }
-
-    .s08-uc-shared.orange {
-      background: var(--orange);
-      color: var(--cream);
-    }
-
-    .s08-uc-cols {
+    .s08-legend-strip {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(4, 1fr);
       gap: 12px;
-      flex: 1;
-      min-height: 0;
-    }
-
-    .s08-uc-col {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      min-height: 0;
-    }
-
-    .s08-col-label {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      text-align: center;
-      opacity: 0.7;
-    }
-
-    .s08-uc {
-      border: 3px solid var(--ink);
-      border-radius: 999px;
-      padding: 8px 12px;
-      text-align: center;
-      font-family: var(--font-body);
-      font-size: 17px;
-      font-weight: 600;
-      line-height: 1.2;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 42px;
-    }
-
-    .s08-uc.pink { background: var(--pink); }
-    .s08-uc.yellow { background: var(--yellow); }
-    .s08-uc.green {
-      background: var(--green);
-      color: var(--cream);
-      border-radius: 18px;
-      font-size: 15px;
-    }
-    .s08-uc.extend {
-      background: var(--cream-2);
-      border-style: dashed;
-      font-size: 15px;
-    }
-
-    .s08-includes {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 8px;
-      margin-top: 2px;
-    }
-
-    .s08-includes .s08-uc {
-      flex: none;
-      min-height: 52px;
-    }
-
-    .s08-rel {
-      font-family: var(--font-mono);
-      font-size: 13px;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      text-align: center;
-      border: 2px solid var(--ink);
-      background: var(--yellow);
-      padding: 6px 10px;
-      line-height: 1.25;
-    }
-
-    .s08-assoc {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 14px;
-      align-self: center;
-      height: 55%;
-    }
-
-    .s08-assoc span {
-      height: 4px;
-      background: var(--ink);
-      width: 100%;
-      position: relative;
       flex: 0 0 auto;
     }
 
-    .s08-assoc.left span::after {
-      content: "";
-      position: absolute;
-      right: -2px;
-      top: 50%;
-      transform: translateY(-50%);
-      border-top: 6px solid transparent;
-      border-bottom: 6px solid transparent;
-      border-left: 10px solid var(--ink);
-    }
-
-    .s08-assoc.right span::before {
-      content: "";
-      position: absolute;
-      left: -2px;
-      top: 50%;
-      transform: translateY(-50%);
-      border-top: 6px solid transparent;
-      border-bottom: 6px solid transparent;
-      border-right: 10px solid var(--ink);
-    }
-
-    .s08-legend {
-      border: 4px solid var(--ink);
-      background: var(--cream);
-      padding: 22px 20px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 12px;
-      box-shadow: 8px 8px 0 var(--pink);
-      height: 100%;
-      min-height: 0;
-      overflow: hidden;
-    }
-
-    .s08-legend h2 {
-      font-family: var(--font-display);
-      font-size: 32px;
-      text-transform: uppercase;
-      line-height: 1;
-      margin-bottom: 2px;
-    }
-
-    .s08-leg-item {
+    .s08-leg {
       border: 3px solid var(--ink);
-      padding: 16px;
-      background: var(--cream-2);
-      flex: 1;
+      padding: 12px 14px;
+      min-height: 92px;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      box-shadow: var(--hard-shadow);
     }
 
-    .s08-leg-item.pink { background: var(--pink); }
-    .s08-leg-item.yellow { background: var(--yellow); }
-    .s08-leg-item.green { background: var(--green); color: var(--cream); }
+    .s08-leg.pink { background: var(--pink); }
+    .s08-leg.yellow { background: var(--yellow); }
+    .s08-leg.green { background: var(--green); color: var(--cream); }
+    .s08-leg.cream { background: var(--cream-2); }
 
-    .s08-leg-item h3 {
+    .s08-leg h3 {
       font-family: var(--font-mono);
-      font-size: 14px;
+      font-size: 13px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       margin-bottom: 6px;
     }
 
-    .s08-leg-item p {
-      font-size: 17px;
+    .s08-leg p {
+      font-family: var(--font-body);
+      font-size: 16px;
       line-height: 1.3;
     }
 
@@ -2280,85 +2075,145 @@
           <div class="topbar-pill">UML / Actors</div>
         </div>
         <div class="content">
-          <div class="s08-diagram reveal" role="img" aria-label="MarkAny UML Use Case Diagram">
+          <div class="s08-board reveal">
             <div class="dotgrid"></div>
-            <div class="s08-uml">
-              <div class="s08-actor">
-                <svg class="s08-stick" viewBox="0 0 70 120" aria-hidden="true">
-                  <circle cx="35" cy="18" r="14" fill="none" stroke="#0F0F0F" stroke-width="3"/>
-                  <line x1="35" y1="32" x2="35" y2="72" stroke="#0F0F0F" stroke-width="3"/>
-                  <line x1="12" y1="48" x2="58" y2="48" stroke="#0F0F0F" stroke-width="3"/>
-                  <line x1="35" y1="72" x2="16" y2="108" stroke="#0F0F0F" stroke-width="3"/>
-                  <line x1="35" y1="72" x2="54" y2="108" stroke="#0F0F0F" stroke-width="3"/>
-                </svg>
-                <div class="s08-actor-badge pink">Faculty</div>
-              </div>
-              <div class="s08-assoc left" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+            <svg viewBox="0 0 1600 780" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MarkAny UML Use Case Diagram">
+              <!-- System boundary first so lines draw above fill -->
+              <rect x="220" y="36" width="1160" height="710" fill="#EFE9D9" stroke="#0F0F0F" stroke-width="4"/>
+              <text x="800" y="72" text-anchor="middle" font-family="Archivo Black, sans-serif" font-size="26" fill="#0F0F0F">MARKANY SYSTEM</text>
 
-              <div class="s08-boundary">
-                <div class="s08-boundary-title">MarkAny System</div>
-                <div class="s08-uc-shared">UC-01 · Auth &amp; RBAC <span style="opacity:.65;font-size:14px;">(shared)</span></div>
+              <!-- Association lines -->
+              <g stroke="#0F0F0F" stroke-width="2.5" fill="none">
+                <!-- Faculty bus -->
+                <line x1="120" y1="390" x2="200" y2="390"/>
+                <line x1="200" y1="120" x2="200" y2="600"/>
+                <line x1="200" y1="120" x2="560" y2="120"/>
+                <line x1="200" y1="190" x2="300" y2="190"/>
+                <line x1="200" y1="255" x2="300" y2="255"/>
+                <line x1="200" y1="320" x2="300" y2="320"/>
+                <line x1="200" y1="385" x2="300" y2="385"/>
+                <line x1="200" y1="450" x2="300" y2="450"/>
+                <line x1="200" y1="515" x2="300" y2="515"/>
+                <line x1="200" y1="580" x2="560" y2="580"/>
 
-                <div class="s08-uc-cols">
-                  <div class="s08-uc-col">
-                    <div class="s08-col-label">Faculty-driven</div>
-                    <div class="s08-uc pink">UC-02 · Parse Timetable</div>
-                    <div class="s08-uc pink">UC-03 · Subjects &amp; Enrollments</div>
-                    <div class="s08-uc pink">UC-05 · Live Video Marking</div>
-                    <div class="s08-uc pink">UC-06 · Group-Photo Batch</div>
-                    <div class="s08-uc pink">UC-08 · Review &amp; Override</div>
-                    <div class="s08-uc pink">UC-10 · Export Excel/CSV</div>
-                  </div>
-                  <div class="s08-uc-col">
-                    <div class="s08-col-label">Student-driven</div>
-                    <div class="s08-uc yellow">UC-04 · Biometric Registration<br /><span style="font-weight:500;font-size:14px;opacity:.8">3–5 poses · 512-D embeddings</span></div>
-                    <div class="s08-uc yellow">UC-07 · Mobile Self Check-In<br /><span style="font-weight:500;font-size:14px;opacity:.8">Timed window · 3D liveness</span></div>
-                    <div class="s08-uc" style="background:var(--cream-2);font-size:15px;font-weight:500;border-radius:18px;">Also uses UC-01 Auth<br />&amp; UC-09 Marks</div>
-                    <div class="s08-uc" style="background:var(--cream-2);font-size:15px;font-weight:500;border-radius:18px;">UC-07 includes Face Match<br />+ 3D Liveness</div>
-                  </div>
-                </div>
+                <!-- Student bus -->
+                <line x1="1480" y1="390" x2="1400" y2="390"/>
+                <line x1="1400" y1="120" x2="1400" y2="580"/>
+                <line x1="1400" y1="120" x2="1040" y2="120"/>
+                <line x1="1400" y1="255" x2="1300" y2="255"/>
+                <line x1="1400" y1="385" x2="1300" y2="385"/>
+                <line x1="1400" y1="580" x2="1040" y2="580"/>
 
-                <div class="s08-uc-shared orange">UC-09 · CIE Marks Management <span style="opacity:.8;font-size:14px;">(shared)</span></div>
-                <div class="s08-rel">≪include≫ Face Match + Liveness &nbsp;·&nbsp; ≪extend≫ Manual Override → UC-08</div>
-                <div class="s08-includes">
-                  <div class="s08-uc green">Biometric Face Match<br />512-D ArcFace</div>
-                  <div class="s08-uc green">3D Head-Turn Liveness<br />Δ ≥ 0.12</div>
-                  <div class="s08-uc extend">Manual Override<br />≪extend≫ UC-08</div>
-                </div>
-              </div>
+                <!-- include: UC-05, UC-06, UC-07 -> Face Match -->
+                <path d="M470 346 V620 H510" stroke-dasharray="7 5"/>
+                <path d="M470 411 V635 H620" stroke-dasharray="7 5"/>
+                <path d="M1130 411 V635 H800" stroke-dasharray="7 5"/>
+                <!-- include: UC-07 -> Liveness -->
+                <path d="M1130 411 V680 H970" stroke-dasharray="7 5"/>
+                <!-- extend: UC-08 -> Manual Override -->
+                <path d="M470 476 V545 H800 V720" stroke-dasharray="7 5"/>
+              </g>
 
-              <div class="s08-assoc right" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
-              <div class="s08-actor">
-                <svg class="s08-stick" viewBox="0 0 70 120" aria-hidden="true">
-                  <circle cx="35" cy="18" r="14" fill="none" stroke="#0F0F0F" stroke-width="3"/>
-                  <line x1="35" y1="32" x2="35" y2="72" stroke="#0F0F0F" stroke-width="3"/>
-                  <line x1="12" y1="48" x2="58" y2="48" stroke="#0F0F0F" stroke-width="3"/>
-                  <line x1="35" y1="72" x2="16" y2="108" stroke="#0F0F0F" stroke-width="3"/>
-                  <line x1="35" y1="72" x2="54" y2="108" stroke="#0F0F0F" stroke-width="3"/>
-                </svg>
-                <div class="s08-actor-badge yellow">Student</div>
-              </div>
+              <!-- Faculty actor -->
+              <g transform="translate(70,330)">
+                <circle cx="0" cy="0" r="22" fill="#EFE9D9" stroke="#0F0F0F" stroke-width="3"/>
+                <line x1="0" y1="22" x2="0" y2="70" stroke="#0F0F0F" stroke-width="3"/>
+                <line x1="-28" y1="40" x2="28" y2="40" stroke="#0F0F0F" stroke-width="3"/>
+                <line x1="0" y1="70" x2="-24" y2="110" stroke="#0F0F0F" stroke-width="3"/>
+                <line x1="0" y1="70" x2="24" y2="110" stroke="#0F0F0F" stroke-width="3"/>
+                <rect x="-58" y="122" width="116" height="34" fill="#F06CA8" stroke="#0F0F0F" stroke-width="3"/>
+                <text x="0" y="145" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" fill="#0F0F0F">FACULTY</text>
+              </g>
+
+              <!-- Student actor -->
+              <g transform="translate(1530,330)">
+                <circle cx="0" cy="0" r="22" fill="#EFE9D9" stroke="#0F0F0F" stroke-width="3"/>
+                <line x1="0" y1="22" x2="0" y2="70" stroke="#0F0F0F" stroke-width="3"/>
+                <line x1="-28" y1="40" x2="28" y2="40" stroke="#0F0F0F" stroke-width="3"/>
+                <line x1="0" y1="70" x2="-24" y2="110" stroke="#0F0F0F" stroke-width="3"/>
+                <line x1="0" y1="70" x2="24" y2="110" stroke="#0F0F0F" stroke-width="3"/>
+                <rect x="-58" y="122" width="116" height="34" fill="#F4C419" stroke="#0F0F0F" stroke-width="3"/>
+                <text x="0" y="145" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" fill="#0F0F0F">STUDENT</text>
+              </g>
+
+              <!-- Shared UC-01 -->
+              <rect x="560" y="94" rx="26" ry="26" width="480" height="52" fill="#E4DCC4" stroke="#0F0F0F" stroke-width="3"/>
+              <text x="800" y="127" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="22" font-weight="600" fill="#0F0F0F">UC-01  ·  Auth &amp; RBAC</text>
+
+              <!-- Faculty use cases -->
+              <g font-family="Space Grotesk, sans-serif" font-size="20" font-weight="600" fill="#0F0F0F">
+                <rect x="300" y="164" rx="24" ry="24" width="340" height="52" fill="#F06CA8" stroke="#0F0F0F" stroke-width="3"/>
+                <text x="470" y="197" text-anchor="middle">UC-02  ·  Parse Timetable</text>
+
+                <rect x="300" y="229" rx="24" ry="24" width="340" height="52" fill="#F06CA8" stroke="#0F0F0F" stroke-width="3"/>
+                <text x="470" y="262" text-anchor="middle">UC-03  ·  Subjects &amp; Enrollments</text>
+
+                <rect x="300" y="294" rx="24" ry="24" width="340" height="52" fill="#F06CA8" stroke="#0F0F0F" stroke-width="3"/>
+                <text x="470" y="327" text-anchor="middle">UC-05  ·  Live Video Marking</text>
+
+                <rect x="300" y="359" rx="24" ry="24" width="340" height="52" fill="#F06CA8" stroke="#0F0F0F" stroke-width="3"/>
+                <text x="470" y="392" text-anchor="middle">UC-06  ·  Group-Photo Batch</text>
+
+                <rect x="300" y="424" rx="24" ry="24" width="340" height="52" fill="#F06CA8" stroke="#0F0F0F" stroke-width="3"/>
+                <text x="470" y="457" text-anchor="middle">UC-08  ·  Review &amp; Override</text>
+
+                <rect x="300" y="489" rx="24" ry="24" width="340" height="52" fill="#F06CA8" stroke="#0F0F0F" stroke-width="3"/>
+                <text x="470" y="522" text-anchor="middle">UC-10  ·  Export Excel / CSV</text>
+              </g>
+
+              <!-- Student use cases -->
+              <g font-family="Space Grotesk, sans-serif" font-size="20" font-weight="600" fill="#0F0F0F">
+                <rect x="960" y="229" rx="24" ry="24" width="340" height="52" fill="#F4C419" stroke="#0F0F0F" stroke-width="3"/>
+                <text x="1130" y="262" text-anchor="middle">UC-04  ·  Biometric Registration</text>
+
+                <rect x="960" y="359" rx="24" ry="24" width="340" height="52" fill="#F4C419" stroke="#0F0F0F" stroke-width="3"/>
+                <text x="1130" y="392" text-anchor="middle">UC-07  ·  Mobile Self Check-In</text>
+              </g>
+
+              <!-- Shared UC-09 -->
+              <rect x="560" y="554" rx="26" ry="26" width="480" height="52" fill="#EA5B25" stroke="#0F0F0F" stroke-width="3"/>
+              <text x="800" y="587" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="22" font-weight="600" fill="#EFE9D9">UC-09  ·  CIE Marks Management</text>
+
+              <!-- Internal dependencies -->
+              <rect x="300" y="655" rx="18" ry="18" width="420" height="50" fill="#1F8A4C" stroke="#0F0F0F" stroke-width="3"/>
+              <text x="510" y="687" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="19" font-weight="600" fill="#EFE9D9">Biometric Face Match (512-D)</text>
+
+              <rect x="760" y="655" rx="18" ry="18" width="420" height="50" fill="#1F8A4C" stroke="#0F0F0F" stroke-width="3"/>
+              <text x="970" y="687" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="19" font-weight="600" fill="#EFE9D9">3D Liveness (Δ ≥ 0.12)</text>
+
+              <rect x="530" y="720" rx="18" ry="18" width="540" height="50" fill="#E4DCC4" stroke="#0F0F0F" stroke-width="3" stroke-dasharray="8 5"/>
+              <text x="800" y="752" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="19" font-weight="600" fill="#0F0F0F">Manual Override  ·  extends UC-08</text>
+
+              <!-- Relation badges (drawn last, never clipped) -->
+              <rect x="250" y="600" width="110" height="28" fill="#F4C419" stroke="#0F0F0F" stroke-width="2"/>
+              <text x="305" y="620" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" fill="#0F0F0F">«include»</text>
+              <rect x="1220" y="690" width="110" height="28" fill="#F4C419" stroke="#0F0F0F" stroke-width="2"/>
+              <text x="1275" y="710" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" fill="#0F0F0F">«extend»</text>
+
+              <!-- Column labels -->
+              <text x="470" y="155" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#0F0F0F" letter-spacing="1.5">FACULTY-DRIVEN</text>
+              <text x="1130" y="215" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#0F0F0F" letter-spacing="1.5">STUDENT-DRIVEN</text>
+            </svg>
+          </div>
+
+          <div class="s08-legend-strip reveal reveal-d2">
+            <div class="s08-leg pink">
+              <h3>Actors</h3>
+              <p>Faculty runs sessions; Student registers &amp; self-checks.</p>
+            </div>
+            <div class="s08-leg yellow">
+              <h3>«include»</h3>
+              <p>Face Match used by UC-05/06/07; Liveness by UC-07.</p>
+            </div>
+            <div class="s08-leg green">
+              <h3>«extend»</h3>
+              <p>Manual Override optionally extends UC-08 review.</p>
+            </div>
+            <div class="s08-leg cream">
+              <h3>Boundary</h3>
+              <p>All ovals inside are in-scope SRS §4 use cases.</p>
             </div>
           </div>
-          <aside class="s08-legend reveal reveal-d2">
-            <h2>Legend</h2>
-            <div class="s08-leg-item pink">
-              <h3>Actors</h3>
-              <p>Faculty runs sessions &amp; exports; Student registers biometrics &amp; self-checks.</p>
-            </div>
-            <div class="s08-leg-item yellow">
-              <h3>≪include≫</h3>
-              <p>Mandatory — Face Match used by UC-05/06/07; Liveness required by UC-07.</p>
-            </div>
-            <div class="s08-leg-item green">
-              <h3>≪extend≫</h3>
-              <p>Optional — Manual Override extends UC-08 only when status is corrected.</p>
-            </div>
-            <div class="s08-leg-item">
-              <h3>Boundary</h3>
-              <p>Everything inside MarkAny System is an in-scope SRS §4 use case.</p>
-            </div>
-          </aside>
         </div>
         <div class="slide-meta">
           <div>UML Use Case Diagram</div>
