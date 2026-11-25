@@ -5,7 +5,7 @@
 **Course:** CS330 – Software Engineering | Navrachana University  
 **Document:** SRS-MARKANY-V1.0  
 
-**Controls reminder:** `→` / `Space` next · `←` previous · `R` reset · `F` fullscreen · `N` speaker cue overlay · `E` edit mode  
+**Controls reminder:** `→` / `Space` next · `←` previous · `R` reset · `F` fullscreen · `N` speaker cue overlay (hidden by default)  
 
 ---
 
@@ -41,7 +41,7 @@
 ### Slide 04 — Feasibility (~55 s)
 > “Feasibility is threefold.  
 > **Technical:** CPU-only ONNX at roughly **200 ms/frame**, browser `getUserMedia` so the server never owns camera drivers, dual Supabase/SQLite persistence, and **16/16 tests in 0.43 s**.  
-> **Economic:** zero software license cost and zero specialized biometric hardware—we reuse webcams and phones.  
+> **Economic:** zero software license cost, zero specialized biometric hardware, and low ops overhead via free-tier Supabase with SQLite offline fallback on existing faculty laptops.  
 > **Operational:** regex timetable parsing, one-click group capture under 2.5 s, human-in-the-loop overrides, and submit-ready exports.  
 > I’ll hand over to Vikas for functional requirements.”
 
@@ -50,7 +50,7 @@
 ## Part B — Vikas Patanvadiya (Slides 05–08)
 
 ### Slide 05 — Major Functional Requirements (~55 s)
-> “I’m **Vikas**. MarkAny’s core value is a four-step process.  
+> “I’m **Vikas**. MarkAny’s core value is four functional modules.  
 > **01 Enrollment (UC-04):** 3–5 poses, SCRFD single-face gate, unit-normalized **512-D ArcFace** vectors.  
 > **02 Live & Group (UC-05/06):** 1500 ms live overlays plus batch recognition of **40–50 faces** with archived BLOB evidence.  
 > **03 Liveness Check-In (UC-07):** timed mobile window with a **14-frame** head-turn challenge where horizontal nose-to-eye span **Δ ≥ 0.12**.  
@@ -61,8 +61,8 @@
 > Four SE guarantees matter most:  
 > **BR-5** accepts a match only if cosine similarity **≥ 0.38**;  
 > **BR-6** arbitrates duplicates by highest confidence;  
-> **BR-4** enforces idempotency via composite UNIQUE so a student can be marked at most once;  
-> **BR-1/BR-7** bind RBAC with salted **PBKDF2 SHA-256**, 30-day tokens, and permanent override trails.”
+> **BR-4 / BR-2 / BR-3** enforce idempotency via composite UNIQUE and block writes outside the active `open_until` window;  
+> **BR-1 / BR-7** bind RBAC with salted **PBKDF2 SHA-256**, 30-day tokens, and permanent override trails.”
 
 **Cue:** Pause on 0.38 and UNIQUE—viva bait.
 
@@ -73,6 +73,7 @@
 ### Slide 08 — UML Use Case Diagram (~45 s)
 > “This use-case model is the SRS §4 contract. Faculty owns timetable, subjects, live/group marking, review, and export. Students own enrollment biometrics and mobile check-in. Shared use cases cover auth and CIE marks.  
 > Dashed **≪include≫** edges force Face Match into UC-05/06/07 and Liveness into UC-07. **≪extend≫** Manual Override is conditional on UC-08.  
+> UC-01–UC-10 sit inside the runtime boundary; **UC-11 Classical Baseline** is verified by the Course Evaluator on the modules slide.  
 > Rishi will continue with architecture.”
 
 ---
@@ -80,10 +81,10 @@
 ## Part C — Rishi Yagnesh Kachhadia (Slides 09–12)
 
 ### Slide 09 — System Architecture (~55 s)
-> “I’m **Rishi**. Architecture is four tiers with **zero driver lock-in**.  
-> Presentation is React 19 plus WebRTC. Application is a Flask gateway on **port 5050** with RBAC, regex parsing, and idempotency. Vision is the **Hybrid Verification Engine**—SCRFD, ArcFace, 3D liveness—plus the **Classical Vision Baseline** in pure Python. Persistence is a unified `store.py` DAL that fails over from Supabase PostgreSQL to SQLite.”
+> “I’m **Rishi**. MarkAny is a **3-tier design** with **four core layers** and **zero OS camera-driver lock-in**.  
+> **Presentation tier:** React 19 plus WebRTC client capture. **Application tier:** Flask REST gateway on **port 5050** with RBAC, regex parsing, and idempotency. The backend then splits into **CV Inference**—the **Hybrid Verification Engine** (SCRFD, ArcFace, 3D liveness) plus the **Classical Vision Baseline**—and **Data Persistence**, a unified `store.py` DAL that fails over from Supabase PostgreSQL to SQLite.”
 
-**Cue:** Gesture through the staggered stack top→bottom.
+**Cue:** Emphasize “3-tier / four layers” if asked. Gesture through the staggered stack top→bottom.
 
 ### Slide 10 — Core Modules & Schema (~55 s)
 > “Vision is dual-track. The production deep engine runs ONNX on CPU: SCRFD, ArcFace 512-D, cosine ≥ 0.38, liveness Δ ≥ 0.12. The classical baseline implements luminosity grayscale, Gaussian convolution, CDF equalization, **3,776-D LBP** at Euclidean 0.65, and Bresenham rasterization.  

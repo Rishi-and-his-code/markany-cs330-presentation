@@ -141,9 +141,7 @@
       }
       .deck-controls,
       .progress-track,
-      .speaker-cue,
-      .edit-hotzone,
-      .edit-toggle {
+      .speaker-cue {
         display: none !important;
       }
     }
@@ -221,14 +219,20 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      font-family: var(--font-mono);
+      letter-spacing: 0.08em;
     }
 
-    .slide-meta-dot {
-      width: 8px;
-      height: 8px;
-      background: var(--ink);
-      border-radius: 50%;
+    .slide-meta-num .dot {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: inherit;
+      line-height: 1;
+      color: var(--ink);
+      opacity: 0.9;
     }
+
+    .slide.closing .slide-meta-num .dot { color: var(--cream); }
 
     .slide.closing .topbar,
     .slide.closing .slide-meta {
@@ -241,7 +245,6 @@
       color: var(--cream);
     }
 
-    .slide.closing .slide-meta-dot { background: var(--cream); }
 
     /* ===========================================
        TYPOGRAPHY HELPERS
@@ -372,68 +375,118 @@
       letter-spacing: 0.06em;
       text-transform: uppercase;
       max-width: 320px;
-      display: none;
+      display: none !important;
+      opacity: 0;
+      pointer-events: none;
       box-shadow: 5px 5px 0 var(--pink);
     }
 
-    .speaker-cue.on { display: block; }
-    .speaker-cue .cue-name { color: var(--yellow); margin-bottom: 4px; }
-    .speaker-cue .cue-time { color: var(--pink); }
-
-    /* ===========================================
-       INLINE EDIT TOGGLE
-       =========================================== */
-    .edit-hotzone {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 80px;
-      height: 80px;
-      z-index: 10000;
-      cursor: pointer;
-    }
-
-    .edit-toggle {
-      position: fixed;
-      top: 14px;
-      left: 14px;
-      z-index: 10001;
-      width: 42px;
-      height: 42px;
-      border: 3px solid var(--ink);
-      background: var(--yellow);
-      font-size: 18px;
-      cursor: pointer;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.2s;
-      box-shadow: 3px 3px 0 var(--ink);
-    }
-
-    .edit-toggle.show {
+    .speaker-cue.on {
+      display: block !important;
       opacity: 1;
       pointer-events: auto;
     }
+    .speaker-cue .cue-name { color: var(--yellow); margin-bottom: 4px; }
+    .speaker-cue .cue-time { color: var(--pink); }
 
-    .edit-toggle.active {
-      background: var(--pink);
-    }
-
-    body.edit-mode [contenteditable="true"] {
-      outline: 2px dashed var(--orange);
-      outline-offset: 2px;
-      cursor: text;
-    }
 
     /* ===========================================
        SHARED LAYOUT PRIMITIVES
        =========================================== */
     .content {
       position: absolute;
-      top: 92px;
+      top: 88px;
       left: 72px;
       right: 72px;
-      bottom: 84px;
+      bottom: 108px; /* safe zone above bottom nav pill */
+    }
+
+    /* Shared slide headline under topbar */
+    .slide-headline {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 2.4vw, 40px);
+      text-transform: uppercase;
+      line-height: 0.95;
+      letter-spacing: -0.01em;
+      margin: 0 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px dashed var(--ink);
+      flex-shrink: 0;
+    }
+
+    .code-pill {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.92em;
+      letter-spacing: 0.02em;
+      text-transform: none;
+      border: 2px solid var(--ink);
+      background: var(--yellow);
+      padding: 1px 8px;
+      border-radius: 999px;
+      line-height: 1.3;
+    }
+
+    .schema-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .schema-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      text-transform: none;
+      border: 2px solid var(--ink);
+      background: var(--cream);
+      padding: 5px 9px;
+      border-radius: 999px;
+      color: var(--ink);
+    }
+    .s10-group.g3 .schema-pill { background: var(--cream); color: var(--ink); }
+
+    .schema-pill .badge {
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border: 1.5px solid var(--ink);
+      padding: 1px 6px;
+      background: var(--yellow);
+      border-radius: 999px;
+    }
+
+    .s11-card .mit {
+      margin-top: auto;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      line-height: 1.35;
+      border: 2px solid var(--ink);
+      background: #E8F6EE;
+      color: var(--green-dark);
+      padding: 8px 10px;
+    }
+
+    .s06-rules-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-height: 0;
+      height: 100%;
+    }
+
+    .s06-rules-wrap > h2 {
+      font-family: var(--font-display);
+      font-size: 26px;
+      text-transform: uppercase;
+      line-height: 1;
+      margin: 0;
     }
 
     .hard-box {
@@ -465,8 +518,9 @@
     }
 
     .s01-title {
-      font-size: 120px;
-      line-height: 0.86;
+      font-size: 112px;
+      line-height: 0.9;
+      word-spacing: 0.06em;
     }
 
     .s01-title .orange { color: var(--orange); }
@@ -643,10 +697,9 @@
        SLIDE 02 — PROBLEM / OBJECTIVES
        =========================================== */
     .s02 .content {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 28px;
+      /* flex column set inline for headline + grid */
     }
+    .s02 .s02-col h2 { font-size: 32px; }
 
     .s02-col {
       border: 4px solid var(--ink);
@@ -772,16 +825,25 @@
 
     .s03-arrow {
       position: absolute;
-      right: -14px;
+      right: -20px;
       top: 50%;
       transform: translateY(-50%);
-      width: 0;
-      height: 0;
-      border-top: 10px solid transparent;
-      border-bottom: 10px solid transparent;
-      border-left: 12px solid var(--ink);
-      z-index: 2;
+      z-index: 3;
+      width: 36px;
+      height: 36px;
+      border: 3px solid var(--ink);
+      background: var(--cream);
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 22px;
+      line-height: 1;
+      color: var(--ink);
+      box-shadow: 3px 3px 0 var(--ink);
     }
+    .s03-arrow::before { content: "\2192"; }
 
     .s03-grid {
       display: grid;
@@ -836,11 +898,7 @@
     /* ===========================================
        SLIDE 04 — FEASIBILITY
        =========================================== */
-    .s04 .content {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-    }
+    .s04 .content { /* headline + grid via flex */ }
 
     .s04-pillar {
       border: 4px solid var(--ink);
@@ -894,12 +952,12 @@
     }
 
     .s04-body li strong {
-      display: block;
+      display: inline;
       font-family: var(--font-display);
-      font-size: 20px;
+      font-size: 17px;
       text-transform: uppercase;
       color: var(--ink);
-      margin-bottom: 4px;
+      margin-right: 4px;
       letter-spacing: 0;
     }
 
@@ -935,7 +993,8 @@
     .s05-card.c1 { background: var(--cream); }
     .s05-card.c2 { background: var(--pink); }
     .s05-card.c3 { background: var(--yellow); }
-    .s05-card.c4 { background: var(--green); color: var(--cream); }
+    .s05-card.c4 { background: var(--green); color: #EFE9D9; }
+    .s05-card.c4 h3, .s05-card.c4 .num, .s05-card.c4 .uc { color: #EFE9D9; }
 
     .s05-card .num {
       font-family: var(--font-display);
@@ -987,11 +1046,7 @@
     /* ===========================================
        SLIDE 06 — WORKFLOWS & RULES
        =========================================== */
-    .s06 .content {
-      display: grid;
-      grid-template-columns: 0.92fr 1.08fr;
-      gap: 26px;
-    }
+    .s06 .content { /* headline + grid via flex */ }
 
     .s06-flow {
       border: 4px solid var(--ink);
@@ -1145,7 +1200,8 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 18px;
-      height: calc(100% - 170px);
+      flex: 1;
+      min-height: 0;
     }
 
     .s07-card {
@@ -1197,7 +1253,7 @@
     .s08 .content {
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 10px;
     }
 
     .s08-board {
@@ -1236,14 +1292,14 @@
     .s08-legend-strip {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
+      gap: 10px;
       flex: 0 0 auto;
     }
 
     .s08-leg {
       border: 3px solid var(--ink);
-      padding: 12px 14px;
-      min-height: 92px;
+      padding: 10px 12px;
+      min-height: 78px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -1325,7 +1381,7 @@
 
     .s09-stack-wrap {
       position: relative;
-      height: 820px;
+      height: 800px;
       background: var(--green);
       border: 4px solid var(--ink);
       box-shadow: var(--hard-shadow-xl);
@@ -1373,7 +1429,7 @@
 
     .s09-layer .tier {
       font-family: var(--font-mono);
-      font-size: 14px;
+      font-size: 12px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       margin-bottom: 8px;
@@ -1397,11 +1453,7 @@
     /* ===========================================
        SLIDE 10 — MODULES & SCHEMA
        =========================================== */
-    .s10 .content {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-    }
+    .s10 .content { /* headline + grid via flex */ }
 
     .s10-card {
       border: 4px solid var(--ink);
@@ -1544,10 +1596,11 @@
     .s11-card {
       border: 4px solid var(--ink);
       background: var(--cream);
-      padding: 24px 26px;
+      padding: 20px 22px;
       box-shadow: var(--hard-shadow);
       display: flex;
       flex-direction: column;
+      min-height: 0;
     }
 
     .s11-card .num {
@@ -1566,30 +1619,20 @@
 
     .s11-card h3 {
       font-family: var(--font-display);
-      font-size: 24px;
+      font-size: 22px;
       text-transform: uppercase;
       line-height: 1.1;
       margin-bottom: 12px;
     }
 
     .s11-card p {
-      font-size: 19px;
+      font-size: 17px;
       line-height: 1.35;
       color: var(--ink-2);
       flex: 1;
     }
 
-    .s11-card .mit {
-      margin-top: 14px;
-      font-family: var(--font-mono);
-      font-size: 14px;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      line-height: 1.35;
-      border-top: 2px solid var(--ink);
-      padding-top: 12px;
-      color: var(--green-dark);
-    }
+    /* mitigation styles defined in shared primitives */
 
     /* ===========================================
        SLIDE 12 — CLOSING
@@ -1607,10 +1650,11 @@
 
     .s12-block {
       border: 4px solid var(--ink);
-      padding: 30px 28px;
+      padding: 26px 26px;
       color: var(--ink);
       box-shadow: var(--hard-shadow-lg);
-      min-height: 520px;
+      min-height: 0;
+      height: 100%;
       display: flex;
       flex-direction: column;
     }
@@ -1693,11 +1737,11 @@
       position: absolute;
       left: 72px;
       right: 72px;
-      bottom: 96px;
+      bottom: 128px;
       border: 4px solid var(--ink);
       background: var(--cream);
       color: var(--ink);
-      padding: 24px 30px;
+      padding: 18px 28px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -1706,7 +1750,7 @@
 
     .s12-thanks .big {
       font-family: var(--font-display);
-      font-size: 36px;
+      font-size: 32px;
       text-transform: uppercase;
       line-height: 1;
     }
@@ -1733,10 +1777,6 @@
     <div class="cue-time" id="cueTime">Target</div>
   </div>
 
-  <!-- Inline edit affordance -->
-  <div class="edit-hotzone" id="editHotzone" title="Edit mode"></div>
-  <button class="edit-toggle" id="editToggle" title="Edit mode (E)">✎</button>
-
   <div class="deck-viewport">
     <main class="deck-stage" id="deckStage">
 
@@ -1750,14 +1790,15 @@
           <div class="s01-left reveal">
             <div>
               <h1 class="display s01-title">
-                MarkAny<br />
-                <span class="orange">Facial<br />Attendance</span>
+                MARKANY<br />
+                <span class="orange">FACIAL<br />ATTENDANCE</span>
               </h1>
               <p class="body s01-sub">A Hybrid Classical &amp; Deep Learning Biometric Attendance Platform</p>
             </div>
             <div class="s01-meta">
-              <div><strong>Course</strong> CS330 – Software Engineering · Navrachana University</div>
+              <div><strong>Course</strong> CS330 – Software Engineering · Navrachana University, Vadodara</div>
               <div><strong>Guide</strong> Ujwala Petigara</div>
+              <div><strong>Document ID</strong> SRS-MARKANY-V1.0</div>
               <div class="s01-team"><strong>Team</strong>
                 <span>Maitra Prajapati (24000493)<br />Vikas Patanvadiya (24000605)<br />Rishi Yagnesh Kachhadia (24000713)</span>
               </div>
@@ -1794,7 +1835,7 @@
         </div>
         <div class="slide-meta">
           <div>MarkAny · CS330</div>
-          <div class="slide-meta-num"><span>01</span><span class="slide-meta-dot"></span><span>12</span></div>
+          <div class="slide-meta-num"><span>01</span><span class="dot" aria-hidden="true">•</span><span>12</span></div>
         </div>
       </section>
 
@@ -1804,7 +1845,9 @@
           <div class="topbar-eyebrow">Project Introduction</div>
           <div class="topbar-pill">Problem → Goal</div>
         </div>
-        <div class="content">
+        <div class="content" style="display:flex;flex-direction:column;">
+          <h2 class="slide-headline reveal">Why Manual Attendance Fails.</h2>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;flex:1;min-height:0;">
           <div class="s02-col problem reveal">
             <h2>The 4 Failures</h2>
             <div class="s02-item">
@@ -1867,10 +1910,11 @@
               </div>
             </div>
           </div>
+          </div>
         </div>
         <div class="slide-meta">
           <div>Problem Statement &amp; Objectives</div>
-          <div class="slide-meta-num"><span>02</span><span class="slide-meta-dot"></span><span>12</span></div>
+          <div class="slide-meta-num"><span>02</span><span class="dot" aria-hidden="true">•</span><span>12</span></div>
         </div>
       </section>
 
@@ -1880,29 +1924,30 @@
           <div class="topbar-eyebrow">Project Introduction</div>
           <div class="topbar-pill">Scope &amp; Actors</div>
         </div>
-        <div class="content">
+        <div class="content" style="display:flex;flex-direction:column;">
+          <h2 class="slide-headline reveal">End-to-End Scope &amp; Target Users.</h2>
           <div class="s03-banner reveal">
             <div class="s03-step accent-p">
               <div class="tag">01 Capture</div>
               <div class="label">Browser WebRTC Capture</div>
-              <span class="s03-arrow"></span>
+              <span class="s03-arrow" aria-hidden="true"></span>
             </div>
             <div class="s03-step accent-y">
               <div class="tag">02 Recognize</div>
               <div class="label">Hybrid CV Recognition</div>
-              <span class="s03-arrow"></span>
+              <span class="s03-arrow" aria-hidden="true"></span>
             </div>
             <div class="s03-step accent-o">
               <div class="tag">03 Review</div>
               <div class="label">Audit Review &amp; Marks</div>
-              <span class="s03-arrow"></span>
+              <span class="s03-arrow" aria-hidden="true"></span>
             </div>
             <div class="s03-step accent-g">
               <div class="tag">04 Export</div>
               <div class="label">Excel / CSV Export</div>
             </div>
           </div>
-          <div class="s03-grid">
+          <div class="s03-grid" style="flex:1;min-height:0;height:auto;">
             <div class="s03-card reveal reveal-d1">
               <span class="role-tag">Primary Actor</span>
               <h3>Faculty / Teacher</h3>
@@ -1916,7 +1961,7 @@
             <div class="s03-card reveal reveal-d3">
               <span class="role-tag">Auditor</span>
               <h3>Academic Administrator</h3>
-              <p>Monitors institutional compliance and inspects <span class="mono" style="text-transform:none;letter-spacing:0;font-size:15px;">manually_set = 1</span> override trails.</p>
+              <p>Monitors institutional compliance and inspects <span class="code-pill">manually_set = 1</span> override trails.</p>
             </div>
             <div class="s03-card reveal reveal-d4">
               <span class="role-tag">Examiner</span>
@@ -1927,7 +1972,7 @@
         </div>
         <div class="slide-meta">
           <div>Product Scope &amp; Target Users</div>
-          <div class="slide-meta-num"><span>03</span><span class="slide-meta-dot"></span><span>12</span></div>
+          <div class="slide-meta-num"><span>03</span><span class="dot" aria-hidden="true">•</span><span>12</span></div>
         </div>
       </section>
 
@@ -1937,38 +1982,41 @@
           <div class="topbar-eyebrow">Project Overview</div>
           <div class="topbar-pill">Feasibility</div>
         </div>
-        <div class="content">
+        <div class="content" style="display:flex;flex-direction:column;">
+          <h2 class="slide-headline reveal">Technical, Economic &amp; Operational Feasibility.</h2>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;flex:1;min-height:0;">
           <article class="s04-pillar reveal">
             <div class="s04-head pink">Technical</div>
             <ul class="s04-body">
-              <li><strong>CPU-only ONNX</strong>~200 ms/frame on Intel i5 / Apple Silicon — no CUDA required.</li>
-              <li><strong>Browser WebRTC</strong>getUserMedia eliminates server camera driver issues.</li>
-              <li><strong>Dual Persistence</strong>Supabase PostgreSQL + SQLite3 offline fallback.</li>
-              <li><strong>Test Suite</strong>16/16 unit tests passing in 0.43 s.</li>
+              <li><strong>CPU-only ONNX:</strong> ~200 ms/frame on Intel i5 / Apple Silicon — no CUDA required.</li>
+              <li><strong>Browser WebRTC:</strong> getUserMedia eliminates server camera driver issues.</li>
+              <li><strong>Dual Persistence:</strong> Supabase PostgreSQL + SQLite3 offline fallback.</li>
+              <li><strong>Test Suite:</strong> 16/16 unit tests passing in 0.43 s.</li>
             </ul>
           </article>
           <article class="s04-pillar reveal reveal-d2">
             <div class="s04-head yellow">Economic</div>
             <ul class="s04-body">
-              <li><strong>$0 Licensing</strong>100% open-source: React 19, Flask, InsightFace, SQLite/Supabase.</li>
-              <li><strong>$0 Hardware</strong>Eliminates biometric kiosks, RFID readers, and CUDA GPUs.</li>
-              <li><strong>Reuse Assets</strong>Existing webcams &amp; student phones become capture devices.</li>
-              <li><strong>Ops Cost</strong>Faculty laptops run the full stack locally.</li>
+              <li><strong>$0 Licensing:</strong> 100% open-source — React 19, Flask, InsightFace, SQLite/Supabase.</li>
+              <li><strong>$0 Hardware:</strong> Eliminates biometric kiosks, RFID readers, and CUDA GPUs.</li>
+              <li><strong>Reuse Assets:</strong> Existing webcams &amp; student phones become capture devices.</li>
+              <li><strong>Low Ops Overhead:</strong> Free-tier Supabase cloud DB with SQLite3 offline fallback runs on existing faculty laptops.</li>
             </ul>
           </article>
           <article class="s04-pillar reveal reveal-d3">
             <div class="s04-head green">Operational</div>
             <ul class="s04-body">
-              <li><strong>Timetable Fit</strong>Regex portal parsing plugs into university routines.</li>
-              <li><strong>One-Click Group</strong>&lt; 2.5 s single-click classroom capture.</li>
-              <li><strong>Human-in-Loop</strong>Present/Absent overrides before finalization.</li>
-              <li><strong>Ready Export</strong>Submit-ready .xlsx / .csv reports.</li>
+              <li><strong>Timetable Fit:</strong> Regex portal parsing plugs into university routines.</li>
+              <li><strong>One-Click Group:</strong> &lt; 2.5 s single-click classroom capture.</li>
+              <li><strong>Human-in-Loop:</strong> Present/Absent overrides before finalization.</li>
+              <li><strong>Ready Export:</strong> Submit-ready .xlsx / .csv reports.</li>
             </ul>
           </article>
+          </div>
         </div>
         <div class="slide-meta">
           <div>Feasibility Study</div>
-          <div class="slide-meta-num"><span>04</span><span class="slide-meta-dot"></span><span>12</span></div>
+          <div class="slide-meta-num"><span>04</span><span class="dot" aria-hidden="true">•</span><span>12</span></div>
         </div>
       </section>
 
@@ -1979,13 +2027,13 @@
           <div class="topbar-pill">Four Core Modules</div>
         </div>
         <div class="content">
-          <h2 class="s05-title reveal">A Four-Step Process</h2>
+          <h2 class="s05-title slide-headline reveal" style="border-bottom:2px dashed var(--ink);padding-bottom:10px;margin-bottom:18px;">Four Core Functional Modules.</h2>
           <div class="s05-flow">
             <article class="s05-card c1 reveal reveal-d1">
               <div class="num">01</div>
               <div class="uc">UC-04</div>
               <h3>Biometric Enrollment</h3>
-              <p>Captures 3–5 multi-angle face samples; SCRFD enforces single face; stores unit-normalized 512-D ArcFace vectors (||e||2 = 1.0).</p>
+              <p>Captures 3–5 multi-angle face samples; SCRFD enforces single face; stores unit-normalized 512-D ArcFace vectors (‖e‖<sub>2</sub> = 1.0).</p>
             </article>
             <div class="s05-arrow" aria-hidden="true"><span></span></div>
             <article class="s05-card c2 reveal reveal-d2">
@@ -1999,7 +2047,7 @@
               <div class="num">03</div>
               <div class="uc">UC-07</div>
               <h3>3D Liveness Check-In</h3>
-              <p>Timed mobile self-marking (open_until) guarded by 14-frame head-turn challenge verifying nose-to-eye span Δ ≥ 0.12.</p>
+              <p>Timed mobile self-marking (open_until) with 14-frame head-turn (Δ ≥ 0.12) that also verifies the face matches the logged-in student (REQ-SELF-4).</p>
             </article>
             <div class="s05-arrow" aria-hidden="true"><span></span></div>
             <article class="s05-card c4 reveal reveal-d4">
@@ -2012,7 +2060,7 @@
         </div>
         <div class="slide-meta">
           <div>Major Functional Requirements</div>
-          <div class="slide-meta-num"><span>05</span><span class="slide-meta-dot"></span><span>12</span></div>
+          <div class="slide-meta-num"><span>05</span><span class="dot" aria-hidden="true">•</span><span>12</span></div>
         </div>
       </section>
 
@@ -2022,7 +2070,9 @@
           <div class="topbar-eyebrow">Requirements Analysis</div>
           <div class="topbar-pill">Rules &amp; Control</div>
         </div>
-        <div class="content">
+        <div class="content" style="display:flex;flex-direction:column;">
+          <h2 class="slide-headline reveal">Session Lifecycle &amp; Business Rules.</h2>
+          <div style="display:grid;grid-template-columns:0.92fr 1.08fr;gap:26px;flex:1;min-height:0;">
           <div class="s06-flow reveal">
             <h2>End-to-End Session Flow</h2>
             <div class="s06-step">
@@ -2054,32 +2104,36 @@
               </div>
             </div>
           </div>
-          <div class="s06-rules reveal reveal-d2">
+          <div class="s06-rules-wrap reveal reveal-d2">
+            <h2>Enforced Business Rules (BR-1 – BR-7)</h2>
+            <div class="s06-rules" style="flex:1;min-height:0;">
             <div class="s06-rule pink">
               <div class="br">BR-5</div>
               <h3>Cosine Decision Margin</h3>
-              <p>Match accepted iff a · b ≥ 0.38; otherwise Unknown.</p>
+              <p>Match accepted iff a · b ≥ 0.38; otherwise flagged Unknown.</p>
             </div>
             <div class="s06-rule yellow">
               <div class="br">BR-6</div>
               <h3>Duplicate Arbitration</h3>
-              <p>Highest confidence claims ID; secondary becomes Unknown.</p>
+              <p>If 2 faces match 1 student, highest confidence claims ID; secondary becomes Unknown.</p>
             </div>
             <div class="s06-rule green">
-              <div class="br">BR-4</div>
-              <h3>Strict Idempotency</h3>
-              <p>UNIQUE(student_id, session_date, session_id) → max 1 mark.</p>
+              <div class="br">BR-4 · BR-2 · BR-3</div>
+              <h3>Idempotency &amp; Time Windows</h3>
+              <p>UNIQUE(student_id, session_date, session_id) → max 1 mark; writes blocked outside active open_until.</p>
             </div>
             <div class="s06-rule cream-2 wide">
               <div class="br">BR-1 · BR-7</div>
               <h3>RBAC &amp; Audit Integrity</h3>
-              <p>Salted PBKDF2 SHA-256 + 30-day signed tokens; manual overrides permanently logged with manually_set = 1.</p>
+              <p>Faculty-only writes via PBKDF2 SHA-256 + 30-day tokens; manual toggles stamped <span class="code-pill">manually_set = 1</span>.</p>
             </div>
+            </div>
+          </div>
           </div>
         </div>
         <div class="slide-meta">
           <div>System Workflows &amp; Business Rules</div>
-          <div class="slide-meta-num"><span>06</span><span class="slide-meta-dot"></span><span>12</span></div>
+          <div class="slide-meta-num"><span>06</span><span class="dot" aria-hidden="true">•</span><span>12</span></div>
         </div>
       </section>
 
@@ -2089,10 +2143,11 @@
           <div class="topbar-eyebrow">Requirements Analysis</div>
           <div class="topbar-pill">NFR Benchmarks</div>
         </div>
-        <div class="content">
+        <div class="content" style="display:flex;flex-direction:column;">
+          <h2 class="slide-headline reveal">Measurable NFR Benchmarks.</h2>
           <div class="s07-kpis reveal">
             <div class="s07-kpi k1"><div class="val">&lt; 250 ms</div><div class="lbl">Live Frame Latency</div></div>
-            <div class="s07-kpi k2"><div class="val">&lt; 2.5 s</div><div class="lbl">50-Face Group Batch</div></div>
+            <div class="s07-kpi k2"><div class="val">&lt; 2.5 s</div><div class="lbl">40–50 Face Group Batch</div></div>
             <div class="s07-kpi k3"><div class="val">&lt; 600 ms</div><div class="lbl">14-Frame Liveness</div></div>
             <div class="s07-kpi k4"><div class="val">16/16</div><div class="lbl">Tests in 0.43 s</div></div>
           </div>
@@ -2116,7 +2171,7 @@
               </ul>
             </article>
             <article class="s07-card reveal reveal-d3">
-              <h3>Reliability &amp; Usability</h3>
+              <h3>Reliability, Safety &amp; Usability</h3>
               <ul>
                 <li>Automatic Supabase → SQLite3 offline fallback</li>
                 <li>Strict idempotency on attendance writes</li>
@@ -2128,7 +2183,7 @@
         </div>
         <div class="slide-meta">
           <div>Non-Functional Requirements</div>
-          <div class="slide-meta-num"><span>07</span><span class="slide-meta-dot"></span><span>12</span></div>
+          <div class="slide-meta-num"><span>07</span><span class="dot" aria-hidden="true">•</span><span>12</span></div>
         </div>
       </section>
 
@@ -2138,10 +2193,16 @@
           <div class="topbar-eyebrow">System Analysis &amp; Design</div>
           <div class="topbar-pill">UML / Actors</div>
         </div>
-        <div class="content">
-          <div class="s08-board reveal">
+        <div class="content" style="display:flex;flex-direction:column;">
+          <h2 class="slide-headline reveal">UML Use Case Model &amp; System Actors.</h2>
+          <div class="s08-board reveal" style="flex:1;min-height:0;">
             <div class="dotgrid"></div>
             <svg viewBox="0 0 1600 780" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MarkAny UML Use Case Diagram">
+              <defs>
+                <marker id="arrowHead" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+                  <polygon points="0 0, 10 4, 0 8" fill="#0F0F0F"/>
+                </marker>
+              </defs>
               <!-- System boundary first so lines draw above fill -->
               <rect x="220" y="36" width="1160" height="710" fill="#EFE9D9" stroke="#0F0F0F" stroke-width="4"/>
               <text x="800" y="72" text-anchor="middle" font-family="Archivo Black, sans-serif" font-size="26" fill="#0F0F0F">MARKANY SYSTEM</text>
@@ -2169,13 +2230,13 @@
                 <line x1="1400" y1="580" x2="1040" y2="580"/>
 
                 <!-- include: UC-05, UC-06, UC-07 -> Face Match -->
-                <path d="M470 346 V620 H510" stroke-dasharray="7 5"/>
-                <path d="M470 411 V635 H620" stroke-dasharray="7 5"/>
-                <path d="M1130 411 V635 H800" stroke-dasharray="7 5"/>
+                <path d="M470 346 V620 H510" stroke-dasharray="7 5" marker-end="url(#arrowHead)"/>
+                <path d="M470 411 V635 H620" stroke-dasharray="7 5" marker-end="url(#arrowHead)"/>
+                <path d="M1130 411 V635 H800" stroke-dasharray="7 5" marker-end="url(#arrowHead)"/>
                 <!-- include: UC-07 -> Liveness -->
-                <path d="M1130 411 V680 H970" stroke-dasharray="7 5"/>
+                <path d="M1130 411 V680 H970" stroke-dasharray="7 5" marker-end="url(#arrowHead)"/>
                 <!-- extend: UC-08 -> Manual Override -->
-                <path d="M470 476 V545 H800 V720" stroke-dasharray="7 5"/>
+                <path d="M470 476 V545 H800 V720" stroke-dasharray="7 5" marker-end="url(#arrowHead)"/>
               </g>
 
               <!-- Faculty actor -->
@@ -2275,13 +2336,13 @@
             </div>
             <div class="s08-leg cream">
               <h3>Boundary</h3>
-              <p>All ovals inside are in-scope SRS §4 use cases.</p>
+              <p>UC-01–UC-10 shown inside runtime boundary; UC-11 (Classical Baseline) is verified by the Course Evaluator (Slide 10).</p>
             </div>
           </div>
         </div>
         <div class="slide-meta">
           <div>UML Use Case Diagram</div>
-          <div class="slide-meta-num"><span>08</span><span class="slide-meta-dot"></span><span>12</span></div>
+          <div class="slide-meta-num"><span>08</span><span class="dot" aria-hidden="true">•</span><span>12</span></div>
         </div>
       </section>
 
@@ -2293,41 +2354,41 @@
         </div>
         <div class="content">
           <div class="s09-left reveal">
-            <h2>Four Tiers.<br />Zero Driver<br />Lock-In.</h2>
-            <p>HTML5 WebRTC client capture → Base64 JSON over HTTP/REST → CPU-only hybrid CV → unified dual persistence. No OS camera drivers on the server.</p>
+            <h2>3-Tier Design.<br />Four Core<br />Layers.</h2>
+            <p>HTML5 WebRTC client capture → Base64 JSON over HTTP/REST → decoupled backend splitting CPU-only Hybrid CV Inference &amp; Dual Persistence. Zero OS camera drivers on the server.</p>
             <div class="s09-legend">
-              <div class="s09-leg"><span class="s09-swatch pink"></span>Pink — Presentation</div>
-              <div class="s09-leg"><span class="s09-swatch yellow"></span>Yellow — Application</div>
-              <div class="s09-leg"><span class="s09-swatch orange"></span>Orange — Vision Inference</div>
-              <div class="s09-leg"><span class="s09-swatch cream"></span>Cream — Data Persistence</div>
+              <div class="s09-leg"><span class="s09-swatch pink"></span>Pink — Presentation Tier</div>
+              <div class="s09-leg"><span class="s09-swatch yellow"></span>Yellow — Application Tier</div>
+              <div class="s09-leg"><span class="s09-swatch orange"></span>Orange — Backend CV Inference</div>
+              <div class="s09-leg"><span class="s09-swatch cream"></span>Cream — Backend Persistence</div>
             </div>
           </div>
           <div class="s09-stack-wrap reveal reveal-d2">
             <div class="s09-layer t1">
-              <div class="tier">Tier 01 / Presentation</div>
+              <div class="tier">Layer 01 / Presentation Tier</div>
               <h3>Client Surface</h3>
               <p>React 19 · Tailwind CSS · HTML5 Canvas · WebRTC getUserMedia</p>
             </div>
             <div class="s09-layer t2">
-              <div class="tier">Tier 02 / Application</div>
+              <div class="tier">Layer 02 / Application Tier</div>
               <h3>Flask REST Gateway</h3>
               <p>Port 5050 · RBAC · Regex Parser · Idempotency Guards</p>
             </div>
             <div class="s09-layer t3">
-              <div class="tier">Tier 03 / CV Inference</div>
+              <div class="tier">Layer 03 / Backend — CV Inference</div>
               <h3>Hybrid Verification Engine</h3>
               <p>SCRFD + ArcFace 512-D + 3D Liveness · Classical Baseline (pixel_ops, lbp, drawing)</p>
             </div>
             <div class="s09-layer t4">
-              <div class="tier">Tier 04 / Persistence</div>
-              <h3>Unified DAL</h3>
-              <p>store.py · Supabase PostgreSQL ↔ SQLite3 Offline Fallback</p>
+              <div class="tier">Layer 04 / Backend — Data Persistence</div>
+              <h3>Unified DAL (store.py)</h3>
+              <p>Supabase PostgreSQL (Cloud) ↔ SQLite3 Offline Fallback</p>
             </div>
           </div>
         </div>
         <div class="slide-meta">
           <div>System Architecture</div>
-          <div class="slide-meta-num"><span>09</span><span class="slide-meta-dot"></span><span>12</span></div>
+          <div class="slide-meta-num"><span>09</span><span class="dot" aria-hidden="true">•</span><span>12</span></div>
         </div>
       </section>
 
@@ -2337,7 +2398,9 @@
           <div class="topbar-eyebrow">System Analysis &amp; Design</div>
           <div class="topbar-pill">Engine &amp; Schema</div>
         </div>
-        <div class="content">
+        <div class="content" style="display:flex;flex-direction:column;">
+          <h2 class="slide-headline reveal">Hybrid Vision Engine &amp; 10-Table Schema.</h2>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;flex:1;min-height:0;">
           <article class="s10-card reveal">
             <h2>Hybrid Computer Vision Modules</h2>
             <div class="s10-engines">
@@ -2369,23 +2432,37 @@
             <div class="s10-groups">
               <div class="s10-group g1">
                 <h3>Identity &amp; Biometrics</h3>
-                <p>users · students · face_embeddings (ON DELETE CASCADE)</p>
+                <div class="schema-pills">
+                  <span class="schema-pill">users</span>
+                  <span class="schema-pill">students</span>
+                  <span class="schema-pill">face_embeddings <span class="badge">ON DELETE CASCADE</span></span>
+                </div>
               </div>
               <div class="s10-group g2">
                 <h3>Academics</h3>
-                <p>subjects (UNIQUE join_code) · enrollments · scheduled_classes · results</p>
+                <div class="schema-pills">
+                  <span class="schema-pill">subjects <span class="badge">UNIQUE join_code</span></span>
+                  <span class="schema-pill">enrollments</span>
+                  <span class="schema-pill">scheduled_classes</span>
+                  <span class="schema-pill">results</span>
+                </div>
               </div>
               <div class="s10-group g3">
                 <h3>Attendance &amp; Audit</h3>
-                <p>attendance_sessions · attendance (UNIQUE student/date/session) · session_photos (immutable BLOB)</p>
+                <div class="schema-pills">
+                  <span class="schema-pill">attendance_sessions</span>
+                  <span class="schema-pill">attendance <span class="badge">UNIQUE student/date/session</span></span>
+                  <span class="schema-pill">session_photos <span class="badge">immutable BLOB</span></span>
+                </div>
               </div>
             </div>
             <div class="s10-callout">Dual-Mode store.py DAL · Supabase Cloud → local data/attendance.db failover</div>
           </article>
+          </div>
         </div>
         <div class="slide-meta">
           <div>Core Modules &amp; Data Architecture</div>
-          <div class="slide-meta-num"><span>10</span><span class="slide-meta-dot"></span><span>12</span></div>
+          <div class="slide-meta-num"><span>10</span><span class="dot" aria-hidden="true">•</span><span>12</span></div>
         </div>
       </section>
 
@@ -2395,49 +2472,50 @@
           <div class="topbar-eyebrow">Constraints &amp; Risk</div>
           <div class="topbar-pill">Limitations</div>
         </div>
-        <div class="content">
-          <div class="s11-grid">
+        <div class="content" style="display:flex;flex-direction:column;">
+          <h2 class="slide-headline reveal">Engineering Constraints &amp; Mitigations.</h2>
+          <div class="s11-grid" style="flex:1;min-height:0;height:auto;">
             <article class="s11-card reveal">
               <div class="num">01</div>
               <h3>CPU-Only Execution</h3>
               <p>No dedicated CUDA GPU on standard faculty laptops.</p>
-              <div class="mit">Mitigation: Quantized ONNX Runtime (~200 ms/frame).</div>
+              <div class="mit"><strong>MITIGATION:</strong> Quantized ONNX Runtime (~200 ms/frame).</div>
             </article>
             <article class="s11-card reveal reveal-d1">
               <div class="num">02</div>
               <h3>WebRTC Secure Context</h3>
               <p>Browsers block webcam access on insecure HTTP origins.</p>
-              <div class="mit">Mitigation: HTTPS or localhost / 127.0.0.1.</div>
+              <div class="mit"><strong>MITIGATION:</strong> HTTPS or localhost / 127.0.0.1.</div>
             </article>
             <article class="s11-card reveal reveal-d2">
               <div class="num">03</div>
               <h3>Ambient Lighting (&gt; 150 lux)</h3>
               <p>Harsh backlighting or dim halls reduce facial contrast.</p>
-              <div class="mit">Mitigation: Multi-pose enrollment + manual review override.</div>
+              <div class="mit"><strong>MITIGATION:</strong> Multi-pose enrollment + manual review override.</div>
             </article>
             <article class="s11-card reveal reveal-d3">
               <div class="num">04</div>
               <h3>Initial Weight Cache (~330 MB)</h3>
               <p>First launch needs internet for buffalo_l weights.</p>
-              <div class="mit">Mitigation: Cached locally in ~/.insightface/ for offline runs.</div>
+              <div class="mit"><strong>MITIGATION:</strong> Cached locally in ~/.insightface/ for offline runs.</div>
             </article>
             <article class="s11-card reveal reveal-d4">
               <div class="num">05</div>
               <h3>Client-Side Capture Only</h3>
               <p>Server cannot directly open OS camera drivers.</p>
-              <div class="mit">Mitigation: Browser getUserMedia + Base64 JPEG REST payloads.</div>
+              <div class="mit"><strong>MITIGATION:</strong> Browser getUserMedia + Base64 JPEG REST payloads.</div>
             </article>
             <article class="s11-card reveal reveal-d5">
               <div class="num">06</div>
               <h3>OS Runtime Quirks (macOS)</h3>
               <p>Port 5000 AirPlay clash &amp; Homebrew expat linking.</p>
-              <div class="mit">Mitigation: Permanent port 5050 + run-backend.sh wrapper.</div>
+              <div class="mit"><strong>MITIGATION:</strong> Permanent port 5050 + run-backend.sh wrapper.</div>
             </article>
           </div>
         </div>
         <div class="slide-meta">
           <div>Project Constraints &amp; Limitations</div>
-          <div class="slide-meta-num"><span>11</span><span class="slide-meta-dot"></span><span>12</span></div>
+          <div class="slide-meta-num"><span>11</span><span class="dot" aria-hidden="true">•</span><span>12</span></div>
         </div>
       </section>
 
@@ -2447,7 +2525,7 @@
           <div class="topbar-eyebrow">Conclusion</div>
           <div class="topbar-pill">V1.0 Complete → V2.0</div>
         </div>
-        <div class="content" style="bottom: 200px;">
+        <div class="content" style="bottom: 248px;">
           <div class="s12-block cream reveal">
             <h2>Key Achievements — v1.0 Ready</h2>
             <ul>
@@ -2484,13 +2562,13 @@
         <div class="s12-thanks reveal reveal-d3">
           <div class="big">Thank You — Open for Viva Q&amp;A</div>
           <div class="team">
-            Maitra · Vikas · Rishi<br />
+            Maitra Prajapati · Vikas Patanvadiya · Rishi Yagnesh Kachhadia<br />
             Navrachana University · CS330 Software Engineering
           </div>
         </div>
         <div class="slide-meta">
           <div>Conclusion &amp; Future Roadmap</div>
-          <div class="slide-meta-num"><span>12</span><span class="slide-meta-dot"></span><span>12</span></div>
+          <div class="slide-meta-num"><span>12</span><span class="dot" aria-hidden="true">•</span><span>12</span></div>
         </div>
       </section>
 
@@ -2522,14 +2600,12 @@
         this.cueName = document.getElementById('cueName');
         this.cueRange = document.getElementById('cueRange');
         this.cueTime = document.getElementById('cueTime');
-        this.editMode = false;
         this.touchStartX = null;
 
         this.setupStageScale();
         this.setupKeyboardNav();
         this.setupTouchNav();
         this.setupButtons();
-        this.setupEditMode();
         this.showSlide(0);
       }
 
@@ -2552,14 +2628,6 @@
 
       setupKeyboardNav() {
         document.addEventListener('keydown', (e) => {
-          if (this.editMode && e.target.getAttribute('contenteditable') === 'true') {
-            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
-              e.preventDefault();
-              this.saveEdits();
-            }
-            return;
-          }
-
           const key = e.key;
           if (key === 'ArrowRight' || key === ' ' || key === 'PageDown') {
             e.preventDefault();
@@ -2582,9 +2650,6 @@
           } else if (key.toLowerCase() === 'n') {
             e.preventDefault();
             this.speakerCue.classList.toggle('on');
-          } else if (key.toLowerCase() === 'e') {
-            e.preventDefault();
-            this.toggleEditMode();
           }
         });
       }
@@ -2605,68 +2670,10 @@
         }, { passive: true });
 
         window.addEventListener('wheel', (e) => {
-          if (this.editMode) return;
           if (Math.abs(e.deltaY) < 20) return;
           if (e.deltaY > 0) this.next();
           else this.prev();
         }, { passive: true });
-      }
-
-      setupEditMode() {
-        const hotzone = document.getElementById('editHotzone');
-        const toggle = document.getElementById('editToggle');
-        let hideTimer = null;
-
-        const show = () => {
-          clearTimeout(hideTimer);
-          toggle.classList.add('show');
-        };
-        const scheduleHide = () => {
-          hideTimer = setTimeout(() => {
-            if (!this.editMode) toggle.classList.remove('show');
-          }, 400);
-        };
-
-        hotzone.addEventListener('mouseenter', show);
-        hotzone.addEventListener('mouseleave', scheduleHide);
-        toggle.addEventListener('mouseenter', show);
-        toggle.addEventListener('mouseleave', scheduleHide);
-        toggle.addEventListener('click', () => this.toggleEditMode());
-      }
-
-      toggleEditMode() {
-        this.editMode = !this.editMode;
-        document.body.classList.toggle('edit-mode', this.editMode);
-        document.getElementById('editToggle').classList.toggle('active', this.editMode);
-        document.getElementById('editToggle').classList.add('show');
-
-        const nodes = document.querySelectorAll('.slide h1, .slide h2, .slide h3, .slide p, .slide li, .slide .label, .slide .s01-sub, .slide .s01-meta, .slide .big, .slide .team, .slide .mit, .slide .uc, .slide .lbl, .slide .val, .slide .tier');
-        nodes.forEach((el) => {
-          if (this.editMode) {
-            el.setAttribute('contenteditable', 'true');
-            el.setAttribute('spellcheck', 'false');
-          } else {
-            el.removeAttribute('contenteditable');
-          }
-        });
-
-        if (!this.editMode) this.saveEdits();
-      }
-
-      saveEdits() {
-        try {
-          localStorage.setItem('markany-cs330-edits', this.stage.innerHTML);
-        } catch (_) { /* ignore quota */ }
-      }
-
-      restoreEdits() {
-        try {
-          const html = localStorage.getItem('markany-cs330-edits');
-          if (html) {
-            /* Intentionally not restoring full stage HTML to avoid breaking listeners;
-               edits persist for the session via contenteditable save prompt only. */
-          }
-        } catch (_) {}
       }
 
       toggleFullscreen() {
