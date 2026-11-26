@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
+
     /* ===========================================
        CSS CUSTOM PROPERTIES — CREATIVE MODE
        =========================================== */
@@ -141,6 +142,8 @@
       }
       .deck-controls,
       .progress-track,
+      .zoom-hint,
+      .zoom-modal,
       .speaker-cue {
         display: none !important;
       }
@@ -361,7 +364,9 @@
     }
     .nav-pill .nav-reset:hover { color: var(--pink); }
 
-    .speaker-cue {
+    .zoom-hint,
+      .zoom-modal,
+      .speaker-cue {
       position: fixed;
       top: 18px;
       right: 18px;
@@ -532,6 +537,7 @@
       line-height: 1.28;
       max-width: 820px;
       color: var(--ink-2);
+      font-style: italic;
     }
 
     .s01-meta {
@@ -1043,745 +1049,447 @@
       border-left: 22px solid var(--ink);
     }
 
-    /* ===========================================
-       SLIDE 06 — WORKFLOWS & RULES
-       =========================================== */
-    .s06 .content { /* headline + grid via flex */ }
+    
 
-    .s06-flow {
-      border: 4px solid var(--ink);
-      background: var(--cream);
-      padding: 28px 26px;
-      box-shadow: 8px 8px 0 var(--orange);
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .s06-flow h2 {
-      font-family: var(--font-display);
-      font-size: 34px;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-      line-height: 1;
-    }
-
-    .s06-step {
-      display: grid;
-      grid-template-columns: 60px 1fr;
-      gap: 16px;
-      margin-bottom: 0;
-      align-items: center;
-      flex: 1;
-    }
-
-    .s06-step:last-child { margin-bottom: 0; }
-
-    .s06-step .n {
-      width: 60px;
-      height: 60px;
-      border: 3px solid var(--ink);
-      background: var(--yellow);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--font-display);
-      font-size: 26px;
-    }
-
-    .s06-step:nth-child(3) .n { background: var(--pink); }
-    .s06-step:nth-child(4) .n { background: var(--orange); color: var(--cream); }
-    .s06-step:nth-child(5) .n { background: var(--green); color: var(--cream); }
-
-    .s06-step h3 {
-      font-family: var(--font-display);
-      font-size: 23px;
-      text-transform: uppercase;
-      line-height: 1.1;
-      margin-bottom: 6px;
-    }
-
-    .s06-step p {
-      font-size: 19px;
-      line-height: 1.3;
-      color: var(--ink-2);
-    }
-
-    .s06-rules {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: 1fr 1fr auto;
-      gap: 16px;
-      height: 100%;
-    }
-
-    .s06-rule {
-      border: 3px solid var(--ink);
-      padding: 22px 22px;
-      background: var(--cream);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .s06-rule.wide { grid-column: 1 / -1; }
-
-    .s06-rule .br {
-      font-family: var(--font-mono);
-      font-size: 14px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-      color: var(--ink);
-    }
-
-    .s06-rule.pink { background: var(--pink); }
-    .s06-rule.yellow { background: var(--yellow); }
-    .s06-rule.green { background: var(--green); color: var(--cream); }
-    .s06-rule.green .br { color: var(--cream); }
-    .s06-rule.cream-2 { background: var(--cream-2); }
-
-    .s06-rule h3 {
-      font-family: var(--font-display);
-      font-size: 22px;
-      text-transform: uppercase;
-      line-height: 1.1;
-      margin-bottom: 8px;
-    }
-
-    .s06-rule p {
-      font-size: 18px;
-      line-height: 1.35;
-    }
-
-    .s06-rule.green p { color: rgba(239, 233, 217, 0.95); }
-
-    /* ===========================================
-       SLIDE 07 — NFRs
-       =========================================== */
-    .s07-kpis {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-      margin-bottom: 20px;
-    }
-
-    .s07-kpi {
-      border: 4px solid var(--ink);
-      padding: 22px 24px;
-      min-height: 150px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .s07-kpi.k1 { background: var(--pink); }
-    .s07-kpi.k2 { background: var(--yellow); }
-    .s07-kpi.k3 { background: var(--orange); color: var(--cream); }
-    .s07-kpi.k4 { background: var(--green); color: var(--cream); }
-
-    .s07-kpi .val {
-      font-family: var(--font-display);
-      font-size: 48px;
-      line-height: 0.95;
-      margin-bottom: 10px;
-    }
-
-    .s07-kpi .lbl {
-      font-family: var(--font-mono);
-      font-size: 15px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      line-height: 1.25;
-    }
-
-    .s07-cards {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-      flex: 1;
-      min-height: 0;
-    }
-
-    .s07-card {
-      border: 4px solid var(--ink);
-      padding: 26px 24px;
-      background: var(--cream);
-      box-shadow: var(--hard-shadow);
-      display: flex;
-      flex-direction: column;
-    }
-
-    .s07-card h3 {
-      font-family: var(--font-display);
-      font-size: 26px;
-      text-transform: uppercase;
-      line-height: 1.05;
-      margin-bottom: 16px;
-      padding-bottom: 12px;
-      border-bottom: 3px solid var(--ink);
-    }
-
-    .s07-card ul {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-evenly;
-      flex: 1;
-    }
-
-    .s07-card li {
-      list-style: none;
-      font-size: 19px;
-      line-height: 1.35;
-      color: var(--ink-2);
-      margin-bottom: 0;
-      padding-left: 16px;
+    /* === DIAGRAM ZOOM FRAME === */
+    .diagram-frame {
       position: relative;
-    }
-
-    .s07-card li::before {
-      content: "▸";
-      position: absolute;
-      left: 0;
-      color: var(--ink);
-    }
-
-    /* ===========================================
-       SLIDE 08 — UML USE CASE
-       =========================================== */
-    .s08 .content {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .s08-board {
-      flex: 1;
-      min-height: 0;
       border: 4px solid var(--ink);
-      background: var(--cream);
       box-shadow: var(--hard-shadow);
-      position: relative;
+      background: #fff;
       overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 6px 10px;
+      cursor: zoom-in;
+      min-height: 0;
+      flex: 1;
     }
-
-    .s08-board .dotgrid {
-      position: absolute;
-      inset: 0;
-      background-image: radial-gradient(var(--ink) 1px, transparent 1px);
-      background-size: 18px 18px;
-      opacity: 0.07;
-      pointer-events: none;
-    }
-
-    .s08-board svg {
-      position: relative;
-      z-index: 1;
+    .diagram-frame img {
       width: 100%;
       height: 100%;
-      max-width: none;
-      max-height: none;
+      object-fit: contain;
       display: block;
+      background: #fff;
     }
-
-    .s08-legend-strip {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      flex: 0 0 auto;
+    .zoom-hint {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 2;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: var(--ink);
+      color: var(--cream);
+      border: 2px solid var(--ink);
+      padding: 5px 9px;
+      pointer-events: none;
+      box-shadow: 3px 3px 0 var(--orange);
     }
-
-    .s08-leg {
-      border: 3px solid var(--ink);
-      padding: 8px 12px;
-      min-height: 64px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      box-shadow: var(--hard-shadow);
-    }
-
-    .s08-leg.pink { background: var(--pink); }
-    .s08-leg.yellow { background: var(--yellow); }
-    .s08-leg.green { background: var(--green); color: var(--cream); }
-    .s08-leg.cream { background: var(--cream-2); }
-
-    .s08-leg h3 {
+    .diagram-caption {
       font-family: var(--font-mono);
       font-size: 13px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-top: 8px;
+      color: var(--ink-2);
+      flex-shrink: 0;
+    }
+    .zoom-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 5000;
+      background: rgba(15, 15, 15, 0.92);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .zoom-modal.open { display: flex; }
+    .zoom-modal img {
+      max-width: 94vw;
+      max-height: 88vh;
+      object-fit: contain;
+      border: 4px solid var(--cream);
+      box-shadow: 8px 8px 0 var(--orange);
+      background: #fff;
+    }
+    .zoom-close {
+      position: absolute;
+      top: 18px;
+      right: 24px;
+      width: 48px;
+      height: 48px;
+      border: 3px solid var(--cream);
+      background: var(--ink);
+      color: var(--cream);
+      font-size: 28px;
+      line-height: 1;
+      cursor: pointer;
+      font-family: var(--font-mono);
+    }
+    .zoom-close:hover { background: var(--orange); border-color: var(--orange); color: var(--ink); }
+
+    .diagram-side {
+      display: grid;
+      grid-template-columns: 0.34fr 0.66fr;
+      gap: 18px;
+      height: calc(100% - 66px);
+      min-height: 0;
+    }
+    .diagram-side .notes {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-height: 0;
+    }
+    .diagram-side .diagram-wrap {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      gap: 8px;
+    }
+    .note-card {
+      border: 3px solid var(--ink);
+      box-shadow: 4px 4px 0 var(--ink);
+      padding: 14px 16px;
+      background: var(--cream);
+      flex: 1;
+    }
+    .note-card.pink { background: #FDE1EE; }
+    .note-card.yellow { background: #FFF4C2; }
+    .note-card.green { background: #D8F0E3; }
+    .note-card.orange { background: #FFE0D1; }
+    .note-card h3 {
+      font-family: var(--font-mono);
+      font-size: 14px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       margin-bottom: 6px;
     }
+    .note-card p, .note-card li { font-size: 18px; line-height: 1.3; }
+    .note-card ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .note-card li { padding-left: 14px; position: relative; }
+    .note-card li::before { content: "→"; position: absolute; left: 0; }
 
-    .s08-leg p {
-      font-family: var(--font-body);
-      font-size: 14px;
-      line-height: 1.25;
-    }
-
-    /* ===========================================
-       SLIDE 09 — ARCHITECTURE STACK
-       =========================================== */
-    .s09 .content {
+    .dual-diagrams {
       display: grid;
-      grid-template-columns: 0.88fr 1.12fr;
-      gap: 36px;
-      align-items: center;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      height: calc(100% - 66px);
+      min-height: 0;
+    }
+    .dual-panel {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      gap: 8px;
     }
 
-    .s09-left h2 {
-      font-family: var(--font-display);
-      font-size: 64px;
-      text-transform: uppercase;
-      line-height: 0.92;
-      margin-bottom: 24px;
+    /* === SLIDE 06 RULES + DIAGRAM === */
+    .s06-grid {
+      display: grid;
+      grid-template-columns: 0.48fr 0.52fr;
+      gap: 22px;
+      height: calc(100% - 66px);
+      min-height: 0;
     }
-
-    .s09-left p {
-      font-size: 23px;
-      line-height: 1.4;
-      color: var(--ink-2);
-      margin-bottom: 28px;
-      max-width: 640px;
-    }
-
-    .s09-legend {
+    .s06-left {
       display: flex;
       flex-direction: column;
       gap: 14px;
+      min-height: 0;
     }
+    .s06-kpis {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .s06-kpi {
+      border: 4px solid var(--ink);
+      box-shadow: var(--hard-shadow);
+      padding: 14px 16px;
+      background: var(--yellow);
+    }
+    .s06-kpi .val {
+      font-family: var(--font-display);
+      font-size: 32px;
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .s06-kpi .lbl {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      line-height: 1.3;
+    }
+    .s06-br-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      flex: 1;
+      min-height: 0;
+    }
+    .s06-br {
+      border: 3px solid var(--ink);
+      box-shadow: 4px 4px 0 var(--ink);
+      padding: 14px;
+      background: var(--cream);
+    }
+    .s06-br:nth-child(1) { background: #FDE1EE; }
+    .s06-br:nth-child(2) { background: #FFF4C2; }
+    .s06-br:nth-child(3) { background: #D8F0E3; }
+    .s06-br:nth-child(4) { background: #FFE0D1; }
+    .s06-br .br {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+    .s06-br h4 { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+    .s06-br p { font-size: 17px; line-height: 1.3; color: var(--ink-2); }
+    .s06-right { display: flex; flex-direction: column; min-height: 0; gap: 8px; }
 
-    .s09-leg {
+    /* === SLIDE 13 CONSTRAINTS + ERD === */
+    .s13-grid {
+      display: grid;
+      grid-template-columns: 0.55fr 0.45fr;
+      gap: 18px;
+      height: calc(100% - 66px);
+      min-height: 0;
+    }
+    .s13-constraints {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      min-height: 0;
+    }
+    .s13-card {
+      border: 3px solid var(--ink);
+      box-shadow: 4px 4px 0 var(--ink);
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      background: var(--cream);
+    }
+    .s13-card:nth-child(odd) { background: #FDE1EE; }
+    .s13-card:nth-child(even) { background: #FFF4C2; }
+    .s13-card .num {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+    }
+    .s13-card h3 {
+      font-family: var(--font-display);
+      font-size: 20px;
+      text-transform: uppercase;
+      line-height: 1.05;
+    }
+    .s13-card p { font-size: 16px; line-height: 1.25; color: var(--ink-2); }
+    .s13-card .mit {
+      margin-top: auto;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      border: 2px solid var(--ink);
+      background: #E8F6EE;
+      color: var(--green-dark);
+      padding: 7px 8px;
+      line-height: 1.3;
+    }
+    .s13-right { display: flex; flex-direction: column; min-height: 0; gap: 8px; }
+
+    /* === SLIDE 14 CLOSING === */
+    .s14.closing { background: var(--ink); }
+    .s14 .content { bottom: 220px; }
+    .s14-blocks {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 20px;
+      height: 100%;
+    }
+    .s14-block {
+      border: 4px solid var(--cream);
+      box-shadow: 8px 8px 0 var(--orange);
+      padding: 24px;
+      color: var(--cream);
+    }
+    .s14-block.cream {
+      background: var(--cream);
+      color: var(--ink);
+      border-color: var(--ink);
+      box-shadow: 8px 8px 0 var(--pink);
+    }
+    .s14-block.yellow {
+      background: var(--yellow);
+      color: var(--ink);
+      border-color: var(--ink);
+      box-shadow: 8px 8px 0 var(--green);
+    }
+    .s14-block h2 {
+      font-family: var(--font-display);
+      font-size: 28px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      line-height: 1.05;
+    }
+    .s14-block ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .s14-block li { font-size: 20px; line-height: 1.3; padding-left: 16px; position: relative; }
+    .s14-block li::before { content: "▸"; position: absolute; left: 0; font-weight: 700; }
+    .s14-road .item {
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      gap: 12px;
+      margin-bottom: 14px;
+      align-items: start;
+    }
+    .s14-road .n {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 18px;
+      border: 3px solid var(--ink);
+      background: var(--cream);
+      height: 40px;
       display: flex;
       align-items: center;
-      gap: 12px;
+      justify-content: center;
+    }
+    .s14-road h3 { font-size: 20px; font-weight: 700; margin-bottom: 2px; }
+    .s14-road p { font-size: 17px; line-height: 1.25; }
+    .s14-thanks {
+      position: absolute;
+      left: 72px;
+      right: 72px;
+      bottom: 88px;
+      border: 4px solid var(--cream);
+      background: var(--green);
+      color: var(--cream);
+      padding: 22px 28px;
+      box-shadow: 8px 8px 0 var(--orange);
+      text-align: center;
+    }
+    .s14-thanks .big {
+      font-family: var(--font-display);
+      font-size: 42px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .s14-thanks .team {
+      font-family: var(--font-mono);
+      font-size: 16px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      line-height: 1.45;
+      opacity: 0.95;
+    }
+
+    /* Scope slide polish */
+    .s03-top {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 18px;
+    }
+    .s03-box {
+      border: 4px solid var(--ink);
+      box-shadow: var(--hard-shadow);
+      overflow: hidden;
+    }
+    .s03-box .hdr {
       font-family: var(--font-mono);
       font-size: 16px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-    }
-
-    .s09-swatch {
-      width: 24px;
-      height: 24px;
-      border: 3px solid var(--ink);
-      flex-shrink: 0;
-    }
-
-    .s09-swatch.pink { background: var(--pink); }
-    .s09-swatch.yellow { background: var(--yellow); }
-    .s09-swatch.orange { background: var(--orange); }
-    .s09-swatch.cream { background: var(--cream-2); }
-
-    .s09-stack-wrap {
-      position: relative;
-      height: 800px;
-      background: var(--green);
-      border: 4px solid var(--ink);
-      box-shadow: var(--hard-shadow-xl);
-      overflow: hidden;
-    }
-
-    .s09-layer {
-      position: absolute;
-      left: 44px;
-      right: 68px;
-      border: 4px solid var(--ink);
-      box-shadow: var(--hard-shadow-lg);
-      padding: 26px 30px;
-      min-height: 132px;
-    }
-
-    .s09-layer.t1 {
-      top: 42px;
-      background: var(--pink);
-      transform: translateX(0);
-    }
-
-    .s09-layer.t2 {
-      top: 210px;
-      background: var(--yellow);
-      transform: translateX(28px);
-      right: 40px;
-    }
-
-    .s09-layer.t3 {
-      top: 378px;
-      background: var(--orange);
-      color: var(--cream);
-      transform: translateX(56px);
-      right: 12px;
-    }
-
-    .s09-layer.t4 {
-      top: 546px;
-      background: var(--cream-2);
-      transform: translateX(84px);
-      right: -16px;
-      left: 44px;
-    }
-
-    .s09-layer .tier {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-      opacity: 0.85;
-    }
-
-    .s09-layer h3 {
-      font-family: var(--font-display);
-      font-size: 30px;
-      text-transform: uppercase;
-      line-height: 1;
-      margin-bottom: 10px;
-    }
-
-    .s09-layer p {
-      font-family: var(--font-body);
-      font-size: 19px;
-      line-height: 1.3;
-    }
-
-    /* ===========================================
-       SLIDE 10 — MODULES & SCHEMA
-       =========================================== */
-    .s10 .content { /* headline + grid via flex */ }
-
-    .s10-card {
-      border: 4px solid var(--ink);
-      background: var(--cream);
-      padding: 26px 24px;
-      box-shadow: var(--hard-shadow);
-      display: flex;
-      flex-direction: column;
-      min-height: 0;
-      height: 100%;
-    }
-
-    .s10-card h2 {
-      font-family: var(--font-display);
-      font-size: 30px;
-      text-transform: uppercase;
-      line-height: 1;
-      margin-bottom: 18px;
-      padding-bottom: 14px;
+      padding: 12px 16px;
       border-bottom: 3px solid var(--ink);
+      font-weight: 700;
     }
-
-    .s10-engines {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      flex: 1;
-    }
-
-    .s10-eng {
-      border: 3px solid var(--ink);
-      padding: 20px 18px;
+    .s03-box.in .hdr { background: var(--green); color: var(--cream); }
+    .s03-box.out .hdr { background: linear-gradient(90deg, var(--orange), var(--pink)); color: var(--ink); }
+    .s03-box ul {
+      list-style: none;
+      padding: 14px 18px 16px;
       display: flex;
       flex-direction: column;
+      gap: 8px;
     }
-
-    .s10-eng.deep { background: var(--pink); }
-    .s10-eng.classical { background: var(--yellow); }
-
-    .s10-eng h3 {
-      font-family: var(--font-display);
+    .s03-box li {
       font-size: 20px;
-      text-transform: uppercase;
-      line-height: 1.1;
-      margin-bottom: 12px;
+      line-height: 1.3;
+      padding-left: 18px;
+      position: relative;
     }
-
-    .s10-eng .mono-tag {
+    .s03-box li::before { content: "▸"; position: absolute; left: 0; font-weight: 700; }
+    .s03-roles {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .s03-role {
+      border: 4px solid var(--ink);
+      box-shadow: var(--hard-shadow);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-height: 190px;
+    }
+    .s03-role:nth-child(1) { background: var(--pink); }
+    .s03-role:nth-child(2) { background: var(--yellow); }
+    .s03-role:nth-child(3) { background: var(--cream-2); }
+    .s03-role:nth-child(4) { background: #D8F0E3; }
+    .s03-role .tag {
       font-family: var(--font-mono);
       font-size: 13px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      margin-bottom: 12px;
-      display: block;
+      border: 2px solid var(--ink);
+      background: var(--cream);
+      align-self: flex-start;
+      padding: 4px 8px;
     }
-
-    .s10-eng ul {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-evenly;
-      flex: 1;
-    }
-
-    .s10-eng li {
-      list-style: none;
-      font-size: 17px;
-      line-height: 1.35;
-      margin-bottom: 0;
-      padding-left: 14px;
-      position: relative;
-    }
-
-    .s10-eng li::before {
-      content: "•";
-      position: absolute;
-      left: 0;
-      font-weight: 700;
-    }
-
-    .s10-groups {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      flex: 1;
-    }
-
-    .s10-group {
-      border: 3px solid var(--ink);
-      padding: 22px 20px;
-      background: var(--cream-2);
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .s10-group.g1 { background: var(--pink); }
-    .s10-group.g2 { background: var(--yellow); }
-    .s10-group.g3 { background: var(--orange); color: var(--cream); }
-
-    .s10-group h3 {
-      font-family: var(--font-mono);
-      font-size: 14px;
-      letter-spacing: 0.1em;
+    .s03-role h3 {
+      font-family: var(--font-display);
+      font-size: 26px;
       text-transform: uppercase;
-      margin-bottom: 8px;
+      line-height: 1;
     }
+    .s03-role p { font-size: 18px; line-height: 1.3; }
 
-    .s10-group p {
-      font-size: 19px;
-      line-height: 1.35;
-    }
-
-    .s10-callout {
-      margin-top: 14px;
+    .s04-verdict {
+      margin: 0 14px 14px;
       border: 3px solid var(--ink);
-      border-radius: 999px;
-      padding: 14px 18px;
-      background: var(--green);
+      background: var(--ink);
       color: var(--cream);
-      font-family: var(--font-mono);
-      font-size: 14px;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      text-align: center;
-      line-height: 1.35;
-    }
-
-    /* ===========================================
-       SLIDE 11 — CONSTRAINTS
-       =========================================== */
-    .s11-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: 1fr 1fr;
-      gap: 18px;
-      height: 100%;
-    }
-
-    .s11-card {
-      border: 4px solid var(--ink);
-      background: var(--cream);
-      padding: 20px 22px;
-      box-shadow: var(--hard-shadow);
-      display: flex;
-      flex-direction: column;
-      min-height: 0;
-    }
-
-    .s11-card .num {
-      font-family: var(--font-display);
-      font-size: 34px;
-      line-height: 1;
-      margin-bottom: 10px;
-    }
-
-    .s11-card:nth-child(1) .num,
-    .s11-card:nth-child(4) .num { color: var(--pink); }
-    .s11-card:nth-child(2) .num,
-    .s11-card:nth-child(5) .num { color: var(--orange); }
-    .s11-card:nth-child(3) .num,
-    .s11-card:nth-child(6) .num { color: var(--green); }
-
-    .s11-card h3 {
-      font-family: var(--font-display);
-      font-size: 22px;
-      text-transform: uppercase;
-      line-height: 1.1;
-      margin-bottom: 12px;
-    }
-
-    .s11-card p {
-      font-size: 17px;
-      line-height: 1.35;
-      color: var(--ink-2);
-      flex: 1;
-    }
-
-    /* mitigation styles defined in shared primitives */
-
-    /* ===========================================
-       SLIDE 12 — CLOSING
-       =========================================== */
-    .slide.closing {
-      background: var(--green);
-      color: var(--cream);
-    }
-
-    .s12 .content {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 26px;
-    }
-
-    .s12-block {
-      border: 4px solid var(--ink);
-      padding: 26px 26px;
-      color: var(--ink);
-      box-shadow: var(--hard-shadow-lg);
-      min-height: 0;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .s12-block.cream { background: var(--cream); }
-    .s12-block.yellow { background: var(--yellow); }
-    .s12-block.pink { background: var(--pink); }
-
-    .s12-block h2 {
-      font-family: var(--font-display);
-      font-size: 32px;
-      text-transform: uppercase;
-      line-height: 1;
-      margin-bottom: 20px;
-    }
-
-    .s12-block ul {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-evenly;
-      flex: 1;
-    }
-
-    .s12-block li {
-      list-style: none;
-      font-size: 21px;
-      line-height: 1.35;
-      margin-bottom: 0;
-      padding-left: 18px;
-      position: relative;
-    }
-
-    .s12-block li::before {
-      content: "▸";
-      position: absolute;
-      left: 0;
-    }
-
-    .s12-road {
-      justify-content: flex-start;
-    }
-
-    .s12-road .item {
-      display: grid;
-      grid-template-columns: 54px 1fr;
-      gap: 14px;
-      margin-bottom: 18px;
-      align-items: center;
-      flex: 1;
-    }
-
-    .s12-road .item:last-child { margin-bottom: 0; }
-
-    .s12-road .n {
-      width: 54px;
-      height: 54px;
-      border: 3px solid var(--ink);
-      background: var(--cream);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--font-display);
-      font-size: 20px;
-    }
-
-    .s12-road h3 {
-      font-family: var(--font-display);
-      font-size: 20px;
-      text-transform: uppercase;
-      line-height: 1.1;
-      margin-bottom: 4px;
-    }
-
-    .s12-road p {
-      font-size: 18px;
-      line-height: 1.3;
-    }
-
-    .s12-thanks {
-      position: absolute;
-      left: 72px;
-      right: 72px;
-      bottom: 128px;
-      border: 4px solid var(--ink);
-      background: var(--cream);
-      color: var(--ink);
-      padding: 18px 28px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 8px 8px 0 var(--ink);
-    }
-
-    .s12-thanks .big {
-      font-family: var(--font-display);
-      font-size: 32px;
-      text-transform: uppercase;
-      line-height: 1;
-    }
-
-    .s12-thanks .team {
       font-family: var(--font-mono);
       font-size: 15px;
       letter-spacing: 0.06em;
       text-transform: uppercase;
-      text-align: right;
-      line-height: 1.45;
+      text-align: center;
+      padding: 12px 10px;
+      line-height: 1.3;
     }
 
   </style>
 </head>
 <body>
-  <!-- Progress -->
-  <div class="progress-track" aria-hidden="true"><div class="progress-fill" id="progressFill"></div></div>
-
-  <!-- Speaker cue overlay (toggle with N) -->
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
   <div class="speaker-cue" id="speakerCue" aria-live="polite">
-    <div class="cue-name" id="cueName">Speaker</div>
-    <div id="cueRange">Slides</div>
-    <div class="cue-time" id="cueTime">Target</div>
+    <div class="cue-name" id="cueName"></div>
+    <div class="cue-range" id="cueRange"></div>
+    <div class="cue-time" id="cueTime"></div>
   </div>
 
   <div class="deck-viewport">
     <main class="deck-stage" id="deckStage">
-
-      <!-- ========== SLIDE 01 — TITLE COVER ========== -->
-      <section class="slide s01 active visible" data-speaker="Maitra Prajapati" data-range="01–04" data-time="0:00–3:20">
+      <!-- SLIDE 01 — TITLE -->
+      <section class="slide s01 active visible" data-speaker="Vikas Patanvadiya" data-range="01–05" data-time="0:00–3:35">
         <div class="topbar">
           <div class="topbar-eyebrow">Project Overview</div>
           <div class="topbar-pill">CS330 / SRS V1.0</div>
@@ -1789,367 +1497,246 @@
         <div class="content">
           <div class="s01-left reveal">
             <div>
-              <h1 class="display s01-title">
-                MARKANY<br />
-                <span class="orange">FACIAL<br />ATTENDANCE</span>
-              </h1>
-              <p class="body s01-sub">A Hybrid Classical &amp; Deep Learning Biometric Attendance Platform</p>
+              <h1 class="display s01-title">MarkAny<br /><span class="orange">Facial Attendance</span></h1>
+              <p class="s01-sub">A Hybrid Classical &amp; Deep Learning Biometric Attendance Platform</p>
             </div>
             <div class="s01-meta">
-              <div><strong>Course</strong> CS330 – Software Engineering · Navrachana University, Vadodara</div>
-              <div><strong>Guide</strong> Ujwala Petigara</div>
-              <div><strong>Document ID</strong> SRS-MARKANY-V1.0</div>
-              <div class="s01-team"><strong>Team</strong>
-                <span>Maitra Prajapati (24000493)<br />Vikas Patanvadiya (24000605)<br />Rishi Yagnesh Kachhadia (24000713)</span>
+              <div><strong>Course</strong>CS330 – Software Engineering · B.Tech CSE (3rd Year) · Navrachana University, Vadodara</div>
+              <div><strong>Faculty Guide</strong>Prof. Ujwala Petigara</div>
+              <div><strong>Document ID</strong>SRS-MARKANY-V1.0</div>
+              <div><strong>Team</strong>Vikas Patanvadiya (24000605) · Rishi Yagnesh Kachhadia (24000713) · Maitra Prajapati (24000493)</div>
+            </div>
+          </div>
+          <div class="s01-right reveal reveal-d2">
+            <div class="s01-stack">
+              <div class="s01-card c1"></div>
+              <div class="s01-card c2"></div>
+              <div class="s01-card c3">
+                <div class="big">IEEE 830<br />SRS</div>
+                <div>Hybrid CV · 16/16 Tests · &lt; 2.5 s Batch</div>
               </div>
             </div>
           </div>
-          <div class="s01-poster reveal reveal-d2" aria-hidden="true">
-            <div class="s01-frame f1"></div>
-            <div class="s01-frame f2"></div>
-            <div class="s01-frame f3"></div>
-            <div class="s01-scan">
-              <svg class="s01-face" viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">
-                <!-- Soft abstract face silhouette -->
-                <ellipse cx="100" cy="120" rx="58" ry="74" fill="none" stroke="#0F0F0F" stroke-width="3" opacity="0.55"/>
-                <!-- Light eye arcs -->
-                <path d="M62 112 Q74 104 86 112" fill="none" stroke="#0F0F0F" stroke-width="2.5" opacity="0.45"/>
-                <path d="M114 112 Q126 104 138 112" fill="none" stroke="#0F0F0F" stroke-width="2.5" opacity="0.45"/>
-                <!-- Soft nose suggestion -->
-                <path d="M100 118 L100 148" fill="none" stroke="#0F0F0F" stroke-width="2" opacity="0.35"/>
-                <!-- Soft mouth arc -->
-                <path d="M78 168 Q100 178 122 168" fill="none" stroke="#0F0F0F" stroke-width="2.5" opacity="0.4"/>
-                <!-- Subtle landmark dots -->
-                <circle cx="74" cy="112" r="2.5" fill="#0F0F0F" opacity="0.35"/>
-                <circle cx="126" cy="112" r="2.5" fill="#0F0F0F" opacity="0.35"/>
-                <circle cx="100" cy="152" r="2.5" fill="#0F0F0F" opacity="0.3"/>
-              </svg>
-              <div class="s01-reticle"></div>
-              <span class="s01-corner tl"></span>
-              <span class="s01-corner tr"></span>
-              <span class="s01-corner bl"></span>
-              <span class="s01-corner br"></span>
-            </div>
-            <div class="s01-badge">Hybrid CV · ArcFace 512-D · 3D Liveness</div>
-          </div>
         </div>
         <div class="slide-meta">
-          <div>MarkAny · CS330</div>
-          <div class="slide-meta-num"><span>01</span><span class="dot" aria-hidden="true">•</span><span>12</span></div>
+          <div>Title Cover</div>
+          <div class="slide-meta-num"><span>01</span><span class="dot" aria-hidden="true">•</span><span>14</span></div>
         </div>
       </section>
 
-      <!-- ========== SLIDE 02 — PROBLEM & OBJECTIVES ========== -->
-      <section class="slide s02" data-speaker="Maitra Prajapati" data-range="01–04" data-time="0:00–3:20">
+      <!-- SLIDE 02 — PROBLEM -->
+      <section class="slide s02" data-speaker="Vikas Patanvadiya" data-range="01–05" data-time="0:00–3:35">
         <div class="topbar">
           <div class="topbar-eyebrow">Project Introduction</div>
           <div class="topbar-pill">Problem → Goal</div>
         </div>
-        <div class="content" style="display:flex;flex-direction:column;">
+        <div class="content">
           <h2 class="slide-headline reveal">Why Manual Attendance Fails.</h2>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;flex:1;min-height:0;">
-          <div class="s02-col problem reveal">
-            <h2>The 4 Failures</h2>
-            <div class="s02-item">
-              <div class="s02-num">01</div>
-              <div>
-                <h3>Lecture Time Loss</h3>
-                <p>Verbal roll-calls consume 10–15 mins (15–20%) every lecture.</p>
-              </div>
-            </div>
-            <div class="s02-item">
-              <div class="s02-num">02</div>
-              <div>
-                <h3>Proxy Attendance</h3>
-                <p>Paper sign-ins and RFID cards enable effortless buddy signing.</p>
-              </div>
-            </div>
-            <div class="s02-item">
-              <div class="s02-num">03</div>
-              <div>
-                <h3>Hardware &amp; Hygiene Friction</h3>
-                <p>Fingerprint scanners bottleneck doors and degrade from dust/grease.</p>
-              </div>
-            </div>
-            <div class="s02-item">
-              <div class="s02-num">04</div>
-              <div>
-                <h3>Administrative Lag</h3>
-                <p>Manual sheet-to-ERP transcription delays compliance reporting.</p>
-              </div>
-            </div>
-          </div>
-          <div class="s02-col objectives reveal reveal-d2">
-            <h2>Project Objectives</h2>
-            <div class="s02-item">
-              <div class="s02-num">01</div>
-              <div>
-                <h3>Instant Batch Marking</h3>
-                <p>Mark 40–50 students from a single photo in &lt; 2.5 s.</p>
-              </div>
-            </div>
-            <div class="s02-item">
-              <div class="s02-num">02</div>
-              <div>
-                <h3>Anti-Spoofing Biometrics</h3>
-                <p>512-D ArcFace + active 3D head-turn liveness defeats photos/replays.</p>
-              </div>
-            </div>
-            <div class="s02-item">
-              <div class="s02-num">03</div>
-              <div>
-                <h3>Multi-Modal Flexibility</h3>
-                <p>Live stream, classroom group photo, and timed mobile self check-in.</p>
-              </div>
-            </div>
-            <div class="s02-item">
-              <div class="s02-num">04</div>
-              <div>
-                <h3>Auditability &amp; Rigor</h3>
-                <p>IEEE 830 SRS, immutable audit logs, and dual hybrid CV validation.</p>
-              </div>
-            </div>
-          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;flex:1;min-height:0;height:calc(100% - 66px);">
+            <article class="s02-col problem reveal">
+              <h2>The 4 Failures</h2>
+              <div class="s02-item"><div class="s02-num">01</div><div><h3>Lecture Time Loss</h3><p>10–15 mins (15–20%) wasted per lecture on verbal roll-call.</p></div></div>
+              <div class="s02-item"><div class="s02-num">02</div><div><h3>Proxy Attendance</h3><p>Paper buddy-signing &amp; RFID card sharing defeat integrity.</p></div></div>
+              <div class="s02-item"><div class="s02-num">03</div><div><h3>Hardware &amp; Hygiene Friction</h3><p>Doorway bottlenecks &amp; fingerprint sensor degradation.</p></div></div>
+              <div class="s02-item"><div class="s02-num">04</div><div><h3>Administrative Lag</h3><p>Delayed paper-to-ERP entry creates audit gaps.</p></div></div>
+            </article>
+            <article class="s02-col objectives reveal reveal-d2">
+              <h2>Project Objectives</h2>
+              <div class="s02-item"><div class="s02-num">01</div><div><h3>Instant Batch Marking</h3><p>40–50 students from one photo in &lt; 2.5 s.</p></div></div>
+              <div class="s02-item"><div class="s02-num">02</div><div><h3>Anti-Spoofing Biometrics</h3><p>512-D ArcFace + active 3D head-turn liveness.</p></div></div>
+              <div class="s02-item"><div class="s02-num">03</div><div><h3>Multi-Modal Capture</h3><p>Live webcam, group photo &amp; timed mobile check-in.</p></div></div>
+              <div class="s02-item"><div class="s02-num">04</div><div><h3>Auditability &amp; Rigor</h3><p>IEEE 830 SRS, immutable audit logs &amp; hybrid CV validation.</p></div></div>
+            </article>
           </div>
         </div>
         <div class="slide-meta">
           <div>Problem Statement &amp; Objectives</div>
-          <div class="slide-meta-num"><span>02</span><span class="dot" aria-hidden="true">•</span><span>12</span></div>
+          <div class="slide-meta-num"><span>02</span><span class="dot" aria-hidden="true">•</span><span>14</span></div>
         </div>
       </section>
 
-      <!-- ========== SLIDE 03 — SCOPE & USERS ========== -->
-      <section class="slide s03" data-speaker="Maitra Prajapati" data-range="01–04" data-time="0:00–3:20">
+      <!-- SLIDE 03 — SCOPE -->
+      <section class="slide s03" data-speaker="Vikas Patanvadiya" data-range="01–05" data-time="0:00–3:35">
         <div class="topbar">
           <div class="topbar-eyebrow">Project Introduction</div>
           <div class="topbar-pill">Scope &amp; Actors</div>
         </div>
-        <div class="content" style="display:flex;flex-direction:column;">
-          <h2 class="slide-headline reveal">End-to-End Scope &amp; Target Users.</h2>
-          <div class="s03-banner reveal">
-            <div class="s03-step accent-p">
-              <div class="tag">01 Capture</div>
-              <div class="label">Browser WebRTC Capture</div>
-              <span class="s03-arrow" aria-hidden="true"></span>
+        <div class="content">
+          <h2 class="slide-headline reveal">Scope Boundary &amp; Target Users.</h2>
+          <div class="s03-top reveal">
+            <div class="s03-box in">
+              <div class="hdr">In Scope (V1.0 Delivered)</div>
+              <ul>
+                <li>RBAC Auth (<span class="code-pill">PBKDF2</span> + 30-day tokens)</li>
+                <li>Regex timetable parsing &amp; 6-char join codes</li>
+                <li>Biometric registration (3–5 poses)</li>
+                <li>Live, group-photo &amp; 3D-liveness mobile check-in</li>
+                <li>Audit overrides, CIE marks &amp; <span class="code-pill">.xlsx</span> / <span class="code-pill">.csv</span> exports</li>
+              </ul>
             </div>
-            <div class="s03-step accent-y">
-              <div class="tag">02 Recognize</div>
-              <div class="label">Hybrid CV Recognition</div>
-              <span class="s03-arrow" aria-hidden="true"></span>
-            </div>
-            <div class="s03-step accent-o">
-              <div class="tag">03 Review</div>
-              <div class="label">Audit Review &amp; Marks</div>
-              <span class="s03-arrow" aria-hidden="true"></span>
-            </div>
-            <div class="s03-step accent-g">
-              <div class="tag">04 Export</div>
-              <div class="label">Excel / CSV Export</div>
+            <div class="s03-box out">
+              <div class="hdr">Out of Scope (Post-V1.0)</div>
+              <ul>
+                <li>Native iOS/Android push notifications (FCM)</li>
+                <li>Automated Canvas/Moodle LMS webhook sync</li>
+                <li>Dedicated Edge-AI hardware kiosks (RPi 5 / Jetson)</li>
+                <li>Live university ERP auto-push</li>
+              </ul>
             </div>
           </div>
-          <div class="s03-grid" style="flex:1;min-height:0;height:auto;">
-            <div class="s03-card reveal reveal-d1">
-              <span class="role-tag">Primary Actor</span>
-              <h3>Faculty / Teacher</h3>
-              <p>Creates subjects &amp; 6-char join codes, imports timetables, runs live/group sessions, overrides statuses, enters CIE marks, exports reports.</p>
-            </div>
-            <div class="s03-card reveal reveal-d2">
-              <span class="role-tag">End-User</span>
-              <h3>Student</h3>
-              <p>One-time biometric registration (3–5 poses), joins courses, mobile self check-in with 3D liveness, tracks attendance % &amp; marks.</p>
-            </div>
-            <div class="s03-card reveal reveal-d3">
-              <span class="role-tag">Auditor</span>
-              <h3>Academic Administrator</h3>
-              <p>Monitors institutional compliance and inspects <span class="code-pill">manually_set = 1</span> override trails.</p>
-            </div>
-            <div class="s03-card reveal reveal-d4">
-              <span class="role-tag">Examiner</span>
-              <h3>Course Evaluator</h3>
-              <p>Audits IEEE 830 traceability, hybrid CV implementations, and automated test suite (16/16 passing).</p>
-            </div>
+          <div class="s03-roles reveal reveal-d2">
+            <article class="s03-role"><span class="tag">Primary Actor</span><h3>Faculty / Teacher</h3><p>Owns sessions, live/group capture, overrides, exports.</p></article>
+            <article class="s03-role"><span class="tag">End-User</span><h3>Student</h3><p>Enrolls biometrics; self check-in with 3D liveness.</p></article>
+            <article class="s03-role"><span class="tag">Auditor</span><h3>Academic Admin</h3><p>Inspects <span class="code-pill">manually_set = 1</span> override trails.</p></article>
+            <article class="s03-role"><span class="tag">Examiner</span><h3>Course Evaluator</h3><p>Audits SRS rigor &amp; 16/16 passing tests.</p></article>
           </div>
         </div>
         <div class="slide-meta">
           <div>Product Scope &amp; Target Users</div>
-          <div class="slide-meta-num"><span>03</span><span class="dot" aria-hidden="true">•</span><span>12</span></div>
+          <div class="slide-meta-num"><span>03</span><span class="dot" aria-hidden="true">•</span><span>14</span></div>
         </div>
       </section>
 
-      <!-- ========== SLIDE 04 — FEASIBILITY ========== -->
-      <section class="slide s04" data-speaker="Maitra Prajapati" data-range="01–04" data-time="0:00–3:20">
+      <!-- SLIDE 04 — FEASIBILITY -->
+      <section class="slide s04" data-speaker="Vikas Patanvadiya" data-range="01–05" data-time="0:00–3:35">
         <div class="topbar">
           <div class="topbar-eyebrow">Project Overview</div>
           <div class="topbar-pill">Feasibility</div>
         </div>
-        <div class="content" style="display:flex;flex-direction:column;">
+        <div class="content">
           <h2 class="slide-headline reveal">Technical, Economic &amp; Operational Feasibility.</h2>
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;flex:1;min-height:0;">
-          <article class="s04-pillar reveal">
-            <div class="s04-head pink">Technical</div>
-            <ul class="s04-body">
-              <li><strong>CPU-only ONNX:</strong> ~200 ms/frame on Intel i5 / Apple Silicon — no CUDA required.</li>
-              <li><strong>Browser WebRTC:</strong> getUserMedia eliminates server camera driver issues.</li>
-              <li><strong>Dual Persistence:</strong> Supabase PostgreSQL + SQLite3 offline fallback.</li>
-              <li><strong>Test Suite:</strong> 16/16 unit tests passing in 0.43 s.</li>
-            </ul>
-          </article>
-          <article class="s04-pillar reveal reveal-d2">
-            <div class="s04-head yellow">Economic</div>
-            <ul class="s04-body">
-              <li><strong>$0 Licensing:</strong> 100% open-source — React 19, Flask, InsightFace, SQLite/Supabase.</li>
-              <li><strong>$0 Hardware:</strong> Eliminates biometric kiosks, RFID readers, and CUDA GPUs.</li>
-              <li><strong>Reuse Assets:</strong> Existing webcams &amp; student phones become capture devices.</li>
-              <li><strong>Low Ops Overhead:</strong> Free-tier Supabase cloud DB with SQLite3 offline fallback runs on existing faculty laptops.</li>
-            </ul>
-          </article>
-          <article class="s04-pillar reveal reveal-d3">
-            <div class="s04-head green">Operational</div>
-            <ul class="s04-body">
-              <li><strong>Timetable Fit:</strong> Regex portal parsing plugs into university routines.</li>
-              <li><strong>One-Click Group:</strong> &lt; 2.5 s single-click classroom capture.</li>
-              <li><strong>Human-in-Loop:</strong> Present/Absent overrides before finalization.</li>
-              <li><strong>Ready Export:</strong> Submit-ready .xlsx / .csv reports.</li>
-            </ul>
-          </article>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;height:calc(100% - 66px);min-height:0;">
+            <article class="s04-pillar reveal">
+              <div class="s04-head pink">Technical</div>
+              <ul class="s04-body">
+                <li><strong>CPU Inference:</strong> ONNX Runtime ~200 ms/frame — no CUDA required.</li>
+                <li><strong>Browser Capture:</strong> WebRTC <span class="code-pill">getUserMedia</span> — no server camera drivers.</li>
+                <li><strong>Dual Persistence:</strong> Supabase PostgreSQL + SQLite3 offline fallback.</li>
+                <li><strong>Verified Suite:</strong> 16/16 unit tests in 0.43 s.</li>
+              </ul>
+              <div class="s04-verdict">Working Prototype Built</div>
+            </article>
+            <article class="s04-pillar reveal reveal-d2">
+              <div class="s04-head yellow">Economic</div>
+              <ul class="s04-body">
+                <li><strong>$0 Licensing:</strong> 100% open-source React 19, Flask, InsightFace, SQLite/Supabase.</li>
+                <li><strong>$0 Hardware:</strong> No biometric kiosks, RFID readers, or GPUs.</li>
+                <li><strong>Reuse Assets:</strong> Existing classroom webcams &amp; student phones.</li>
+                <li><strong>Near-Zero Ops:</strong> Free-tier Supabase + local SQLite.</li>
+              </ul>
+              <div class="s04-verdict">Zero Hardware / License Cost</div>
+            </article>
+            <article class="s04-pillar reveal reveal-d3">
+              <div class="s04-head green">Operational</div>
+              <ul class="s04-body">
+                <li><strong>Timetable Ingest:</strong> Regex parser reads existing portal schedules.</li>
+                <li><strong>Lecture Fit:</strong> &lt; 2.5 s one-click group capture for 50 students.</li>
+                <li><strong>Human Loop:</strong> Faculty override before final lock.</li>
+                <li><strong>Submit Ready:</strong> .xlsx / .csv exports for ERP handoff.</li>
+              </ul>
+              <div class="s04-verdict">Classroom-Ready Workflow</div>
+            </article>
           </div>
         </div>
         <div class="slide-meta">
           <div>Feasibility Study</div>
-          <div class="slide-meta-num"><span>04</span><span class="dot" aria-hidden="true">•</span><span>12</span></div>
+          <div class="slide-meta-num"><span>04</span><span class="dot" aria-hidden="true">•</span><span>14</span></div>
         </div>
       </section>
 
-      <!-- ========== SLIDE 05 — FUNCTIONAL REQUIREMENTS ========== -->
-      <section class="slide s05" data-speaker="Vikas Patanvadiya" data-range="05–08" data-time="3:20–6:40">
+      <!-- SLIDE 05 — FUNCTIONAL -->
+      <section class="slide s05" data-speaker="Vikas Patanvadiya" data-range="01–05" data-time="0:00–3:35">
         <div class="topbar">
           <div class="topbar-eyebrow">Requirements Analysis</div>
           <div class="topbar-pill">Four Core Modules</div>
         </div>
         <div class="content">
-          <h2 class="s05-title slide-headline reveal" style="border-bottom:2px dashed var(--ink);padding-bottom:10px;margin-bottom:18px;">Four Core Functional Modules.</h2>
-          <div class="s05-flow">
-            <article class="s05-card c1 reveal reveal-d1">
+          <h2 class="slide-headline reveal">Four Core Functional Modules.</h2>
+          <div class="s05-flow" style="height:calc(100% - 66px);">
+            <article class="s05-card c1 reveal">
               <div class="num">01</div>
               <div class="uc">UC-04</div>
               <h3>Biometric Enrollment</h3>
-              <p>Captures 3–5 multi-angle face samples; SCRFD enforces single face; stores unit-normalized 512-D ArcFace vectors (‖e‖<sub>2</sub> = 1.0).</p>
+              <p>3–5 multi-angle face poses; SCRFD enforces single face (HTTP 400 on 0 or &gt;1); stores unit-normalized 512-D ArcFace vectors (<span class="code-pill">‖e‖₂ = 1.0</span>).</p>
             </article>
-            <div class="s05-arrow" aria-hidden="true"><span></span></div>
-            <article class="s05-card c2 reveal reveal-d2">
+            <div class="s05-arrow reveal" aria-hidden="true"><span>→</span></div>
+            <article class="s05-card c2 reveal reveal-d1">
               <div class="num">02</div>
               <div class="uc">UC-05, UC-06</div>
               <h3>Live &amp; Group Marking</h3>
-              <p>1500 ms live webcam overlay + batch group-photo recognition of 40–50 faces (≥ 24×24 px) with archived BLOB evidence.</p>
+              <p>1500 ms live webcam canvas overlay (green/red boxes) + batch group-photo recognition of 40–50 faces (≥ 24×24 px) with archived BLOB evidence.</p>
             </article>
-            <div class="s05-arrow" aria-hidden="true"><span></span></div>
-            <article class="s05-card c3 reveal reveal-d3">
+            <div class="s05-arrow reveal reveal-d2" aria-hidden="true"><span>→</span></div>
+            <article class="s05-card c3 reveal reveal-d2">
               <div class="num">03</div>
               <div class="uc">UC-07</div>
               <h3>3D Liveness Check-In</h3>
-              <p>Timed mobile self-marking (open_until) with 14-frame head-turn (Δ ≥ 0.12) that also verifies the face matches the logged-in student (REQ-SELF-4).</p>
+              <p>Timed mobile self-mark (<span class="code-pill">open_until</span>), 14-frame head-turn challenge (Δ ≥ 0.12), strictly verified against logged-in student ID (REQ-SELF-4).</p>
             </article>
-            <div class="s05-arrow" aria-hidden="true"><span></span></div>
-            <article class="s05-card c4 reveal reveal-d4">
+            <div class="s05-arrow reveal reveal-d3" aria-hidden="true"><span>→</span></div>
+            <article class="s05-card c4 reveal reveal-d3">
               <div class="num">04</div>
               <div class="uc">UC-08, UC-10</div>
-              <h3>Audit &amp; Reporting</h3>
-              <p>Roster sheet with match confidences, manual toggles (manually_set = 1), irreversible session lock, and in-memory .xlsx/.csv export.</p>
+              <h3>Audit &amp; Export</h3>
+              <p>Full roster confidence sheet, manual toggles (<span class="code-pill">manually_set = 1</span>), permanent session finalize lock, and in-memory .xlsx / .csv reports.</p>
             </article>
           </div>
         </div>
         <div class="slide-meta">
           <div>Major Functional Requirements</div>
-          <div class="slide-meta-num"><span>05</span><span class="dot" aria-hidden="true">•</span><span>12</span></div>
+          <div class="slide-meta-num"><span>05</span><span class="dot" aria-hidden="true">•</span><span>14</span></div>
         </div>
       </section>
 
-      <!-- ========== SLIDE 06 — WORKFLOWS & BUSINESS RULES ========== -->
-      <section class="slide s06" data-speaker="Vikas Patanvadiya" data-range="05–08" data-time="3:20–6:40">
+      <!-- SLIDE 06 — RULES + B.7 -->
+      <section class="slide s06" data-speaker="Rishi Yagnesh Kachhadia" data-range="06–09" data-time="3:35–6:40">
         <div class="topbar">
           <div class="topbar-eyebrow">Requirements Analysis</div>
-          <div class="topbar-pill">Rules &amp; Control</div>
+          <div class="topbar-pill">Rules &amp; Pipeline</div>
         </div>
-        <div class="content" style="display:flex;flex-direction:column;">
-          <h2 class="slide-headline reveal">Session Lifecycle &amp; Business Rules.</h2>
-          <div style="display:grid;grid-template-columns:0.92fr 1.08fr;gap:26px;flex:1;min-height:0;">
-          <div class="s06-flow reveal">
-            <h2>End-to-End Session Flow</h2>
-            <div class="s06-step">
-              <div class="n">01</div>
-              <div>
-                <h3>Timetable Regex Parse</h3>
-                <p>Heuristic ingestion of portal timetable text into weekly recurring schedules.</p>
+        <div class="content">
+          <h2 class="slide-headline reveal">How Matching, Liveness &amp; Rules Work.</h2>
+          <div class="s06-grid">
+            <div class="s06-left reveal">
+              <div class="s06-kpis">
+                <div class="s06-kpi"><div class="val">a · b ≥ 0.38</div><div class="lbl">ArcFace Cosine Margin · BR-5</div></div>
+                <div class="s06-kpi" style="background:var(--pink)"><div class="val">Δ ≥ 0.12</div><div class="lbl">14-Frame 3D Yaw Span · REQ-SELF-3</div></div>
+              </div>
+              <div class="s06-br-grid">
+                <div class="s06-br"><div class="br">BR-5</div><h4>Cosine Margin</h4><p>&lt; 0.38 → labeled Unknown; no false Present.</p></div>
+                <div class="s06-br"><div class="br">BR-6</div><h4>Duplicate Arbitration</h4><p>Higher confidence claims ID; secondary → Unknown.</p></div>
+                <div class="s06-br"><div class="br">BR-2 · BR-3 · BR-4</div><h4>Time Window &amp; Idempotency</h4><p><span class="code-pill">UNIQUE(student_id, session_date, session_id)</span></p></div>
+                <div class="s06-br"><div class="br">BR-1 · BR-7</div><h4>Faculty RBAC &amp; Audit</h4><p>PBKDF2 tokens + permanent <span class="code-pill">manually_set = 1</span> stamp.</p></div>
               </div>
             </div>
-            <div class="s06-step">
-              <div class="n">02</div>
-              <div>
-                <h3>6-Char Join Code &amp; Capacity</h3>
-                <p>Cryptographic join codes + enrollment capacity guards before sessions open.</p>
+            <div class="s06-right reveal reveal-d2">
+              <div class="diagram-frame" data-zoom="./assets/diagrams/fig_b7_act_liveness.png" role="button" tabindex="0" aria-label="Zoom Vision Liveness Activity Diagram">
+                <span class="zoom-hint">Click to Zoom ↗</span>
+                <img src="./assets/diagrams/fig_b7_act_liveness.png" alt="SRS Figure B.7 Vision and 3D Liveness Activity Diagram" />
               </div>
+              <div class="diagram-caption">SRS Fig. B.7: Vision &amp; Anti-Spoofing Activity Pipeline</div>
             </div>
-            <div class="s06-step">
-              <div class="n">03</div>
-              <div>
-                <h3>Multi-Modal Capture</h3>
-                <p>Live stream, group photo, or timed mobile self check-in with liveness.</p>
-              </div>
-            </div>
-            <div class="s06-step">
-              <div class="n">04</div>
-              <div>
-                <h3>Finalize Lock</h3>
-                <p>Human review, Present/Absent overrides, then irreversible session lock.</p>
-              </div>
-            </div>
-          </div>
-          <div class="s06-rules-wrap reveal reveal-d2">
-            <h2>Enforced Business Rules (BR-1 – BR-7)</h2>
-            <div class="s06-rules" style="flex:1;min-height:0;">
-            <div class="s06-rule pink">
-              <div class="br">BR-5</div>
-              <h3>Cosine Decision Margin</h3>
-              <p>Match accepted iff a · b ≥ 0.38; otherwise flagged Unknown.</p>
-            </div>
-            <div class="s06-rule yellow">
-              <div class="br">BR-6</div>
-              <h3>Duplicate Arbitration</h3>
-              <p>If 2 faces match 1 student, highest confidence claims ID; secondary becomes Unknown.</p>
-            </div>
-            <div class="s06-rule green">
-              <div class="br">BR-4 · BR-2 · BR-3</div>
-              <h3>Idempotency &amp; Time Windows</h3>
-              <p>UNIQUE(student_id, session_date, session_id) → max 1 mark; writes blocked outside active open_until.</p>
-            </div>
-            <div class="s06-rule cream-2 wide">
-              <div class="br">BR-1 · BR-7</div>
-              <h3>RBAC &amp; Audit Integrity</h3>
-              <p>Faculty-only writes via PBKDF2 SHA-256 + 30-day tokens; manual toggles stamped <span class="code-pill">manually_set = 1</span>.</p>
-            </div>
-            </div>
-          </div>
           </div>
         </div>
         <div class="slide-meta">
-          <div>System Workflows &amp; Business Rules</div>
-          <div class="slide-meta-num"><span>06</span><span class="dot" aria-hidden="true">•</span><span>12</span></div>
+          <div>Core Recognition Logic &amp; Business Rules</div>
+          <div class="slide-meta-num"><span>06</span><span class="dot" aria-hidden="true">•</span><span>14</span></div>
         </div>
       </section>
 
-      <!-- ========== SLIDE 07 — NFRs ========== -->
-      <section class="slide s07" data-speaker="Vikas Patanvadiya" data-range="05–08" data-time="3:20–6:40">
+      <!-- SLIDE 07 — NFR -->
+      <section class="slide s07" data-speaker="Rishi Yagnesh Kachhadia" data-range="06–09" data-time="3:35–6:40">
         <div class="topbar">
           <div class="topbar-eyebrow">Requirements Analysis</div>
           <div class="topbar-pill">NFR Benchmarks</div>
         </div>
         <div class="content" style="display:flex;flex-direction:column;">
-          <h2 class="slide-headline reveal">Measurable NFR Benchmarks.</h2>
+          <h2 class="slide-headline reveal">Verified Non-Functional Requirements.</h2>
           <div class="s07-kpis reveal">
-            <div class="s07-kpi k1"><div class="val">&lt; 250 ms</div><div class="lbl">Live Frame Latency</div></div>
-            <div class="s07-kpi k2"><div class="val">&lt; 2.5 s</div><div class="lbl">40–50 Face Group Batch</div></div>
+            <div class="s07-kpi k1"><div class="val">&lt; 250 ms</div><div class="lbl">Live Frame</div></div>
+            <div class="s07-kpi k2"><div class="val">&lt; 2.5 s</div><div class="lbl">40–50 Face Batch</div></div>
             <div class="s07-kpi k3"><div class="val">&lt; 600 ms</div><div class="lbl">14-Frame Liveness</div></div>
-            <div class="s07-kpi k4"><div class="val">16/16</div><div class="lbl">Tests in 0.43 s</div></div>
+            <div class="s07-kpi k4"><div class="val">16 / 16</div><div class="lbl">Tests in 0.43 s</div></div>
           </div>
           <div class="s07-cards">
             <article class="s07-card reveal reveal-d1">
@@ -2157,446 +1744,275 @@
               <ul>
                 <li>Commodity 4-core CPU inference — no GPU bottleneck</li>
                 <li>DB queries &lt; 50 ms under normal load</li>
-                <li>Stateless bearer tokens + client-side WebRTC capture</li>
-                <li>Scales across concurrent classrooms effortlessly</li>
+                <li>Stateless bearer tokens + client-side WebRTC</li>
+                <li>Scales across concurrent classrooms</li>
               </ul>
             </article>
             <article class="s07-card reveal reveal-d2">
               <h3>Security &amp; Privacy</h3>
               <ul>
-                <li>Non-invertible 512-D embeddings — no raw recognition photos</li>
-                <li>Live frames processed in volatile RAM, then discarded</li>
+                <li>Non-invertible 512-D embeddings only</li>
+                <li>Live frames stay in volatile RAM, then discarded</li>
                 <li>Active 3D anti-spoofing (Δ ≥ 0.12)</li>
-                <li>Salted PBKDF2 SHA-256 + signed URL-safe tokens</li>
+                <li>Salted PBKDF2 SHA-256 + signed tokens</li>
               </ul>
             </article>
             <article class="s07-card reveal reveal-d3">
-              <h3>Reliability, Safety &amp; Usability</h3>
+              <h3>Reliability &amp; Usability</h3>
               <ul>
-                <li>Automatic Supabase → SQLite3 offline fallback</li>
+                <li>Automatic Supabase → SQLite3 failover</li>
                 <li>Strict idempotency on attendance writes</li>
-                <li>1500 ms frame throttling for thermal/battery safety</li>
-                <li>Responsive UI from 375×667 mobile to 4K</li>
+                <li>1500 ms thermal/battery frame throttle</li>
+                <li>Responsive UI from mobile to 4K</li>
               </ul>
             </article>
           </div>
         </div>
         <div class="slide-meta">
           <div>Non-Functional Requirements</div>
-          <div class="slide-meta-num"><span>07</span><span class="dot" aria-hidden="true">•</span><span>12</span></div>
+          <div class="slide-meta-num"><span>07</span><span class="dot" aria-hidden="true">•</span><span>14</span></div>
         </div>
       </section>
 
-      <!-- ========== SLIDE 08 — UML USE CASE ========== -->
-      <section class="slide s08" data-speaker="Vikas Patanvadiya" data-range="05–08" data-time="3:20–6:40">
+      <!-- SLIDE 08 — USE CASE -->
+      <section class="slide s08" data-speaker="Rishi Yagnesh Kachhadia" data-range="06–09" data-time="3:35–6:40">
         <div class="topbar">
           <div class="topbar-eyebrow">System Analysis &amp; Design</div>
-          <div class="topbar-pill">UML / Actors</div>
+          <div class="topbar-pill">UML Use Case</div>
         </div>
-        <div class="content" style="display:flex;flex-direction:column;">
+        <div class="content">
           <h2 class="slide-headline reveal">UML Use Case Model &amp; System Actors.</h2>
-          <div class="s08-board reveal" style="flex:1;min-height:0;">
-            <div class="dotgrid"></div>
-            <svg viewBox="0 0 1600 720" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MarkAny UML Use Case Diagram">
-              <defs>
-                <marker id="arrowHead" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
-                  <polygon points="0 0, 10 4, 0 8" fill="#0F0F0F"/>
-                </marker>
-              </defs>
-
-              <!-- System boundary -->
-              <rect x="210" y="22" width="1180" height="676" fill="#EFE9D9" stroke="#0F0F0F" stroke-width="4"/>
-              <text x="800" y="54" text-anchor="middle" font-family="Archivo Black, sans-serif" font-size="24" fill="#0F0F0F">MARKANY SYSTEM</text>
-
-              <!-- Solid association lines (behind ovals) -->
-              <g stroke="#0F0F0F" stroke-width="2.5" fill="none">
-                <!-- Faculty vertical bus + spokes (aligned to oval centers) -->
-                <line x1="105" y1="300" x2="185" y2="300"/>
-                <line x1="185" y1="93" x2="185" y2="524"/>
-                <line x1="185" y1="93" x2="560" y2="93"/>
-                <line x1="185" y1="164" x2="300" y2="164"/>
-                <line x1="185" y1="224" x2="300" y2="224"/>
-                <line x1="185" y1="284" x2="300" y2="284"/>
-                <line x1="185" y1="344" x2="300" y2="344"/>
-                <line x1="185" y1="404" x2="300" y2="404"/>
-                <line x1="185" y1="464" x2="300" y2="464"/>
-                <line x1="185" y1="524" x2="560" y2="524"/>
-
-                <!-- Student vertical bus + spokes -->
-                <line x1="1495" y1="300" x2="1415" y2="300"/>
-                <line x1="1415" y1="93" x2="1415" y2="524"/>
-                <line x1="1415" y1="93" x2="1040" y2="93"/>
-                <line x1="1415" y1="224" x2="1300" y2="224"/>
-                <line x1="1415" y1="344" x2="1300" y2="344"/>
-                <line x1="1415" y1="524" x2="1040" y2="524"/>
-              </g>
-
-              <!-- Faculty actor -->
-              <g transform="translate(70,250)">
-                <circle cx="0" cy="0" r="20" fill="#EFE9D9" stroke="#0F0F0F" stroke-width="3"/>
-                <line x1="0" y1="20" x2="0" y2="64" stroke="#0F0F0F" stroke-width="3"/>
-                <line x1="-26" y1="36" x2="26" y2="36" stroke="#0F0F0F" stroke-width="3"/>
-                <line x1="0" y1="64" x2="-22" y2="100" stroke="#0F0F0F" stroke-width="3"/>
-                <line x1="0" y1="64" x2="22" y2="100" stroke="#0F0F0F" stroke-width="3"/>
-                <rect x="-54" y="112" width="108" height="30" fill="#F06CA8" stroke="#0F0F0F" stroke-width="3"/>
-                <text x="0" y="133" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" fill="#0F0F0F">FACULTY</text>
-              </g>
-
-              <!-- Student actor -->
-              <g transform="translate(1530,250)">
-                <circle cx="0" cy="0" r="20" fill="#EFE9D9" stroke="#0F0F0F" stroke-width="3"/>
-                <line x1="0" y1="20" x2="0" y2="64" stroke="#0F0F0F" stroke-width="3"/>
-                <line x1="-26" y1="36" x2="26" y2="36" stroke="#0F0F0F" stroke-width="3"/>
-                <line x1="0" y1="64" x2="-22" y2="100" stroke="#0F0F0F" stroke-width="3"/>
-                <line x1="0" y1="64" x2="22" y2="100" stroke="#0F0F0F" stroke-width="3"/>
-                <rect x="-54" y="112" width="108" height="30" fill="#F4C419" stroke="#0F0F0F" stroke-width="3"/>
-                <text x="0" y="133" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" fill="#0F0F0F">STUDENT</text>
-              </g>
-
-              <!-- Column labels -->
-              <text x="470" y="128" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#0F0F0F" letter-spacing="1.5">FACULTY-DRIVEN</text>
-              <text x="1130" y="188" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#0F0F0F" letter-spacing="1.5">STUDENT-DRIVEN</text>
-
-              <!-- Shared UC-01 -->
-              <rect x="560" y="70" rx="24" ry="24" width="480" height="46" fill="#E4DCC4" stroke="#0F0F0F" stroke-width="3"/>
-              <text x="800" y="100" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="20" font-weight="600" fill="#0F0F0F">UC-01  ·  Auth &amp; RBAC</text>
-
-              <!-- Faculty use cases -->
-              <g font-family="Space Grotesk, sans-serif" font-size="18" font-weight="600" fill="#0F0F0F">
-                <rect x="300" y="140" rx="22" ry="22" width="340" height="48" fill="#F06CA8" stroke="#0F0F0F" stroke-width="3"/>
-                <text x="470" y="171" text-anchor="middle">UC-02  ·  Parse Timetable</text>
-
-                <rect x="300" y="200" rx="22" ry="22" width="340" height="48" fill="#F06CA8" stroke="#0F0F0F" stroke-width="3"/>
-                <text x="470" y="231" text-anchor="middle">UC-03  ·  Subjects &amp; Enrollments</text>
-
-                <rect x="300" y="260" rx="22" ry="22" width="340" height="48" fill="#F06CA8" stroke="#0F0F0F" stroke-width="3"/>
-                <text x="470" y="291" text-anchor="middle">UC-05  ·  Live Video Marking</text>
-
-                <rect x="300" y="320" rx="22" ry="22" width="340" height="48" fill="#F06CA8" stroke="#0F0F0F" stroke-width="3"/>
-                <text x="470" y="351" text-anchor="middle">UC-06  ·  Group-Photo Batch</text>
-
-                <rect x="300" y="380" rx="22" ry="22" width="340" height="48" fill="#F06CA8" stroke="#0F0F0F" stroke-width="3"/>
-                <text x="470" y="411" text-anchor="middle">UC-08  ·  Review &amp; Override</text>
-
-                <rect x="300" y="440" rx="22" ry="22" width="340" height="48" fill="#F06CA8" stroke="#0F0F0F" stroke-width="3"/>
-                <text x="470" y="471" text-anchor="middle">UC-10  ·  Export Excel / CSV</text>
-              </g>
-
-              <!-- Student use cases -->
-              <g font-family="Space Grotesk, sans-serif" font-size="18" font-weight="600" fill="#0F0F0F">
-                <rect x="960" y="200" rx="22" ry="22" width="340" height="48" fill="#F4C419" stroke="#0F0F0F" stroke-width="3"/>
-                <text x="1130" y="231" text-anchor="middle">UC-04  ·  Biometric Registration</text>
-
-                <rect x="960" y="320" rx="22" ry="22" width="340" height="48" fill="#F4C419" stroke="#0F0F0F" stroke-width="3"/>
-                <text x="1130" y="351" text-anchor="middle">UC-07  ·  Mobile Self Check-In</text>
-              </g>
-
-              <!-- Shared UC-09 -->
-              <rect x="560" y="500" rx="24" ry="24" width="480" height="48" fill="#EA5B25" stroke="#0F0F0F" stroke-width="3"/>
-              <text x="800" y="531" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="20" font-weight="600" fill="#EFE9D9">UC-09  ·  CIE Marks Management</text>
-
-              <!-- Dependency targets -->
-              <rect x="280" y="572" rx="16" ry="16" width="400" height="42" fill="#1F8A4C" stroke="#0F0F0F" stroke-width="3"/>
-              <text x="480" y="599" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="17" font-weight="600" fill="#EFE9D9">Biometric Face Match (512-D)</text>
-
-              <rect x="720" y="572" rx="16" ry="16" width="400" height="42" fill="#1F8A4C" stroke="#0F0F0F" stroke-width="3"/>
-              <text x="920" y="599" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="17" font-weight="600" fill="#EFE9D9">3D Liveness (Δ ≥ 0.12)</text>
-
-              <rect x="480" y="632" rx="16" ry="16" width="640" height="42" fill="#E4DCC4" stroke="#0F0F0F" stroke-width="3" stroke-dasharray="8 5"/>
-              <text x="800" y="659" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="17" font-weight="600" fill="#0F0F0F">Manual Override  ·  extends UC-08</text>
-
-              <!-- Include / extend dashed paths — outer channels only (never through ovals) -->
-              <g stroke="#0F0F0F" stroke-width="2.25" fill="none" stroke-dasharray="7 5">
-                <!-- UC-05 → Face Match via left gutter -->
-                <path d="M300 284 H248 V572 H400" marker-end="url(#arrowHead)"/>
-                <!-- UC-06 → Face Match via left gutter (offset) -->
-                <path d="M300 344 H262 V572 H480" marker-end="url(#arrowHead)"/>
-                <!-- UC-07 → Face Match via right gutter -->
-                <path d="M1300 344 H1352 V572 H880" marker-end="url(#arrowHead)"/>
-                <!-- UC-07 → Liveness via right gutter -->
-                <path d="M1300 344 H1364 V593 H1120" marker-end="url(#arrowHead)"/>
-                <!-- UC-08 → Manual Override via left gutter -->
-                <path d="M300 404 H236 V653 H480" marker-end="url(#arrowHead)"/>
-              </g>
-
-              <!-- Stereotype badges beside clear corridors -->
-              <rect x="232" y="500" width="100" height="26" fill="#F4C419" stroke="#0F0F0F" stroke-width="2"/>
-              <text x="282" y="518" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#0F0F0F">«include»</text>
-
-              <rect x="232" y="610" width="100" height="26" fill="#F4C419" stroke="#0F0F0F" stroke-width="2"/>
-              <text x="282" y="628" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#0F0F0F">«extend»</text>
-            </svg>
-            </svg>
-          </div>
-
-          <div class="s08-legend-strip reveal reveal-d2">
-            <div class="s08-leg pink">
-              <h3>Actors</h3>
-              <p>Faculty runs sessions; Student registers &amp; self-checks.</p>
+          <div class="diagram-side">
+            <div class="notes reveal">
+              <div class="note-card pink"><h3>Actors</h3><p>Faculty owns timetable, sessions, review &amp; export. Student owns enrollment &amp; mobile check-in.</p></div>
+              <div class="note-card yellow"><h3>«include»</h3><ul><li>Face Match → UC-04 / 05 / 07</li><li>3D Liveness → UC-07</li></ul></div>
+              <div class="note-card green"><h3>«extend»</h3><ul><li>Dispute/Audit → UC-08</li><li>Spoof exclude → UC-07</li></ul></div>
+              <div class="note-card orange"><h3>Boundary</h3><p>UC-01–UC-10 inside runtime. Classical Baseline verified as syllabus companion engine.</p></div>
             </div>
-            <div class="s08-leg yellow">
-              <h3>«include»</h3>
-              <p>Face Match used by UC-05/06/07; Liveness by UC-07.</p>
-            </div>
-            <div class="s08-leg green">
-              <h3>«extend»</h3>
-              <p>Manual Override optionally extends UC-08 review.</p>
-            </div>
-            <div class="s08-leg cream">
-              <h3>Boundary</h3>
-              <p>UC-01–UC-10 shown inside runtime boundary; UC-11 (Classical Baseline) is verified by the Course Evaluator (Slide 10).</p>
+            <div class="diagram-wrap reveal reveal-d2">
+              <div class="diagram-frame" data-zoom="./assets/diagrams/fig_b1_use_case.png" role="button" tabindex="0" aria-label="Zoom Use Case Diagram">
+                <span class="zoom-hint">Click to Zoom ↗</span>
+                <img src="./assets/diagrams/fig_b1_use_case.png" alt="SRS Figure B.1 UML Use Case Diagram" />
+              </div>
+              <div class="diagram-caption">SRS Fig. B.1: Excalidraw UML Use Case Diagram</div>
             </div>
           </div>
         </div>
         <div class="slide-meta">
-          <div>UML Use Case Diagram</div>
-          <div class="slide-meta-num"><span>08</span><span class="dot" aria-hidden="true">•</span><span>12</span></div>
+          <div>Use Case Diagram</div>
+          <div class="slide-meta-num"><span>08</span><span class="dot" aria-hidden="true">•</span><span>14</span></div>
         </div>
       </section>
 
-      <!-- ========== SLIDE 09 — ARCHITECTURE ========== -->
-      <section class="slide s09" data-speaker="Rishi Yagnesh Kachhadia" data-range="09–12" data-time="6:40–10:00">
+      <!-- SLIDE 09 — ARCHITECTURE -->
+      <section class="slide s09" data-speaker="Rishi Yagnesh Kachhadia" data-range="06–09" data-time="3:35–6:40">
         <div class="topbar">
           <div class="topbar-eyebrow">System Analysis &amp; Design</div>
-          <div class="topbar-pill">Schematic / 3-Tier</div>
+          <div class="topbar-pill">3-Tier Architecture</div>
         </div>
         <div class="content">
-          <div class="s09-left reveal">
-            <h2>3-Tier Design.<br />Four Core<br />Layers.</h2>
-            <p>HTML5 WebRTC client capture → Base64 JSON over HTTP/REST → decoupled backend splitting CPU-only Hybrid CV Inference &amp; Dual Persistence. Zero OS camera drivers on the server.</p>
-            <div class="s09-legend">
-              <div class="s09-leg"><span class="s09-swatch pink"></span>Pink — Presentation Tier</div>
-              <div class="s09-leg"><span class="s09-swatch yellow"></span>Yellow — Application Tier</div>
-              <div class="s09-leg"><span class="s09-swatch orange"></span>Orange — Backend CV Inference</div>
-              <div class="s09-leg"><span class="s09-swatch cream"></span>Cream — Backend Persistence</div>
+          <h2 class="slide-headline reveal">3-Tier Design · Four Core Layers.</h2>
+          <div class="diagram-side">
+            <div class="notes reveal">
+              <div class="note-card pink"><h3>01 Presentation</h3><p>React 19 · WebRTC getUserMedia · Faculty &amp; Student portals.</p></div>
+              <div class="note-card yellow"><h3>02 Application</h3><p>Flask REST on port 5050 · RBAC · Regex · Idempotency.</p></div>
+              <div class="note-card orange"><h3>03 CV Inference</h3><p>Hybrid engine: SCRFD + ArcFace + Liveness · Classical baseline.</p></div>
+              <div class="note-card green"><h3>04 Persistence</h3><p>Unified <span class="code-pill">store.py</span> DAL · Supabase ↔ SQLite failover.</p></div>
             </div>
-          </div>
-          <div class="s09-stack-wrap reveal reveal-d2">
-            <div class="s09-layer t1">
-              <div class="tier">Layer 01 / Presentation Tier</div>
-              <h3>Client Surface</h3>
-              <p>React 19 · Tailwind CSS · HTML5 Canvas · WebRTC getUserMedia</p>
-            </div>
-            <div class="s09-layer t2">
-              <div class="tier">Layer 02 / Application Tier</div>
-              <h3>Flask REST Gateway</h3>
-              <p>Port 5050 · RBAC · Regex Parser · Idempotency Guards</p>
-            </div>
-            <div class="s09-layer t3">
-              <div class="tier">Layer 03 / Backend — CV Inference</div>
-              <h3>Hybrid Verification Engine</h3>
-              <p>SCRFD + ArcFace 512-D + 3D Liveness · Classical Baseline (pixel_ops, lbp, drawing)</p>
-            </div>
-            <div class="s09-layer t4">
-              <div class="tier">Layer 04 / Backend — Data Persistence</div>
-              <h3>Unified DAL (store.py)</h3>
-              <p>Supabase PostgreSQL (Cloud) ↔ SQLite3 Offline Fallback</p>
+            <div class="diagram-wrap reveal reveal-d2">
+              <div class="diagram-frame" style="background:#0b1220;" data-zoom="./assets/diagrams/fig_2_1_architecture.png" role="button" tabindex="0" aria-label="Zoom Architecture Diagram">
+                <span class="zoom-hint">Click to Zoom ↗</span>
+                <img src="./assets/diagrams/fig_2_1_architecture.png" alt="SRS Figure 2.1 MarkAny 3-Tier System Architecture" />
+              </div>
+              <div class="diagram-caption">SRS Fig. 2.1: MarkAny 3-Tier System Architecture</div>
             </div>
           </div>
         </div>
         <div class="slide-meta">
           <div>System Architecture</div>
-          <div class="slide-meta-num"><span>09</span><span class="dot" aria-hidden="true">•</span><span>12</span></div>
+          <div class="slide-meta-num"><span>09</span><span class="dot" aria-hidden="true">•</span><span>14</span></div>
         </div>
       </section>
 
-      <!-- ========== SLIDE 10 — MODULES & SCHEMA ========== -->
-      <section class="slide s10" data-speaker="Rishi Yagnesh Kachhadia" data-range="09–12" data-time="6:40–10:00">
+      <!-- SLIDE 10 — DFDs -->
+      <section class="slide s10" data-speaker="Maitra Prajapati" data-range="10–14" data-time="6:40–10:00">
         <div class="topbar">
           <div class="topbar-eyebrow">System Analysis &amp; Design</div>
-          <div class="topbar-pill">Engine &amp; Schema</div>
+          <div class="topbar-pill">DFD Level-0 / 1</div>
         </div>
-        <div class="content" style="display:flex;flex-direction:column;">
-          <h2 class="slide-headline reveal">Hybrid Vision Engine &amp; 10-Table Schema.</h2>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;flex:1;min-height:0;">
-          <article class="s10-card reveal">
-            <h2>Hybrid Computer Vision Modules</h2>
-            <div class="s10-engines">
-              <div class="s10-eng deep">
-                <span class="mono-tag">Production Deep Engine</span>
-                <h3>ONNX CPU Runtime</h3>
-                <ul>
-                  <li>SCRFD multi-scale detector (≥ 24×24 px)</li>
-                  <li>ArcFace 512-D embeddings</li>
-                  <li>Cosine k-NN (≥ 0.38)</li>
-                  <li>3D Landmark Liveness (Δ ≥ 0.12)</li>
-                </ul>
+        <div class="content">
+          <h2 class="slide-headline reveal">Context &amp; Image-Pipeline Data Flows.</h2>
+          <div class="dual-diagrams">
+            <div class="dual-panel reveal">
+              <div class="diagram-frame" data-zoom="./assets/diagrams/fig_b2_dfd_level0.png" role="button" tabindex="0" aria-label="Zoom Level-0 DFD">
+                <span class="zoom-hint">Click to Zoom ↗</span>
+                <img src="./assets/diagrams/fig_b2_dfd_level0.png" alt="SRS Figure B.2 Level-0 Context DFD" />
               </div>
-              <div class="s10-eng classical">
-                <span class="mono-tag">Classical Vision Baseline</span>
-                <h3>Pure Python / NumPy</h3>
-                <ul>
-                  <li>Luminosity Grayscale</li>
-                  <li>2D Gaussian Convolution</li>
-                  <li>CDF Histogram Equalization</li>
-                  <li>3,776-D LBP (0.65 Euclidean)</li>
-                  <li>Bresenham integer line rasterization</li>
-                </ul>
-              </div>
+              <div class="diagram-caption">SRS Fig. B.2: Level-0 Context DFD</div>
             </div>
-          </article>
-          <article class="s10-card reveal reveal-d2">
-            <h2>Relational Schema — 10 Tables</h2>
-            <div class="s10-groups">
-              <div class="s10-group g1">
-                <h3>Identity &amp; Biometrics</h3>
-                <div class="schema-pills">
-                  <span class="schema-pill">users</span>
-                  <span class="schema-pill">students</span>
-                  <span class="schema-pill">face_embeddings <span class="badge">ON DELETE CASCADE</span></span>
-                </div>
+            <div class="dual-panel reveal reveal-d2">
+              <div class="diagram-frame" data-zoom="./assets/diagrams/fig_b3_dfd_level1.png" role="button" tabindex="0" aria-label="Zoom Level-1 DFD">
+                <span class="zoom-hint">Click to Zoom ↗</span>
+                <img src="./assets/diagrams/fig_b3_dfd_level1.png" alt="SRS Figure B.3 Level-1 Image Processing Pipeline DFD" />
               </div>
-              <div class="s10-group g2">
-                <h3>Academics</h3>
-                <div class="schema-pills">
-                  <span class="schema-pill">subjects <span class="badge">UNIQUE join_code</span></span>
-                  <span class="schema-pill">enrollments</span>
-                  <span class="schema-pill">scheduled_classes</span>
-                  <span class="schema-pill">results</span>
-                </div>
-              </div>
-              <div class="s10-group g3">
-                <h3>Attendance &amp; Audit</h3>
-                <div class="schema-pills">
-                  <span class="schema-pill">attendance_sessions</span>
-                  <span class="schema-pill">attendance <span class="badge">UNIQUE student/date/session</span></span>
-                  <span class="schema-pill">session_photos <span class="badge">immutable BLOB</span></span>
-                </div>
-              </div>
+              <div class="diagram-caption">SRS Fig. B.3: Level-1 Image Processing Pipeline</div>
             </div>
-            <div class="s10-callout">Dual-Mode store.py DAL · Supabase Cloud → local data/attendance.db failover</div>
-          </article>
           </div>
         </div>
         <div class="slide-meta">
-          <div>Core Modules &amp; Data Architecture</div>
-          <div class="slide-meta-num"><span>10</span><span class="dot" aria-hidden="true">•</span><span>12</span></div>
+          <div>Data Flow Diagrams</div>
+          <div class="slide-meta-num"><span>10</span><span class="dot" aria-hidden="true">•</span><span>14</span></div>
         </div>
       </section>
 
-      <!-- ========== SLIDE 11 — CONSTRAINTS ========== -->
-      <section class="slide s11" data-speaker="Rishi Yagnesh Kachhadia" data-range="09–12" data-time="6:40–10:00">
+      <!-- SLIDE 11 — SEQUENCES -->
+      <section class="slide s11" data-speaker="Maitra Prajapati" data-range="10–14" data-time="6:40–10:00">
         <div class="topbar">
-          <div class="topbar-eyebrow">Constraints &amp; Risk</div>
-          <div class="topbar-pill">Limitations</div>
+          <div class="topbar-eyebrow">System Analysis &amp; Design</div>
+          <div class="topbar-pill">Sequence Diagrams</div>
         </div>
-        <div class="content" style="display:flex;flex-direction:column;">
-          <h2 class="slide-headline reveal">Engineering Constraints &amp; Mitigations.</h2>
-          <div class="s11-grid" style="flex:1;min-height:0;height:auto;">
-            <article class="s11-card reveal">
-              <div class="num">01</div>
-              <h3>CPU-Only Execution</h3>
-              <p>No dedicated CUDA GPU on standard faculty laptops.</p>
-              <div class="mit"><strong>MITIGATION:</strong> Quantized ONNX Runtime (~200 ms/frame).</div>
-            </article>
-            <article class="s11-card reveal reveal-d1">
-              <div class="num">02</div>
-              <h3>WebRTC Secure Context</h3>
-              <p>Browsers block webcam access on insecure HTTP origins.</p>
-              <div class="mit"><strong>MITIGATION:</strong> HTTPS or localhost / 127.0.0.1.</div>
-            </article>
-            <article class="s11-card reveal reveal-d2">
-              <div class="num">03</div>
-              <h3>Ambient Lighting (&gt; 150 lux)</h3>
-              <p>Harsh backlighting or dim halls reduce facial contrast.</p>
-              <div class="mit"><strong>MITIGATION:</strong> Multi-pose enrollment + manual review override.</div>
-            </article>
-            <article class="s11-card reveal reveal-d3">
-              <div class="num">04</div>
-              <h3>Initial Weight Cache (~330 MB)</h3>
-              <p>First launch needs internet for buffalo_l weights.</p>
-              <div class="mit"><strong>MITIGATION:</strong> Cached locally in ~/.insightface/ for offline runs.</div>
-            </article>
-            <article class="s11-card reveal reveal-d4">
-              <div class="num">05</div>
-              <h3>Client-Side Capture Only</h3>
-              <p>Server cannot directly open OS camera drivers.</p>
-              <div class="mit"><strong>MITIGATION:</strong> Browser getUserMedia + Base64 JPEG REST payloads.</div>
-            </article>
-            <article class="s11-card reveal reveal-d5">
-              <div class="num">06</div>
-              <h3>OS Runtime Quirks (macOS)</h3>
-              <p>Port 5000 AirPlay clash &amp; Homebrew expat linking.</p>
-              <div class="mit"><strong>MITIGATION:</strong> Permanent port 5050 + run-backend.sh wrapper.</div>
-            </article>
+        <div class="content">
+          <h2 class="slide-headline reveal">Live Stream &amp; Mobile Liveness Sequences.</h2>
+          <div class="dual-diagrams">
+            <div class="dual-panel reveal">
+              <div class="diagram-frame" data-zoom="./assets/diagrams/fig_b4_seq_live.png" role="button" tabindex="0" aria-label="Zoom Live Attendance Sequence">
+                <span class="zoom-hint">Click to Zoom ↗</span>
+                <img src="./assets/diagrams/fig_b4_seq_live.png" alt="SRS Figure B.4 Sequence Diagram Real-Time Live Attendance" />
+              </div>
+              <div class="diagram-caption">SRS Fig. B.4: Real-Time Live Attendance</div>
+            </div>
+            <div class="dual-panel reveal reveal-d2">
+              <div class="diagram-frame" data-zoom="./assets/diagrams/fig_b5_seq_liveness.png" role="button" tabindex="0" aria-label="Zoom Liveness Sequence">
+                <span class="zoom-hint">Click to Zoom ↗</span>
+                <img src="./assets/diagrams/fig_b5_seq_liveness.png" alt="SRS Figure B.5 Sequence Diagram Student Mobile Check-In with 3D Liveness" />
+              </div>
+              <div class="diagram-caption">SRS Fig. B.5: Mobile Check-In + 3D Liveness</div>
+            </div>
           </div>
         </div>
         <div class="slide-meta">
-          <div>Project Constraints &amp; Limitations</div>
-          <div class="slide-meta-num"><span>11</span><span class="dot" aria-hidden="true">•</span><span>12</span></div>
+          <div>UML Sequence Diagrams</div>
+          <div class="slide-meta-num"><span>11</span><span class="dot" aria-hidden="true">•</span><span>14</span></div>
         </div>
       </section>
 
-      <!-- ========== SLIDE 12 — CLOSING ========== -->
-      <section class="slide s12 closing" data-speaker="Rishi Yagnesh Kachhadia" data-range="09–12" data-time="6:40–10:00">
+      <!-- SLIDE 12 — ACTIVITY SESSION -->
+      <section class="slide s12" data-speaker="Maitra Prajapati" data-range="10–14" data-time="6:40–10:00">
+        <div class="topbar">
+          <div class="topbar-eyebrow">System Analysis &amp; Design</div>
+          <div class="topbar-pill">Session Lifecycle</div>
+        </div>
+        <div class="content">
+          <h2 class="slide-headline reveal">Attendance Session Management Lifecycle.</h2>
+          <div class="diagram-side">
+            <div class="notes reveal">
+              <div class="note-card yellow"><h3>Open</h3><p>Regex timetable → join code → capacity guard → <span class="code-pill">open_until</span>.</p></div>
+              <div class="note-card pink"><h3>Capture</h3><p>Live stream, group photo, or timed mobile self-mark with liveness.</p></div>
+              <div class="note-card green"><h3>Review</h3><p>Confidence roster + optional <span class="code-pill">manually_set = 1</span> overrides.</p></div>
+              <div class="note-card orange"><h3>Finalize</h3><p>Irreversible lock → .xlsx / .csv export for submission.</p></div>
+            </div>
+            <div class="diagram-wrap reveal reveal-d2">
+              <div class="diagram-frame" data-zoom="./assets/diagrams/fig_b6_act_session.png" role="button" tabindex="0" aria-label="Zoom Session Activity Diagram">
+                <span class="zoom-hint">Click to Zoom ↗</span>
+                <img src="./assets/diagrams/fig_b6_act_session.png" alt="SRS Figure B.6 Activity Diagram Attendance Session Management Lifecycle" />
+              </div>
+              <div class="diagram-caption">SRS Fig. B.6: Session Management Activity Diagram</div>
+            </div>
+          </div>
+        </div>
+        <div class="slide-meta">
+          <div>Activity Diagram — Session Lifecycle</div>
+          <div class="slide-meta-num"><span>12</span><span class="dot" aria-hidden="true">•</span><span>14</span></div>
+        </div>
+      </section>
+
+      <!-- SLIDE 13 — ERD + CONSTRAINTS -->
+      <section class="slide s13" data-speaker="Maitra Prajapati" data-range="10–14" data-time="6:40–10:00">
+        <div class="topbar">
+          <div class="topbar-eyebrow">Constraints &amp; Data Design</div>
+          <div class="topbar-pill">ERD + Limits</div>
+        </div>
+        <div class="content">
+          <h2 class="slide-headline reveal">Schema Reality &amp; Engineering Constraints.</h2>
+          <div class="s13-grid">
+            <div class="s13-constraints reveal">
+              <article class="s13-card"><div class="num">01</div><h3>CPU-Only</h3><p>No CUDA on faculty laptops.</p><div class="mit">Mitigation: Quantized ONNX ~200 ms/frame</div></article>
+              <article class="s13-card"><div class="num">02</div><h3>WebRTC Context</h3><p>Cameras blocked on insecure HTTP.</p><div class="mit">Mitigation: HTTPS or localhost</div></article>
+              <article class="s13-card"><div class="num">03</div><h3>Lighting &gt; 150 lux</h3><p>Harsh backlight reduces contrast.</p><div class="mit">Mitigation: Multi-pose + override</div></article>
+              <article class="s13-card"><div class="num">04</div><h3>~330 MB Weights</h3><p>First-run buffalo_l download.</p><div class="mit">Mitigation: Local ~/.insightface cache</div></article>
+              <article class="s13-card"><div class="num">05</div><h3>Client Capture</h3><p>Server never opens OS cameras.</p><div class="mit">Mitigation: Base64 JPEG REST payloads</div></article>
+              <article class="s13-card"><div class="num">06</div><h3>macOS Quirks</h3><p>Port 5000 AirPlay clash.</p><div class="mit">Mitigation: Permanent port 5050</div></article>
+            </div>
+            <div class="s13-right reveal reveal-d2">
+              <div class="diagram-frame" data-zoom="./assets/diagrams/fig_b8_erd.png" role="button" tabindex="0" aria-label="Zoom ERD">
+                <span class="zoom-hint">Click to Zoom ↗</span>
+                <img src="./assets/diagrams/fig_b8_erd.png" alt="SRS Figure B.8 Entity-Relationship Diagram Chen Notation" />
+              </div>
+              <div class="diagram-caption">SRS Fig. B.8: ERD (Chen) · 10 Tables · UNIQUE attendance keys</div>
+            </div>
+          </div>
+        </div>
+        <div class="slide-meta">
+          <div>ERD &amp; Project Constraints</div>
+          <div class="slide-meta-num"><span>13</span><span class="dot" aria-hidden="true">•</span><span>14</span></div>
+        </div>
+      </section>
+
+      <!-- SLIDE 14 — CONCLUSION -->
+      <section class="slide s14 closing" data-speaker="Maitra Prajapati" data-range="10–14" data-time="6:40–10:00">
         <div class="topbar">
           <div class="topbar-eyebrow">Conclusion</div>
           <div class="topbar-pill">V1.0 Complete → V2.0</div>
         </div>
-        <div class="content" style="bottom: 248px;">
-          <div class="s12-block cream reveal">
-            <h2>Key Achievements — v1.0 Ready</h2>
-            <ul>
-              <li>Working end-to-end prototype: all SRS TBDs resolved &amp; 16/16 backend tests passing (0.43 s).</li>
-              <li>Eliminates 10–15 min roll-call overhead &amp; proxy attendance with &lt; 2.5 s touchless classroom marking.</li>
-              <li>Hybrid Verification Engine pairs Classical Vision Baseline with production ArcFace depth.</li>
-            </ul>
-          </div>
-          <div class="s12-block yellow s12-road reveal reveal-d2">
-            <h2>Post-1.0 Enterprise Roadmap</h2>
-            <div class="item">
-              <div class="n">01</div>
-              <div>
-                <h3>Firebase Cloud Messaging</h3>
-                <p>Native mobile push alerts via FCM.</p>
-              </div>
+        <div class="content">
+          <div class="s14-blocks">
+            <div class="s14-block cream reveal">
+              <h2>Key Achievements — v1.0 Ready</h2>
+              <ul>
+                <li>Working end-to-end prototype: all SRS TBDs resolved &amp; 16/16 backend tests passing (0.43 s).</li>
+                <li>Eliminates 10–15 min roll-call overhead &amp; proxy attendance with &lt; 2.5 s touchless classroom marking.</li>
+                <li>Hybrid Verification Engine pairs Classical Vision Baseline with production ArcFace depth.</li>
+                <li>IEEE 830 SRS with full UML / DFD / Sequence / Activity / ERD appendix models.</li>
+              </ul>
             </div>
-            <div class="item">
-              <div class="n">02</div>
-              <div>
-                <h3>Canvas / Moodle LMS Sync</h3>
-                <p>Automated webhooks for university LMS.</p>
-              </div>
-            </div>
-            <div class="item">
-              <div class="n">03</div>
-              <div>
-                <h3>Edge-AI Classroom Terminals</h3>
-                <p>Standalone Raspberry Pi 5 / NVIDIA Jetson nodes.</p>
-              </div>
+            <div class="s14-block yellow s14-road reveal reveal-d2">
+              <h2>Post-1.0 Enterprise Roadmap</h2>
+              <div class="item"><div class="n">01</div><div><h3>Firebase Cloud Messaging</h3><p>Native mobile push alerts via FCM.</p></div></div>
+              <div class="item"><div class="n">02</div><div><h3>Canvas / Moodle LMS Sync</h3><p>Automated webhooks for university LMS.</p></div></div>
+              <div class="item"><div class="n">03</div><div><h3>Edge-AI Classroom Terminals</h3><p>Standalone Raspberry Pi 5 / NVIDIA Jetson nodes.</p></div></div>
             </div>
           </div>
         </div>
-        <div class="s12-thanks reveal reveal-d3">
+        <div class="s14-thanks reveal reveal-d3">
           <div class="big">Thank You — Open for Viva Q&amp;A</div>
           <div class="team">
-            Maitra Prajapati · Vikas Patanvadiya · Rishi Yagnesh Kachhadia<br />
-            Navrachana University · CS330 Software Engineering
+            Vikas Patanvadiya · Rishi Yagnesh Kachhadia · Maitra Prajapati<br />
+            Navrachana University · CS330 Software Engineering · SRS-MARKANY-V1.0
           </div>
         </div>
         <div class="slide-meta">
           <div>Conclusion &amp; Future Roadmap</div>
-          <div class="slide-meta-num"><span>12</span><span class="dot" aria-hidden="true">•</span><span>12</span></div>
+          <div class="slide-meta-num"><span>14</span><span class="dot" aria-hidden="true">•</span><span>14</span></div>
         </div>
       </section>
-
     </main>
   </div>
 
-  <!-- Bottom nav pill -->
   <div class="deck-controls" role="navigation" aria-label="Slide navigation">
     <div class="nav-pill">
       <button type="button" id="btnPrev" aria-label="Previous slide">&lt;</button>
-      <span id="navCounter">01/12</span>
+      <span id="navCounter">01/14</span>
       <button type="button" id="btnNext" aria-label="Next slide">&gt;</button>
       <button type="button" class="nav-reset" id="btnReset" aria-label="Reset to slide 1">Reset (R)</button>
     </div>
   </div>
 
+  <div class="zoom-modal" id="zoomModal" role="dialog" aria-modal="true" aria-label="Diagram zoom">
+    <button type="button" class="zoom-close" id="zoomClose" aria-label="Close zoom">×</button>
+    <img id="zoomImg" src="" alt="Zoomed diagram" />
+  </div>
+
   <script>
-    /* ===========================================
-       SLIDE PRESENTATION CONTROLLER
-       =========================================== */
     class SlidePresentation {
       constructor() {
         this.slides = Array.from(document.querySelectorAll('.slide'));
@@ -2608,12 +2024,15 @@
         this.cueName = document.getElementById('cueName');
         this.cueRange = document.getElementById('cueRange');
         this.cueTime = document.getElementById('cueTime');
+        this.zoomModal = document.getElementById('zoomModal');
+        this.zoomImg = document.getElementById('zoomImg');
         this.touchStartX = null;
 
         this.setupStageScale();
         this.setupKeyboardNav();
         this.setupTouchNav();
         this.setupButtons();
+        this.setupZoom();
         this.showSlide(0);
       }
 
@@ -2634,9 +2053,42 @@
         document.getElementById('btnReset').addEventListener('click', () => this.showSlide(0));
       }
 
+      setupZoom() {
+        const open = (src) => {
+          this.zoomImg.src = src;
+          this.zoomModal.classList.add('open');
+        };
+        const close = () => {
+          this.zoomModal.classList.remove('open');
+          this.zoomImg.src = '';
+        };
+        document.querySelectorAll('.diagram-frame[data-zoom]').forEach((el) => {
+          const go = () => open(el.dataset.zoom);
+          el.addEventListener('click', go);
+          el.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              go();
+            }
+          });
+        });
+        document.getElementById('zoomClose').addEventListener('click', close);
+        this.zoomModal.addEventListener('click', (e) => {
+          if (e.target === this.zoomModal) close();
+        });
+        this._closeZoom = close;
+      }
+
       setupKeyboardNav() {
         document.addEventListener('keydown', (e) => {
           const key = e.key;
+          if (this.zoomModal.classList.contains('open')) {
+            if (key === 'Escape') {
+              e.preventDefault();
+              this._closeZoom();
+            }
+            return;
+          }
           if (key === 'ArrowRight' || key === ' ' || key === 'PageDown') {
             e.preventDefault();
             this.next();
@@ -2658,6 +2110,8 @@
           } else if (key.toLowerCase() === 'n') {
             e.preventDefault();
             this.speakerCue.classList.toggle('on');
+          } else if (key === 'Escape') {
+            if (document.fullscreenElement) document.exitFullscreen?.();
           }
         });
       }
@@ -2676,8 +2130,8 @@
           }
           this.touchStartX = null;
         }, { passive: true });
-
         window.addEventListener('wheel', (e) => {
+          if (this.zoomModal.classList.contains('open')) return;
           if (Math.abs(e.deltaY) < 20) return;
           if (e.deltaY > 0) this.next();
           else this.prev();
@@ -2685,11 +2139,8 @@
       }
 
       toggleFullscreen() {
-        if (!document.fullscreenElement) {
-          document.documentElement.requestFullscreen?.();
-        } else {
-          document.exitFullscreen?.();
-        }
+        if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+        else document.exitFullscreen?.();
       }
 
       next() { this.showSlide(this.currentSlide + 1); }
@@ -2702,16 +2153,14 @@
           slide.classList.toggle('active', on);
           slide.classList.toggle('visible', on);
         });
-
         const n = String(this.currentSlide + 1).padStart(2, '0');
         const total = String(this.slides.length).padStart(2, '0');
-        this.navCounter.textContent = `${n}/${total}`;
-        this.progressFill.style.width = `${((this.currentSlide + 1) / this.slides.length) * 100}%`;
-
+        this.navCounter.textContent = n + '/' + total;
+        this.progressFill.style.width = ((this.currentSlide + 1) / this.slides.length) * 100 + '%';
         const slide = this.slides[this.currentSlide];
         this.cueName.textContent = slide.dataset.speaker || '';
-        this.cueRange.textContent = `Slides ${slide.dataset.range || ''}`;
-        this.cueTime.textContent = `Target ${slide.dataset.time || ''}`;
+        this.cueRange.textContent = 'Slides ' + (slide.dataset.range || '');
+        this.cueTime.textContent = 'Target ' + (slide.dataset.time || '');
       }
     }
 

@@ -1,3 +1,6 @@
 .claude/
 CS330_SRS_Group_7.pdf
 .DS_Store
+.venv/
+scripts/_parts/
+.deck_build_ready
