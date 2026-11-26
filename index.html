@@ -364,9 +364,7 @@
     }
     .nav-pill .nav-reset:hover { color: var(--pink); }
 
-    .zoom-hint,
-      .zoom-modal,
-      .speaker-cue {
+    .speaker-cue {
       position: fixed;
       top: 18px;
       right: 18px;
@@ -380,14 +378,14 @@
       letter-spacing: 0.06em;
       text-transform: uppercase;
       max-width: 320px;
-      display: none !important;
+      display: none;
       opacity: 0;
       pointer-events: none;
       box-shadow: 5px 5px 0 var(--pink);
     }
 
     .speaker-cue.on {
-      display: block !important;
+      display: block;
       opacity: 1;
       pointer-events: auto;
     }
@@ -1107,7 +1105,11 @@
       justify-content: center;
       padding: 24px;
     }
-    .zoom-modal.open { display: flex; }
+    .zoom-modal.open {
+      display: flex !important;
+      pointer-events: auto;
+      opacity: 1;
+    }
     .zoom-modal img {
       max-width: 94vw;
       max-height: 88vh;
@@ -2188,6 +2190,7 @@
 
       setupZoom() {
         const open = (src) => {
+          if (!src) return;
           this.zoomImg.src = src;
           this.zoomModal.classList.add('open');
         };
@@ -2196,16 +2199,24 @@
           this.zoomImg.src = '';
         };
         document.querySelectorAll('.diagram-frame[data-zoom]').forEach((el) => {
-          const go = () => open(el.dataset.zoom);
+          const go = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            open(el.getAttribute('data-zoom'));
+          };
           el.addEventListener('click', go);
           el.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
-              go();
+              e.stopPropagation();
+              open(el.getAttribute('data-zoom'));
             }
           });
         });
-        document.getElementById('zoomClose').addEventListener('click', close);
+        document.getElementById('zoomClose').addEventListener('click', (e) => {
+          e.stopPropagation();
+          close();
+        });
         this.zoomModal.addEventListener('click', (e) => {
           if (e.target === this.zoomModal) close();
         });
