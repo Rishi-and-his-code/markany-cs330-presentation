@@ -409,12 +409,12 @@
     /* Shared slide headline under topbar */
     .slide-headline {
       font-family: var(--font-display);
-      font-size: clamp(28px, 2.4vw, 40px);
+      font-size: 42px;
       text-transform: uppercase;
       line-height: 0.95;
       letter-spacing: -0.01em;
-      margin: 0 0 14px;
-      padding-bottom: 10px;
+      margin: 0 0 18px;
+      padding-bottom: 12px;
       border-bottom: 2px dashed var(--ink);
       flex-shrink: 0;
     }
@@ -1075,22 +1075,22 @@
       right: 10px;
       z-index: 2;
       font-family: var(--font-mono);
-      font-size: 11px;
+      font-size: 13px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       background: var(--ink);
       color: var(--cream);
       border: 2px solid var(--ink);
-      padding: 5px 9px;
+      padding: 6px 10px;
       pointer-events: none;
       box-shadow: 3px 3px 0 var(--orange);
     }
     .diagram-caption {
       font-family: var(--font-mono);
-      font-size: 13px;
+      font-size: 16px;
       letter-spacing: 0.06em;
       text-transform: uppercase;
-      margin-top: 8px;
+      margin-top: 10px;
       color: var(--ink-2);
       flex-shrink: 0;
     }
@@ -1131,95 +1131,104 @@
 
     .diagram-side {
       display: grid;
-      grid-template-columns: 0.34fr 0.66fr;
-      gap: 18px;
-      height: calc(100% - 66px);
+      grid-template-columns: 0.38fr 0.62fr;
+      gap: 22px;
+      height: calc(100% - 72px);
       min-height: 0;
     }
     .diagram-side .notes {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 14px;
       min-height: 0;
     }
     .diagram-side .diagram-wrap {
       display: flex;
       flex-direction: column;
       min-height: 0;
-      gap: 8px;
+      gap: 10px;
     }
     .note-card {
-      border: 3px solid var(--ink);
-      box-shadow: 4px 4px 0 var(--ink);
-      padding: 14px 16px;
+      border: 4px solid var(--ink);
+      box-shadow: var(--hard-shadow);
+      padding: 18px 20px;
       background: var(--cream);
       flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
     .note-card.pink { background: #FDE1EE; }
     .note-card.yellow { background: #FFF4C2; }
     .note-card.green { background: #D8F0E3; }
     .note-card.orange { background: #FFE0D1; }
     .note-card h3 {
-      font-family: var(--font-mono);
-      font-size: 14px;
-      letter-spacing: 0.08em;
+      font-family: var(--font-display);
+      font-size: 22px;
+      letter-spacing: -0.01em;
       text-transform: uppercase;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
+      line-height: 1.05;
     }
-    .note-card p, .note-card li { font-size: 18px; line-height: 1.3; }
-    .note-card ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
-    .note-card li { padding-left: 14px; position: relative; }
-    .note-card li::before { content: "→"; position: absolute; left: 0; }
+    .note-card p, .note-card li {
+      font-family: var(--font-body);
+      font-size: 20px;
+      line-height: 1.35;
+      color: var(--ink-2);
+    }
+    .note-card ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .note-card li { padding-left: 18px; position: relative; }
+    .note-card li::before { content: "→"; position: absolute; left: 0; color: var(--ink); font-weight: 700; }
 
     .dual-diagrams {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      height: calc(100% - 66px);
+      gap: 18px;
+      height: calc(100% - 72px);
       min-height: 0;
     }
     .dual-panel {
       display: flex;
       flex-direction: column;
       min-height: 0;
-      gap: 8px;
+      gap: 10px;
     }
 
     /* === SLIDE 06 RULES + DIAGRAM === */
     .s06-grid {
       display: grid;
       grid-template-columns: 0.48fr 0.52fr;
-      gap: 22px;
-      height: calc(100% - 66px);
+      gap: 24px;
+      height: calc(100% - 72px);
       min-height: 0;
     }
     .s06-left {
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 16px;
       min-height: 0;
     }
     .s06-kpis {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      gap: 14px;
     }
     .s06-kpi {
       border: 4px solid var(--ink);
       box-shadow: var(--hard-shadow);
-      padding: 14px 16px;
+      padding: 18px 20px;
       background: var(--yellow);
     }
     .s06-kpi .val {
       font-family: var(--font-display);
-      font-size: 32px;
+      font-size: 36px;
       text-transform: uppercase;
       line-height: 1;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
     .s06-kpi .lbl {
       font-family: var(--font-mono);
-      font-size: 13px;
+      font-size: 15px;
       letter-spacing: 0.05em;
       text-transform: uppercase;
       line-height: 1.3;
@@ -1227,15 +1236,18 @@
     .s06-br-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      gap: 14px;
       flex: 1;
       min-height: 0;
     }
     .s06-br {
-      border: 3px solid var(--ink);
-      box-shadow: 4px 4px 0 var(--ink);
-      padding: 14px;
+      border: 4px solid var(--ink);
+      box-shadow: var(--hard-shadow);
+      padding: 18px;
       background: var(--cream);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
     .s06-br:nth-child(1) { background: #FDE1EE; }
     .s06-br:nth-child(2) { background: #FFF4C2; }
@@ -1243,81 +1255,180 @@
     .s06-br:nth-child(4) { background: #FFE0D1; }
     .s06-br .br {
       font-family: var(--font-mono);
-      font-size: 13px;
+      font-size: 15px;
       letter-spacing: 0.06em;
       text-transform: uppercase;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
       font-weight: 700;
     }
-    .s06-br h4 { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
-    .s06-br p { font-size: 17px; line-height: 1.3; color: var(--ink-2); }
-    .s06-right { display: flex; flex-direction: column; min-height: 0; gap: 8px; }
+    .s06-br h4 {
+      font-family: var(--font-display);
+      font-size: 24px;
+      text-transform: uppercase;
+      line-height: 1.05;
+      margin-bottom: 6px;
+    }
+    .s06-br p {
+      font-family: var(--font-body);
+      font-size: 20px;
+      line-height: 1.35;
+      color: var(--ink-2);
+    }
+    .s06-right { display: flex; flex-direction: column; min-height: 0; gap: 10px; }
 
-    /* === SLIDE 13 CONSTRAINTS + ERD === */
+    /* === SLIDE 07 NFRs === */
+    .s07-kpis {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 20px;
+      flex-shrink: 0;
+    }
+    .s07-kpi {
+      border: 4px solid var(--ink);
+      box-shadow: var(--hard-shadow);
+      padding: 22px 24px;
+      min-height: 148px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .s07-kpi.k1 { background: var(--pink); }
+    .s07-kpi.k2 { background: var(--yellow); }
+    .s07-kpi.k3 { background: var(--orange); color: var(--cream); }
+    .s07-kpi.k4 { background: var(--green); color: var(--cream); }
+    .s07-kpi .val {
+      font-family: var(--font-display);
+      font-size: 44px;
+      line-height: 0.95;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .s07-kpi .lbl {
+      font-family: var(--font-mono);
+      font-size: 16px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      line-height: 1.25;
+    }
+    .s07-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      flex: 1;
+      min-height: 0;
+    }
+    .s07-card {
+      border: 4px solid var(--ink);
+      padding: 26px 24px;
+      background: var(--cream);
+      box-shadow: var(--hard-shadow);
+      display: flex;
+      flex-direction: column;
+    }
+    .s07-card h3 {
+      font-family: var(--font-display);
+      font-size: 26px;
+      text-transform: uppercase;
+      line-height: 1.05;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 3px solid var(--ink);
+    }
+    .s07-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      flex: 1;
+      gap: 12px;
+    }
+    .s07-card li {
+      font-family: var(--font-body);
+      font-size: 20px;
+      line-height: 1.35;
+      color: var(--ink-2);
+      padding-left: 18px;
+      position: relative;
+    }
+    .s07-card li::before {
+      content: "▸";
+      position: absolute;
+      left: 0;
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    /* === SLIDE 11 CONSTRAINTS + ERD (class s13) === */
     .s13-grid {
       display: grid;
       grid-template-columns: 0.55fr 0.45fr;
-      gap: 18px;
-      height: calc(100% - 66px);
+      gap: 22px;
+      height: calc(100% - 72px);
       min-height: 0;
     }
     .s13-constraints {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      gap: 14px;
       min-height: 0;
     }
     .s13-card {
-      border: 3px solid var(--ink);
-      box-shadow: 4px 4px 0 var(--ink);
-      padding: 14px;
+      border: 4px solid var(--ink);
+      box-shadow: var(--hard-shadow);
+      padding: 16px 18px;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 8px;
       background: var(--cream);
     }
     .s13-card:nth-child(odd) { background: #FDE1EE; }
     .s13-card:nth-child(even) { background: #FFF4C2; }
     .s13-card .num {
       font-family: var(--font-mono);
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 700;
       letter-spacing: 0.06em;
     }
     .s13-card h3 {
       font-family: var(--font-display);
-      font-size: 20px;
+      font-size: 24px;
       text-transform: uppercase;
       line-height: 1.05;
     }
-    .s13-card p { font-size: 16px; line-height: 1.25; color: var(--ink-2); }
+    .s13-card p {
+      font-family: var(--font-body);
+      font-size: 18px;
+      line-height: 1.3;
+      color: var(--ink-2);
+    }
     .s13-card .mit {
       margin-top: auto;
       font-family: var(--font-mono);
-      font-size: 12px;
+      font-size: 14px;
       letter-spacing: 0.04em;
       text-transform: uppercase;
       border: 2px solid var(--ink);
       background: #E8F6EE;
       color: var(--green-dark);
-      padding: 7px 8px;
+      padding: 8px 10px;
       line-height: 1.3;
     }
-    .s13-right { display: flex; flex-direction: column; min-height: 0; gap: 8px; }
+    .s13-right { display: flex; flex-direction: column; min-height: 0; gap: 10px; }
 
-    /* === SLIDE 14 CLOSING === */
+    /* === SLIDE 12 CLOSING (class s14) === */
     .s14.closing { background: var(--ink); }
     .s14 .content { bottom: 220px; }
     .s14-blocks {
       display: grid;
       grid-template-columns: 1.1fr 0.9fr;
-      gap: 20px;
+      gap: 22px;
       height: 100%;
     }
     .s14-block {
       border: 4px solid var(--cream);
       box-shadow: 8px 8px 0 var(--orange);
-      padding: 24px;
+      padding: 28px;
       color: var(--cream);
     }
     .s14-block.cream {
@@ -1334,34 +1445,50 @@
     }
     .s14-block h2 {
       font-family: var(--font-display);
-      font-size: 28px;
+      font-size: 32px;
       text-transform: uppercase;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
       line-height: 1.05;
     }
-    .s14-block ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
-    .s14-block li { font-size: 20px; line-height: 1.3; padding-left: 16px; position: relative; }
+    .s14-block ul { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+    .s14-block li {
+      font-family: var(--font-body);
+      font-size: 22px;
+      line-height: 1.35;
+      padding-left: 18px;
+      position: relative;
+    }
     .s14-block li::before { content: "▸"; position: absolute; left: 0; font-weight: 700; }
     .s14-road .item {
       display: grid;
-      grid-template-columns: 44px 1fr;
-      gap: 12px;
-      margin-bottom: 14px;
+      grid-template-columns: 48px 1fr;
+      gap: 14px;
+      margin-bottom: 16px;
       align-items: start;
     }
     .s14-road .n {
       font-family: var(--font-mono);
       font-weight: 700;
-      font-size: 18px;
+      font-size: 20px;
       border: 3px solid var(--ink);
       background: var(--cream);
-      height: 40px;
+      height: 44px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
-    .s14-road h3 { font-size: 20px; font-weight: 700; margin-bottom: 2px; }
-    .s14-road p { font-size: 17px; line-height: 1.25; }
+    .s14-road h3 {
+      font-family: var(--font-display);
+      font-size: 22px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      line-height: 1.05;
+    }
+    .s14-road p {
+      font-family: var(--font-body);
+      font-size: 18px;
+      line-height: 1.3;
+    }
     .s14-thanks {
       position: absolute;
       left: 72px;
@@ -1370,19 +1497,19 @@
       border: 4px solid var(--cream);
       background: var(--green);
       color: var(--cream);
-      padding: 22px 28px;
+      padding: 24px 28px;
       box-shadow: 8px 8px 0 var(--orange);
       text-align: center;
     }
     .s14-thanks .big {
       font-family: var(--font-display);
-      font-size: 42px;
+      font-size: 44px;
       text-transform: uppercase;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
     .s14-thanks .team {
       font-family: var(--font-mono);
-      font-size: 16px;
+      font-size: 18px;
       letter-spacing: 0.06em;
       text-transform: uppercase;
       line-height: 1.45;
@@ -1503,8 +1630,7 @@
             <div class="s01-meta">
               <div><strong>Course</strong>CS330 – Software Engineering · B.Tech CSE (3rd Year) · Navrachana University, Vadodara</div>
               <div><strong>Faculty Guide</strong>Prof. Ujwala Petigara</div>
-              <div><strong>Document ID</strong>SRS-MARKANY-V1.0</div>
-              <div><strong>Team</strong>Vikas Patanvadiya (24000605) · Rishi Yagnesh Kachhadia (24000713) · Maitra Prajapati (24000493)</div>
+              <div><strong>Team</strong>Maitra Prajapati (24000493) · Vikas Patanvadiya (24000605) · Rishi Kachhadia (24000713)</div>
             </div>
           </div>
           <div class="s01-poster reveal reveal-d2" aria-hidden="true">
@@ -1707,7 +1833,7 @@
       </section>
 
       <!-- SLIDE 06 — RULES + B.7 -->
-      <section class="slide s06" data-speaker="Rishi Yagnesh Kachhadia" data-range="06–09" data-time="3:35–6:40">
+      <section class="slide s06" data-speaker="Rishi Kachhadia" data-range="06–09" data-time="3:35–6:40">
         <div class="topbar">
           <div class="topbar-eyebrow">Requirements Analysis</div>
           <div class="topbar-pill">Rules &amp; Pipeline</div>
@@ -1743,7 +1869,7 @@
       </section>
 
       <!-- SLIDE 07 — NFR -->
-      <section class="slide s07" data-speaker="Rishi Yagnesh Kachhadia" data-range="06–09" data-time="3:35–6:40">
+      <section class="slide s07" data-speaker="Rishi Kachhadia" data-range="06–09" data-time="3:35–6:40">
         <div class="topbar">
           <div class="topbar-eyebrow">Requirements Analysis</div>
           <div class="topbar-pill">NFR Benchmarks</div>
@@ -1793,7 +1919,7 @@
       </section>
 
       <!-- SLIDE 08 — USE CASE -->
-      <section class="slide s08" data-speaker="Rishi Yagnesh Kachhadia" data-range="06–09" data-time="3:35–6:40">
+      <section class="slide s08" data-speaker="Rishi Kachhadia" data-range="06–09" data-time="3:35–6:40">
         <div class="topbar">
           <div class="topbar-eyebrow">System Analysis &amp; Design</div>
           <div class="topbar-pill">UML Use Case</div>
@@ -1823,7 +1949,7 @@
       </section>
 
       <!-- SLIDE 09 — ARCHITECTURE -->
-      <section class="slide s09" data-speaker="Rishi Yagnesh Kachhadia" data-range="06–09" data-time="3:35–6:40">
+      <section class="slide s09" data-speaker="Rishi Kachhadia" data-range="06–09" data-time="3:35–6:40">
         <div class="topbar">
           <div class="topbar-eyebrow">System Analysis &amp; Design</div>
           <div class="topbar-pill">3-Tier Architecture</div>
@@ -1942,7 +2068,7 @@
         <div class="s14-thanks reveal reveal-d3">
           <div class="big">Thank You — Open for Viva Q&amp;A</div>
           <div class="team">
-            Vikas Patanvadiya · Rishi Yagnesh Kachhadia · Maitra Prajapati<br />
+            Maitra Prajapati · Vikas Patanvadiya · Rishi Kachhadia<br />
             Navrachana University · CS330 Software Engineering · SRS-MARKANY-V1.0
           </div>
         </div>
