@@ -1530,9 +1530,10 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 22px;
-      flex: 0 0 auto;
+      flex: 1.05;
       min-height: 0;
       margin-bottom: 0;
+      align-items: stretch;
     }
     .s03-box {
       border: 4px solid var(--ink);
@@ -1541,6 +1542,7 @@
       display: flex;
       flex-direction: column;
       min-height: 0;
+      height: 100%;
     }
     .s03-box .hdr {
       font-family: var(--font-display);
@@ -1551,16 +1553,19 @@
       border-bottom: 4px solid var(--ink);
       font-weight: 400;
       line-height: 1.05;
+      flex-shrink: 0;
     }
     .s03-box.in .hdr { background: var(--green); color: var(--cream); }
     .s03-box.out .hdr { background: linear-gradient(90deg, var(--orange), var(--pink)); color: var(--ink); }
     .s03-box ul {
       list-style: none;
-      padding: 26px 28px 28px;
+      padding: 28px 28px 30px;
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
-      gap: 16px;
+      justify-content: space-between;
+      gap: 14px;
+      flex: 1;
+      min-height: 0;
     }
     .s03-box li {
       font-family: var(--font-body);
